@@ -1,0 +1,51 @@
+{% load static %}
+{% url "home" as home_url %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.webawesome.com/21ebcafd391742ca.js" crossorigin="anonymous"></script>
+    <link rel="shortcut icon" href="{% static 'images/favicon.png'%}" >
+    <link rel="stylesheet" href="{%static 'css/base.css'%}">
+    <title>LittleGemFelts</title>
+</head>
+<body>
+    <header>
+        <nav class='navbar'>
+
+    <wa-button appearance='plain' size='large'>LittleGemFelts</wa-button>
+
+    <ul class="menu">
+      <li>
+        <wa-button class="nav-btn" >Shop</wa-button>
+      </li>
+      <li>
+        <wa-button class="nav-btn" pill>Event</wa-button>
+      </li>
+      <li>
+        <wa-button class="nav-btn" pill>Blog</wa-button>
+      </li>
+      <li>
+        <wa-button class="nav-btn" pill>Basket</wa-button>
+      </li>
+      <li>
+        <wa-button class="nav-btn" pill>Profile</wa-button>
+      </li>
+    </ul>
+  </nav>
+    </header>
+    <main>
+        {% block content %}
+        {% comment %} content goes here {% endcomment %}
+        {% endblock content %}
+    </main>
+    <footer>
+
+    </footer>
+    <script src="{% static 'js/main.js' %}"></script>
+        {% block extra_js %}
+        {% comment %} extra page JS  loaded here {% endcomment %}
+        {% endblock extra_js %}
+</body>
+</html>

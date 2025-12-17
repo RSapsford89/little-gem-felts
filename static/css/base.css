@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital@0;1&display=swap');
+.navbar{
+  font-family:"josefin sans";
+  display: flex;
+  justify-content: space-between;
+  align-items:center;
+  background-color:#FCF69F;
+  position:relative;
+}
+.menu{
+  display:flex;
+  list-style:none;
+  gap:2rem;
+}
+wa-button.nav-btn::part(base){
+  border-radius:10px;
+  color:black;
+  background:none;
+  transition: all var(--wa-transition-slow);
+}
+wa-button.nav-btn::part(base):hover{
+  color:#fff;
+  background:#A560B2;
+  border: solid 3px;
+  border-color: #D6D5EE;
+  transform: scale(1.1);
+}
+wa-button.nav-btn::part(base):active{
+  transform: translateY(1px);
+}
+body{
+  background-color:#D6D5EE;
+}
