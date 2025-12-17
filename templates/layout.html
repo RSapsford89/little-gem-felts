@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.webawesome.com/21ebcafd391742ca.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/4d2d2c68b5.js" crossorigin="anonymous"></script>
     <link rel="shortcut icon" href="{% static 'images/favicon.png'%}" >
     <link rel="stylesheet" href="{%static 'css/base.css'%}">
     <title>LittleGemFelts</title>
@@ -30,19 +31,69 @@
         <wa-button class="nav-btn" pill>Basket</wa-button>
       </li>
       <li>
+        {% if user.is_authenticated %}
         <wa-button class="nav-btn" pill>Profile</wa-button>
+        {% else %}
+        <wa-button class="nav-btn" pill>Log-in / Sign-up</wa-button>
+        {% endif %}        
       </li>
     </ul>
   </nav>
     </header>
     <main>
+      {% block cta %}
+      {% comment %} homepage call to action section here {% endcomment %}
+      {% endblock cta %}
+      {% block latestAdditions %}
+      {% comment %} homepage Latest Additions section here {% endcomment %}
+      {% endblock latestAdditions %}
+      {% block blogAndEvents %}
+      {% comment %} blog and event section here {% endcomment %}
+      {% endblock blogAndEvents %}
         {% block content %}
         {% comment %} content goes here {% endcomment %}
         {% endblock content %}
+        {% block testimonials %}
+        {% comment %} testimonials cards go here {% endcomment %}
+        {% endblock testimonials %}
     </main>
     <footer>
-
-    </footer>
+  <div class="footer-container">
+    <div class="footer-brand-section">
+      <wa-button appearance='plain' size='large'>LittleGemFelts</wa-button>
+      <div class="footer-social">
+        <wa-button appearance='plain' size='small'>
+          <i class="fa-brands fa-facebook"></i>
+        </wa-button>
+        <wa-button appearance='plain' size='small'>
+          <i class="fa-brands fa-instagram"></i>
+        </wa-button>
+        
+      </div>
+    </div>
+    <div class="footer-links">
+      <ul class='menu'>
+        <li><wa-button class='nav-btn'>One</wa-button></li>
+        <li><wa-button class='nav-btn'>Two</wa-button></li>
+        <li><wa-button class='nav-btn'>Three</wa-button></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <ul class='menu'>
+        <li><wa-button class='nav-btn'>1</wa-button></li>
+        <li><wa-button class='nav-btn'>2</wa-button></li>
+        <li><wa-button class='nav-btn'>3</wa-button></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <ul class='menu'>
+        <li><wa-button class='nav-btn'>4</wa-button></li>
+        <li><wa-button class='nav-btn'>5</wa-button></li>
+        <li><wa-button class='nav-btn'>6</wa-button></li>
+      </ul>
+    </div>
+  </div>
+</footer>
     <script src="{% static 'js/main.js' %}"></script>
         {% block extra_js %}
         {% comment %} extra page JS  loaded here {% endcomment %}
