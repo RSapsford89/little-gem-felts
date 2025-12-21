@@ -33,7 +33,38 @@ wa-button.nav-btn::part(base):active {
 body {
   background-color: #d6d5ee;
 }
-
+.cta-container{
+/*   border:solid 1px; */
+  width:600px;
+  height:250px;
+  color:white;
+/*   background-color:#564DAC; */
+  background:rgb(33,30,67,0.7);
+}
+.cta-img{
+  position:relative;
+  top: -40px;
+  left: 150px;
+  z-index:-1;  
+}
+.cta-title{
+  color:#FCF69F;
+}
+.cta-btns{
+  display:flex;
+/*   border:solid 1px; */
+  justify-content:right;
+  align-items:right;
+  gap:2rem;
+}
+wa-button.cta-event::part(base){
+  background:none;
+  border:solid 4px #A3C4BC;
+  font:white;
+}
+wa-button.cta-shop::part(base){
+  background:#564DAC;
+}
 /* Footer specific styles */
 .footer-container{
   display: grid;
@@ -90,28 +121,30 @@ body {
   
 }
 .layout-addition::before{
-  background:pink;
+  background:#A3C4BC;
   inset:0;
   filter:blur(1rem);
   position:absolute;
   content:"";
-  z-index:-1;
+  z-index:0;
 }
 wa-card::part(base){
   display:flex;
-  background-color:#3D89AF;  
+  background-color:#3D89AF; 
+
 }
 .card-media{
   max-width:300px;
 }
 .card-overview{  
   max-width:300px;
+    z-index:1; 
 /*   background: none; */
   background-color:#3D89AF;
  align-items:center;
   text-align:center;
 }
-wa-button::part(base){
+wa-button.footer-btn::part(base){
   background-color:#A560B2;
   color:#000;
 }
