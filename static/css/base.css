@@ -33,57 +33,17 @@ wa-button.nav-btn::part(base):active {
 body {
   background-color: #d6d5ee;
 }
-.cta-section {
-  position: relative;
-  min-height: 60vh; 
-}
 
-.cta-container{
-  position: relative;
-  width: 80%; 
-  max-width: 900px; 
-  height: auto; 
-  margin: 0 auto;
-  padding: 2rem; 
-  color: white;
-  background: rgb(33,30,67,0.7);
+wa-button.latest-section-btn::part(base){
+  display: flex;
+  justify-content: center;
   z-index: 2;
-}
-
-.cta-img{
-  position: absolute;
-  top: 8rem; 
-  left: 65%;
-  transform: translateX(-50%);
-  width: 80%; 
-  max-width: 900px; 
-  z-index: 1;
-}
-.cta-img img {
-  display: block;
-  width: 100%;
-  height: auto; 
-  object-fit: cover;
-  max-height: 50vh; 
-}
-.cta-title{
-  color:#FCF69F;
-}
-.cta-btns{
-  display:flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content:right;
-  gap:2rem;
-}
-wa-button.cta-event::part(base){
-  background:none;
-  border:solid 4px #A3C4BC;
-  font:white;
-}
-wa-button.cta-shop::part(base){
+  margin: auto;
+  width: 80%;
+  justify-content: center;
   background:#564DAC;
 }
+
 /* Footer specific styles */
 .footer-container{
   display: grid;

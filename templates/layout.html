@@ -9,6 +9,9 @@
     <script src="https://kit.fontawesome.com/4d2d2c68b5.js" crossorigin="anonymous"></script>
     <link rel="shortcut icon" href="{% static 'images/favicon.png'%}" >
     <link rel="stylesheet" href="{%static 'css/base.css'%}">
+    {% block extra_css %}
+    {% comment %} load extra page CSS for page specific styling {% endcomment %}
+    {% endblock extra_css %}
     <title>LittleGemFelts</title>
 </head>
 <body>

@@ -1,0 +1,25 @@
+.cta-container{
+    width: clamp(300px, 60%, 900px);
+    height: 30vh;
+    color: white;
+    background: rgb(33, 30, 67), 0.7;
+}
+
+.cta-img{
+    position: relative;
+    z-index: -1;
+}
+
+.cta-title{
+    color: #fcf69f;
+}
+
+.cta-section{
+    position:relative;
+    width: 100%;
+    height: 30vh;
+    background: no-repeat url('/media/drying-fibres.webp');
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+}

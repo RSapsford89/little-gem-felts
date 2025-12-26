@@ -1,19 +1,16 @@
 {% extends "layout.html" %}
 {% load static %}
-
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">{% endblock extra_css %}
 {% block cta %}
+
 <section class="cta-section">
-    <div class='cta-img'>
-      <img src="https://images.unsplash.com/photo-1559209172-0ff8f6d49ff7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80" alt="">
-    </div>
-    <div class='cta-container'>
-      <h1 class='cta-title'>LittleGemFelts</h1>
-      <p>Handmade felt gifts and kits made with love for you in the North West of England - Paul & Silvia</p>
-      <div class="cta-btns">
+  <div class="cta-overlay">
+    <h1 class='cta-title'>LittleGemFelts</h1>
+      <p>Handmade felt gifts and kits made with love for you in the North West of England - Paul & Silvia</p>      
         <wa-button class="cta-event"size='large'pill>Upcoming Events</wa-button>
         <wa-button class="cta-shop"size='large'pill>Shop All</wa-button>
-      </div>
-    </div>
+  </div>
 </section>
 {% endblock cta %}
 
@@ -40,6 +37,7 @@
       <wa-button size='large' class='footer-btn'  variant="brand" pill><i class="fa-solid fa-bag-shopping"></i> Shop</wa-button>
     </wa-card>
   </div>
+  <wa-button size="large" class="latest-section-btn" variant="brand" pill>Shop All</wa-button>
 </section>
 {% endblock latestAdditions %}
 
