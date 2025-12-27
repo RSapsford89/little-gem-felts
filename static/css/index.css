@@ -1,23 +1,27 @@
-.cta-container{
+/* .cta-container{
     width: clamp(300px, 60%, 900px);
-    height: 30vh;
+    height: 300px;
     color: white;
     background: rgb(33, 30, 67), 0.7;
-}
+} */
 .cta-overlay{
+    position: relative;
     background-color: rgb(162,67,190,0.6);
     padding: 3rem;
     border-radius: 10px;
     text-align: left;
+    inset: -15% -20% ;
 }
 .cta-section{
     position:relative;
+    margin: 5rem auto;
     width: clamp(300px, 60%, 900px);
-    height: 30vh;
+    height: 300px;
     background: no-repeat url('/media/drying-fibres.webp');
     background-size: cover;
     display: flex;
     justify-content: center;
+    inset: 5% 4%;
 }
 .cta-img{
     position: relative;
@@ -30,11 +34,13 @@
     border: #a3c4bc 4px solid;
     background: none;
     border-radius: 2rem;
+    margin: 1rem;
 }
 .button-dark{
     position: relative;
     border-radius: 2rem;
     padding: 0.5rem;
+    margin: 1rem;
     border: none;
     color: white;
     z-index: 1;
@@ -58,4 +64,8 @@ wa-button.button-light::part(base){
 }
 wa-button.button-dark::part(base){
     background: #564dac;
+}
+.latest-section-btn{
+    max-width: 600px;
+    display: block;
 }
