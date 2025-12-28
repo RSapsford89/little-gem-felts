@@ -1,15 +1,25 @@
-/* .cta-container{
-    width: clamp(300px, 60%, 900px);
-    height: 300px;
-    color: white;
-    background: rgb(33, 30, 67), 0.7;
-} */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=Josefin+Sans:ital@0;1&family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+
+:root{
+  --title-font:"josefin sans", sans-serif;
+  --heading-font:"Lora", sans-serif;
+  --content-font:"cormorant", sans-serif;
+  --amethyst-c1:#a560b2;
+  --violet-twilight-c2:#564dac;
+  --light-gold-c3:#fcf69f;
+  --lavender-c4:#d6d5ee;
+  --ash-grey-c5:#A3C4BC;
+  --tropical-teal-c6:#16BAC5;
+
+}
 .cta-overlay{
     position: relative;
-    background-color: rgb(162,67,190,0.6);
+    background-color: rgb(86, 77, 172, 0.8);
     padding: 3rem;
     border-radius: 10px;
     text-align: left;
+    font-size: 1.6rem;
+    color: white;
     inset: -15% -20% ;
 }
 .cta-section{
@@ -66,6 +76,50 @@ wa-button.button-dark::part(base){
     background: #564dac;
 }
 .latest-section-btn{
-    max-width: 600px;
-    display: block;
+    width: 90%;
+    grid-column: span 3;
+    margin: 0 auto;
+    z-index: 1;
+}
+/* Blog and Events section */
+.blog-event-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+.blog-container{
+    grid-column: 1;
+    background-color: transparent;
+    position: relative;
+    z-index: 1;
+}
+
+.blog-container::before{
+    background: var(--tropical-teal-c6);
+    filter: blur(5rem);
+    content: "";
+    inset: 0;
+    z-index: -1; 
+    position: absolute;
+}
+.event-container{
+    grid-column:2;
+    background-color: transparent;
+    position: relative;
+    z-index: 1;
+}
+.event-container::before{
+    grid-column:2;
+    background-color: var(--violet-twilight-c2);
+    filter: blur(5rem);
+    content: "";
+    inset: 0;
+    z-index: -1; 
+    position: absolute;
+}
+.blog-item{
+    text-align: right;
+}
+.event-item{
+    text-align: left;
 }

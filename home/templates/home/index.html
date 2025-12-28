@@ -41,7 +41,28 @@
   </div>
 </section>
 {% endblock latestAdditions %}
-
+{% block blogAndEvents %}
+<section class="blog-and-events-section">
+  <div class="blog-event-container">
+    <div class="blog-container">
+      <h2>Blog: What's on in the workshop</h2>
+      <div class="blog-item">
+        <h3>slug title</h3>
+        <p>Slug:Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit consequuntur rem quidem eligendi corrupti cupiditate ut! Architecto debitis ex eius!</p>
+        <wa-button size='small'class="blog-btn" pill>Read more</wa-button>
+      </div>
+    </div>
+    <div class="event-container">
+      <h2>Events: Join us at our next event</h2>
+      <div class="event-item">
+        <h3>slug title</h3>
+        <p>Slug:Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit consequuntur rem quidem eligendi corrupti cupiditate ut! Architecto debitis ex eius!</p>
+        <wa-button size='small'class="event-btn" pill>Read more</wa-button>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock blogAndEvents %}
 {% block content %}
 <!-- Additional homepage content if needed -->
 {% endblock content %}

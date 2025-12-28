@@ -1,10 +1,37 @@
-@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital@0;1&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=Josefin+Sans:ital@0;1&family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+
+:root{
+  --title-font:"josefin sans", sans-serif;
+  --heading-font:"Lora", sans-serif;
+  --content-font:"cormorant", sans-serif;
+  --amethyst-c1:#a560b2;
+  --violet-twilight-c2:#564dac;
+  --light-gold-c3:#fcf69f;
+  --lavender-c4:#d6d5ee;
+  --ash-grey-c5:#A3C4BC;
+  --tropical-teal-c6:#16BAC5;
+
+}
+h1{
+  font-family: var(--title-font);
+  font-weight: 300;
+}
+h2,h3,h4,h5,h6{
+  font-family: var(--heading-font);
+  font-weight: 300;
+}
+p{
+  font-family: var(--content-font);
+}
+section{
+  margin-bottom: 5rem ;
+}
 .navbar {
-  font-family: "josefin sans";
+  font-family: var(--title-font);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #fcf69f;
+  background-color:var(--light-gold-c3);
   position: relative;
 }
 .menu {
@@ -22,9 +49,9 @@ wa-button.nav-btn::part(base) {
 }
 wa-button.nav-btn::part(base):hover {
   color: #fff;
-  background: #a560b2;
+  background:var(--amethyst-c1);
   border: solid 3px;
-  border-color: #d6d5ee;
+  border-color: var(--lavender-c4);
   transform: scale(1.1);
 }
 wa-button.nav-btn::part(base):active {
@@ -41,7 +68,7 @@ wa-button.latest-section-btn::part(base){
   margin: auto;
   width: 80%;
   justify-content: center;
-  background:#564DAC;
+  background:var(--violet-twilight-c2);
 }
 
 /* Footer specific styles */
