@@ -2,5 +2,6 @@ env.py
 __pycache__/
 *.pyc
 media/
-db.sqlite3
+*.sqlite3
 
+db.sqlite3

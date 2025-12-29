@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">{% endblock extra_css %}
+
+
+{% block blogAndEvents %}
+<section class="blog-and-events-section">
+  <div class="blog-event-container">
+    <div class="blog-container">
+      <h2>Blog: What's on in the workshop</h2>
+      {% for post in posts %}
+        {% if post.is_event != True %}
+            <div class="blog-item">
+                <h3>{{post.title}}</h3>
+                <p>{{post.slug}}</p>
+                <p>{{post.content}}</p>
+                <p>{{post.date_created}}</p>
+                <wa-button size='small'class="blog-btn" pill href="{% url 'blog:blog_details' post.slug %}">Read more</wa-button>
+            </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <div class="event-container">
+      <h2>Events: Join us at our next event</h2>
+      {% for post in posts %}
+        {% if post.is_event == True %}
+            <div class="event-item">
+                <h3>{{post.title}}</h3>
+                <p>{{post.slug}}</p>
+                <p>{{post.content}}</p>
+                <p>We will be at <strong>{{post.location}}</strong></p>
+                <p>{{post.date_created}}</p>
+                <wa-button size='small'class="event-btn" pill href="{% url 'blog:blog_details' post.slug %}">Read more</wa-button>
+            </div>        
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock blogAndEvents %}
+{% block content %}
+<!-- Additional homepage content if needed -->
+{% endblock content %}

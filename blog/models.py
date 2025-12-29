@@ -15,6 +15,7 @@ class Post(models.Model):
     allow_comments = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
+    publish = models.BooleanField(default=False)
 
 
     class Meta:
