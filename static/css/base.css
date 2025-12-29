@@ -24,7 +24,7 @@ p{
   font-family: var(--content-font);
 }
 section{
-  margin-bottom: 5rem ;
+  margin-bottom: 15rem ;
 }
 .navbar {
   font-family: var(--title-font);
