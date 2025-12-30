@@ -2,6 +2,9 @@ section{
     max-width:900px;
     margin: 10rem auto;
 }
+main  div{
+    margin: 2.5vh 2.5vw;
+}
 h2{
     font-size: clamp(1.5rem, 5vw, 3rem);
     font-weight: 500;
