@@ -1,7 +1,8 @@
 {% extends "layout.html" %}
 {% load static %}
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/index.css' %}">{% endblock extra_css %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock extra_css %}
 
 
 {% block blogAndEvents %}
@@ -32,7 +33,7 @@
                 <p>We will be at <strong>{{post.location}}</strong></p>
                 <p>{{post.date_created}}</p>
                 <wa-button size='small'class="event-btn" pill href="{% url 'blog:blog_details' post.slug %}">Read more</wa-button>
-            </div>        
+            </div>
         {% endif %}
       {% endfor %}
     </div>

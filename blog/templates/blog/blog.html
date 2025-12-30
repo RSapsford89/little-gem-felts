@@ -1,31 +1,27 @@
 {% extends "layout.html" %}
 {% load static %}
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/index.css' %}">{% endblock extra_css %}
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">{% endblock extra_css %}
 
-
-{% block blogAndEvents %}
-{% comment %} <section class="blog-and-events-section">
-  <div class="blog-event-container">
-    <div class="blog-container">
-      <h2>Blog: What's on in the workshop</h2>
-      <div class="blog-item">
-        <h3>slug title</h3>
-        <p>Slug:Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit consequuntur rem quidem eligendi corrupti cupiditate ut! Architecto debitis ex eius!</p>
-        <wa-button size='small'class="blog-btn" pill>Read more</wa-button>
-      </div>
-    </div>
-    <div class="event-container">
-      <h2>Events: Join us at our next event</h2>
-      <div class="event-item">
-        <h3>slug title</h3>
-        <p>Slug:Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit consequuntur rem quidem eligendi corrupti cupiditate ut! Architecto debitis ex eius!</p>
-        <wa-button size='small'class="event-btn" pill>Read more</wa-button>
-      </div>
-    </div>
-  </div>
-</section> {% endcomment %}
-{% endblock blogAndEvents %}
 {% block content %}
-<!-- Additional homepage content if needed -->
+<section class="blog-section">
+  <div class="wa-grid wa-gap-l" style='--min-column-size:300px;'>
+    <div class="title wa-span-grid">
+      <h2>{{post.title}}</h2>
+    </div>
+    <div class="slug">
+      <h3>{{post.slug}}</h3>
+    </div>
+    <div class="image">
+      <img src="" alt="blog post image">
+    </div>
+    <div class="wa-span-grid text">
+      <p>{{post.content}}</p>
+    </div>
+    <div class="date-edit-author">
+      <span>written by: {{post.author}} | </span><span>first published on: {{post.date_created}} | </span><span>last edited on: {{post.date_updated}}</span>
+    </div>
+
+  </div>
+</section>
 {% endblock content %}

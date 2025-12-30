@@ -18,7 +18,7 @@
     <header>
         <nav class='navbar'>
 
-    <wa-button appearance='plain' size='large'>LittleGemFelts</wa-button>
+    <wa-button appearance='plain' size='large'href='{% url 'home'%}'>LittleGemFelts</wa-button>
 
     <ul class="menu">
       <li>
@@ -35,7 +35,7 @@
       </li>
       <li>
         {% if user.is_authenticated %}
-        <wa-button class="nav-btn" pill>Profile</wa-button>
+        <wa-button class="nav-btn" pill>{{user.username}}'s Profile</wa-button>
         {% else %}
         <wa-button class="nav-btn" pill>Log-in / Sign-up</wa-button>
         {% endif %}        

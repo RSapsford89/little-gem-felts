@@ -24,4 +24,5 @@ def blog_details(request, slug):
     A view to return the details of a single blog    
     :param request: Description
     """
-    return render(request, 'blog/blog.html')
+    post = get_object_or_404(Post, slug=slug, publish=True)
+    return render(request, 'blog/blog.html', {'post':post})

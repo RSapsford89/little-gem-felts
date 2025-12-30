@@ -1,0 +1,18 @@
+section{
+    max-width:900px;
+    margin: 10rem auto;
+}
+h2{
+    font-size: clamp(1.5rem, 5vw, 3rem);
+    font-weight: 500;
+}
+h3{
+    font-size: clamp(1.5rem, 4vw, 2rem);
+}
+p{
+    font-size: 1.5rem;
+}
+.date-edit-author{
+    font-size: 1rem;
+    color: grey;
+}
