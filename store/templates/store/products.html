@@ -1,10 +1,41 @@
 {% extends "layout.html" %}
 {% load static %}
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/index.css' %}">
+<link rel="stylesheet" href="{% static 'css/store.css' %}">
 {% endblock extra_css %}
+
+{% comment %} The latest additions section is pulled from layout.html {% endcomment %}
 {% block content %}
 <section class="product-section">
+    <h1>Welcome to the Shop</h1>
+    <div class="shop-filter">
+        <div class="category-change">
+
+        </div>
+        <div class="category-change">
+            <wa-button size='small' class='round-btn'>All</wa-button>
+        </div>
+        <div class="category-change">
+            <wa-button size='small' class='round-btn'>Kits</wa-button>
+        </div>
+        <div class="category-change">
+            <wa-button size='small' class='round-btn'>Lamps</wa-button>
+        </div>
+        <div class="category-change">
+            <wa-button size='small' class='round-btn'>Boxes</wa-button>
+        </div>
+        <div class="category-change">
+            <wa-button size='small' class='round-btn'>Bags</wa-button>
+        </div>
+        <div class="category-change">
+            <wa-button size='small' class='round-btn'>Tools</wa-button>
+        </div>
+        <div class="category-change">
+            <wa-input placeholder='Filter' size='small'>
+                <wa-button size='small' class='round-btn'>find</wa-button>
+            </wa-input>
+        </div>
+    </div>
     <div class="store-container">
         <div class="wa-grid wa-gap-2" style="--min-column-size: 200px;">
             {% for item in products %}

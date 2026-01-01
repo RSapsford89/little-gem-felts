@@ -22,7 +22,7 @@
 
     <ul class="menu">
       <li>
-        <wa-button class="nav-btn" >Shop</wa-button>
+        <wa-button class="nav-btn" href="{% url 'store:store'%}">Shop</wa-button>
       </li>
       <li>
         <wa-button class="nav-btn" pill>Event</wa-button>
@@ -48,7 +48,38 @@
       {% comment %} homepage call to action section here {% endcomment %}
       {% endblock cta %}
       {% block latestAdditions %}
-      {% comment %} homepage Latest Additions section here {% endcomment %}
+      <section class="latest-additions">
+        <h2>Latest Additions</h2>
+        <div class="wa-grid wa-gap-2" style="--min-column-size: 200px;">
+          <div>
+            <wa-card class="card-overview">
+              <img slot="media" src="https://images.unsplash.com/photo-1559209172-0ff8f6d49ff7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80" alt="A kitten sits patiently between a terracotta pot and decorative grasses." />
+              <h3>Article Title</h3>
+              <p>Descriptive slug</p>
+              <wa-button size='large' class='footer-btn'  variant="brand" pill><i class="fa-solid fa-bag-shopping"></i> Shop</wa-button>
+            </wa-card>
+          </div>
+
+          <div>
+            <wa-card class="card-overview">
+              <img slot="media" src="https://images.unsplash.com/photo-1559209172-0ff8f6d49ff7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80" alt="A kitten sits patiently between a terracotta pot and decorative grasses." />
+              <h3>Article Title</h3>
+              <p>Descriptive slug</p>
+              <wa-button size='large' class='footer-btn'  variant="brand" pill><i class="fa-solid fa-bag-shopping"></i> Shop</wa-button>
+            </wa-card>
+          </div>
+
+          <div>      
+            <wa-card class="card-overview">
+              <img slot="media" src="https://images.unsplash.com/photo-1559209172-0ff8f6d49ff7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80" alt="A kitten sits patiently between a terracotta pot and decorative grasses." />
+              <h3>Article Title</h3>
+              <p>Descriptive slug</p>
+              <wa-button size='large' class='footer-btn'  variant="brand" pill><i class="fa-solid fa-bag-shopping"></i> Shop</wa-button>
+            </wa-card>
+          </div>
+        </div>
+        <wa-button size="large" class="latest-section-btn" variant="brand" pill>Shop All</wa-button>
+      </section>
       {% endblock latestAdditions %}
       {% block blogAndEvents %}
       {% comment %} blog and event section here {% endcomment %}

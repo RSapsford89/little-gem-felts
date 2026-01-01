@@ -1,0 +1,17 @@
+:root {
+  --title-font: "josefin sans", sans-serif;
+  --heading-font: "Lora", sans-serif;
+  --content-font: "cormorant", sans-serif;
+  --amethyst-c1: #a560b2;
+  --violet-twilight-c2: #564dac;
+  --light-gold-c3: #fcf69f;
+  --lavender-c4: #d6d5ee;
+  --ash-grey-c5: #a3c4bc;
+  --tropical-teal-c6: #16bac5;
+}
+.shop-filter{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: var(--light-gold-c3);
+}
