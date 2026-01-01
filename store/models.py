@@ -3,6 +3,11 @@ from django.db import models
 
 # Create your models here.
 class Product(models.Model):
+    """
+    Docstring for Product
+    Model containing product data. Images are contained in Image as FK
+    Access images as product.images.all()
+    """
     name = models.CharField(max_length=200, blank=False,)
     description = models.TextField(blank=False)
     price = models.DecimalField(max_digits=5, decimal_places=2)
@@ -19,15 +24,15 @@ def __str__(self):
 
 class Images(models.Model):
     product = models.ForeignKey(Product, on_delete= models.CASCADE, related_name='images')
-    models.ImageField( upload_to=None, height_field=None, width_field=None, max_length=None)
+    image = models.ImageField(upload_to='products/', height_field=None, width_field=None, max_length=None)
     position = models.IntegerField(default=0, blank=True, null=True)
     primary_image = models.BooleanField(default=False)# image for card and first to display in details
 
     class Meta:
-        ordering = ['product']
+        ordering = ['position']  # Changed from 'product' to 'position'
 
     def __str__(self):
-        return f"{self.product.name} 's image at position:  {self.position}, is the image the Primary: {self.primary_image}"
+        return f"{self.product.name}'s image at position: {self.position}, Primary: {self.primary_image}"
 # class ProductID_ImageID(models.Model):
 #     productID = models.ForeignKey(Product, on_delete=models.CASCADE)
 #     imageID = models.ForeignKey(Images, on_delete=models.CASCADE)
