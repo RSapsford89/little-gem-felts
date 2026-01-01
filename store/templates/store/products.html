@@ -6,14 +6,16 @@
 {% block content %}
 <section class="product-section">
     <div class="store-container">
-        <div class="wa-grid">
+        <div class="wa-grid wa-gap-2" style="--min-column-size: 200px;">
             {% for item in products %}
-            <wa-card class="card-overview">
-            <img slot="media" src="{{ item.images.first.image.url}}" alt="" />
-            <h3>{{item.name}}</h3>
-            <p>{{item.description}}</p>  
-            <wa-button size='large' class='footer-btn'  variant="brand" pill><i class="fa-solid fa-bag-shopping"></i> {{item.price}}</wa-button>
-            </wa-card>
+            <div>
+                <wa-card class="card-overview">
+                <img slot="media" src="{{ item.images.first.image.url}}" alt="" />
+                <h3>{{item.name}}</h3>
+                <p>{{item.description}}</p>
+                <wa-button size='large' class='footer-btn'  variant="brand" pill><i class="fa-solid fa-bag-shopping"></i>£ {{item.price}}</wa-button>
+                </wa-card>
+            </div>
             {% endfor %}
         </div>
     </div>
