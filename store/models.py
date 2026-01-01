@@ -8,7 +8,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=5, decimal_places=2)
     main_category = models.CharField(max_length=200, blank=False)
     sub_category = models.CharField( max_length=200, blank=True, null=True)# Blank & null should be False?
-    #images = models.ImageField( upload_to=None, height_field=None, width_field=None, max_length=None)# This may need to be a FK to another table which pulls in all related files...
+    # images = models.ImageField( upload_to=None, height_field=None, width_field=None, max_length=None)# This may need to be a FK to another table which pulls in all related files...
     stock_level = models.IntegerField(default=0, blank=False, null=False)
     delivery_cost = models.DecimalField(max_digits=5, decimal_places=2)
 
@@ -27,7 +27,7 @@ class Images(models.Model):
         ordering = ['product']
 
     def __str__(self):
-        return f"{self.product.name} 's {self.position}"
+        return f"{self.product.name} 's image at position:  {self.position}, is the image the Primary: {self.primary_image}"
 # class ProductID_ImageID(models.Model):
 #     productID = models.ForeignKey(Product, on_delete=models.CASCADE)
 #     imageID = models.ForeignKey(Images, on_delete=models.CASCADE)
