@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock extra_css %}
+{% block content %}
+<section class="product-section">
+    <div class="store-container">
+        <div class="wa-grid">
+            {% for item in products %}
+            <wa-card class="card-overview">
+            <img slot="media" src="{{ item.images.first.image.url}}" alt="" />
+            <h3>{{item.name}}</h3>
+            <p>{{item.description}}</p>  
+            <wa-button size='large' class='footer-btn'  variant="brand" pill><i class="fa-solid fa-bag-shopping"></i> {{item.price}}</wa-button>
+            </wa-card>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock content  %}
