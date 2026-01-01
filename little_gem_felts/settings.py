@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # project apps
     'home',
     'blog',
+    'store',
     # additional library apps
 ]
 

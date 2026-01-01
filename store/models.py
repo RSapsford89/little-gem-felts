@@ -13,13 +13,22 @@ class Product(models.Model):
     delivery_cost = models.DecimalField(max_digits=5, decimal_places=2)
 
 
+def __str__(self):
+    return self.name
+
+
 class Images(models.Model):
+    product = models.ForeignKey(Product, on_delete= models.CASCADE, related_name='images')
     models.ImageField( upload_to=None, height_field=None, width_field=None, max_length=None)
     position = models.IntegerField(default=0, blank=True, null=True)
     primary_image = models.BooleanField(default=False)# image for card and first to display in details
 
+    class Meta:
+        ordering = ['product']
 
-class ProductID_ImageID(models.Model):
-    productID = models.ForeignKey(Product, on_delete=models.CASCADE)
-    imageID = models.ForeignKey(Images, on_delete=models.CASCADE)
-    date_added = models.DateTimeField( auto_now_add=True)# add the date it was added
+    def __str__(self):
+        return f"{self.product.name} 's {self.position}"
+# class ProductID_ImageID(models.Model):
+#     productID = models.ForeignKey(Product, on_delete=models.CASCADE)
+#     imageID = models.ForeignKey(Images, on_delete=models.CASCADE)
+#     date_added = models.DateTimeField( auto_now_add=True)# add the date it was added
