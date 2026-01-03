@@ -8,10 +8,56 @@
   --lavender-c4: #d6d5ee;
   --ash-grey-c5: #a3c4bc;
   --tropical-teal-c6: #16bac5;
+  --green-c7:#09BC8A;
 }
-.shop-filter{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    background-color: var(--light-gold-c3);
+.shop-filter {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  background-color: var(--light-gold-c3);
+  align-items: center;
+  justify-content:center;
+  padding: 0.75rem;
+}
+.filter-container {
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+  
+}
+.filter-container wa-input::part(base) {
+  padding-right: 40px;
+}
+.filter-container wa-button::part(base) {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: transparent;
+}
+.category-change{
+  margin: 5px;
+}
+
+wa-button.all-btn::part(base)  {
+  background-color: var(--amethyst-c1);
+}
+
+wa-button.kit-btn::part(base) {
+  background-color: var(--violet-twilight-c2);
+}
+
+wa-button.lamp-btn::part(base) {
+  background-color: var(--green-c7);
+}
+
+wa-button.box-btn::part(base) {
+  background-color: var(--lavender-c4);
+}
+
+wa-button.bag-btn::part(base) {
+  background-color: var(--ash-grey-c5);
+}
+
+wa-button.tool-btn::part(base) {
+  background-color: var(--tropical-teal-c6);
 }

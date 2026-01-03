@@ -75,12 +75,7 @@ wa-button.button-light::part(base){
 wa-button.button-dark::part(base){
     background: #564dac;
 }
-.latest-section-btn{
-    width: 90%;
-    grid-column: span 3;
-    margin: 0 auto;
-    z-index: 1;
-}
+
 /* Blog and Events section */
 .blog-event-container{
     display: grid;

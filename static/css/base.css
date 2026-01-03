@@ -20,8 +20,7 @@ body {
 }
 body {
   display: flex;
-  flex-direction: column;
-  
+  flex-direction: column;  
 }
 main {
   flex: 1; 
@@ -42,9 +41,9 @@ p {
   font-family: var(--content-font);
 }
 section {
-  margin-bottom: 15rem;
+  /* margin-bottom: 15rem; */
   max-width: 900px;
-  margin: 0 auto;
+  margin: 5rem auto;
 }
 .navbar {
   font-family: var(--title-font);
@@ -82,7 +81,17 @@ wa-button.nav-btn::part(base):active {
 body {
   background-color: #d6d5ee;
 }
-
+/* .latest-additions-container{
+  display:grid;
+  grid-template-columns: auto auto auto;
+} */
+ /* Latest Additions Responsive Grid */
+.latest-additions .wa-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--min-column-size, 200px)), 1fr));
+  gap: var(--wa-spacing-2x-large, 2rem);
+  margin: 2rem 2rem;
+}
 wa-button.latest-section-btn::part(base) {
   display: flex;
   justify-content: center;
@@ -176,6 +185,12 @@ wa-card::part(base) {
   align-items: center;
   text-align: center;
 }
+.latest-section-btn{
+    width: 90%;
+    grid-column: 1 / -1; /* Span all columns */
+    margin: 0 auto;
+    z-index: 1;
+}
 wa-button.footer-btn::part(base) {
   background-color: #a560b2;
   color: #000;
@@ -191,3 +206,5 @@ wa-button.footer-btn::part(base) {
     gap: 2rem;
   }
 }
+
+

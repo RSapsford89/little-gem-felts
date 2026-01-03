@@ -5,35 +5,36 @@
 {% endblock extra_css %}
 
 {% comment %} The latest additions section is pulled from layout.html {% endcomment %}
+{% block titles %}
+<h1>Welcome to the Shop</h1>
+{% endblock titles %}
 {% block content %}
 <section class="product-section">
-    <h1>Welcome to the Shop</h1>
     <div class="shop-filter">
         <div class="category-change">
 
         </div>
         <div class="category-change">
-            <wa-button size='small' class='round-btn'>All</wa-button>
+            <wa-button size='small' class='round-btn all-btn'>All</wa-button>
         </div>
         <div class="category-change">
-            <wa-button size='small' class='round-btn'>Kits</wa-button>
+            <wa-button size='small' class='round-btn kit-btn'>Kits</wa-button>
         </div>
         <div class="category-change">
-            <wa-button size='small' class='round-btn'>Lamps</wa-button>
+            <wa-button size='small' class='round-btn lamp-btn'>Lamps</wa-button>
         </div>
         <div class="category-change">
-            <wa-button size='small' class='round-btn'>Boxes</wa-button>
+            <wa-button size='small' class='round-btn box-btn'>Boxes</wa-button>
         </div>
         <div class="category-change">
-            <wa-button size='small' class='round-btn'>Bags</wa-button>
+            <wa-button size='small' class='round-btn bag-btn'>Bags</wa-button>
         </div>
         <div class="category-change">
-            <wa-button size='small' class='round-btn'>Tools</wa-button>
+            <wa-button size='small' class='round-btn tool-btn'>Tools</wa-button>
         </div>
-        <div class="category-change">
-            <wa-input placeholder='Filter' size='small'>
-                <wa-button size='small' class='round-btn'>find</wa-button>
-            </wa-input>
+        <div class="filter-container">
+            <wa-input placeholder='Filter' size='small'></wa-input>
+            <wa-button size='small' class='round-btn'>🔎</wa-button>
         </div>
     </div>
     <div class="store-container">
