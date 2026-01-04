@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/store.css' %}">
+{% endblock extra_css %}
+{%block latestAdditions%}
+{%endblock latestAdditions%}
+{% comment %} The latest additions section is pulled from layout.html {% endcomment %}
+{% block titles %}
+<h1>Product details</h1>
+{% endblock titles %}
+{% block content %}
+<p>{{product.main_category}}...{{product.sub_category}}</p>
+<section class="product-section">
+    <div class="store-container">
+        <div class="wa-grid wa-gap-2" style="--min-column-size: 200px;">
+            <div class="title">
+                <h2>{{product.name}}</h2>
+            </div>
+            <div class="images">
+                Images go here
+            </div>
+            <div class="description">
+                <p>
+                    {{product.description}}
+                    <span><strong>{{product.price}}</strong></span>
+                </p>                
+            </div>
+
+            <!-- <div>
+                <wa-card class="card-overview">
+                <img slot="media" src="{{ item.images.first.image.url}}" alt="" />
+                <h3>{{item.name}}</h3>
+                <p>{{item.description}}</p>
+                <wa-button size='large' class='footer-btn'  variant="brand" pill><i class="fa-solid fa-bag-shopping"></i>£ {{item.price}}</wa-button>
+                </wa-card>
+            </div> -->
+            
+        </div>
+    </div>
+</section>
+{% endblock content  %}
