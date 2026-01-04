@@ -7,7 +7,8 @@ def all_products(request):
     """
     Docstring for all_products
     Retrieve all products from Product Table and filter
-    if the filter input has been submitted.
+    if the filter input has been submitted. Show main_category
+    items if buttons are pressed.
     Tutorial adapted: https://www.makeuseof.com/add-search-functionality-to-django-apps/ 
     :param request: Description
     """
