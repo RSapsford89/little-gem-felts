@@ -15,26 +15,28 @@
 
         </div>
         <div class="category-change">
-            <wa-button size='small' class='round-btn all-btn'>All</wa-button>
+            <wa-button size='small' class='round-btn all-btn' href="?category=all">All</wa-button>
         </div>
         <div class="category-change">
-            <wa-button size='small' class='round-btn kit-btn'>Kits</wa-button>
+            <wa-button size='small' class='round-btn kit-btn' href="?category=kit">Kits</wa-button>
         </div>
         <div class="category-change">
-            <wa-button size='small' class='round-btn lamp-btn'>Lamps</wa-button>
+            <wa-button size='small' class='round-btn lamp-btn' href="?category=lamp">Lamps</wa-button>
         </div>
         <div class="category-change">
-            <wa-button size='small' class='round-btn box-btn'>Boxes</wa-button>
+            <wa-button size='small' class='round-btn box-btn'href="?category=box">Boxes</wa-button>
         </div>
         <div class="category-change">
-            <wa-button size='small' class='round-btn bag-btn'>Bags</wa-button>
+            <wa-button size='small' class='round-btn bag-btn'href="?category=bag">Bags</wa-button>
         </div>
         <div class="category-change">
-            <wa-button size='small' class='round-btn tool-btn'>Tools</wa-button>
+            <wa-button size='small' class='round-btn tool-btn'href="?category=tool">Tools</wa-button>
         </div>
         <div class="filter-container">
-            <wa-input placeholder='Filter' size='small'></wa-input>
-            <wa-button size='small' class='round-btn'>🔎</wa-button>
+            <form action="{% url 'store:store' %}" method="get">
+                <wa-input placeholder='Filter' size='small' type='text' name='filter_input' value="{{filter_input}}"></wa-input>
+                <button type="submit" class="search-btn">🔎</button>
+            </form>
         </div>
     </div>
     <div class="store-container">
