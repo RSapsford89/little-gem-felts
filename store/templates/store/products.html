@@ -44,11 +44,11 @@
             {% for item in products %}
             <div>
                 <wa-card class="card-overview">
-                <img slot="media" src="{{ item.images.first.image.url}}" alt="" />
-                <h3>{{item.name}}</h3>
-                <p>{{item.description}}</p>
-                <wa-button size='large' class='footer-btn'  variant="brand" pill><i class="fa-solid fa-bag-shopping"></i>£ {{item.price}}</wa-button>
-                <wa-button size='large' class='footer-btn' href="{% url 'store:product_detail' item.pk %}" variant="brand" pill>read more</wa-button>
+                    <img slot="media" src="{{ item.images.first.image.url}}" alt="" />
+                    <h3>{{item.name}}</h3>
+                    <p>{{item.description}}</p>
+                    <wa-button size='small' class='footer-btn' href="{% url 'store:product_detail' item.pk %}" variant="brand" pill><i class="fa-solid fa-bag-shopping"></i>£ {{item.price}}</wa-button>
+                    {% comment %} <wa-button size='small' class='footer-btn' href="{% url 'store:product_detail' item.pk %}" variant="brand" pill>read more</wa-button> {% endcomment %}
                 </wa-card>
             </div>
             {% endfor %}
