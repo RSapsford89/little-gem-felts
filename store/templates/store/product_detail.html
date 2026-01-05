@@ -26,15 +26,13 @@
                     <span><strong>{{product.price}}</strong></span>
                 </p>                
             </div>
-
-            <!-- <div>
-                <wa-card class="card-overview">
-                <img slot="media" src="{{ item.images.first.image.url}}" alt="" />
-                <h3>{{item.name}}</h3>
-                <p>{{item.description}}</p>
-                <wa-button size='large' class='footer-btn'  variant="brand" pill><i class="fa-solid fa-bag-shopping"></i>£ {{item.price}}</wa-button>
-                </wa-card>
-            </div> -->
+            <div class="add-to-basket">
+                <form action="{% url 'basket:add_to_basket' product.id %}" method='POST'>
+                    {% csrf_token %}
+                    <input type="number" name="quantity" id="id_quantity" max="{{product.stock_level}}">
+                </form>
+            </div>
+            
             
         </div>
     </div>

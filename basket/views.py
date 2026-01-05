@@ -1,3 +1,25 @@
-from django.shortcuts import render
-
+from django.shortcuts import render, get_object_or_404, redirect
+from store.models import Product  
 # Create your views here.
+
+def add_to_basket(request, product_id):
+    """
+    Docstring for add_to_basket
+    When a user clicks on 'add' the basket is updated
+    :param request: Description
+    :param product_id: from prodduct_detail page 
+    """
+    if request.method == 'POST':
+        product = get_object_or_404(Product, pk=product_id)
+        quantity = int(request.POST.get('quantity'))
+        basket = request.session.get('basket', {})
+        if product.stock_level >= quantity:
+            if product_id in list(basket.keys()):
+                basket[product_id] += quantity
+    else:
+        return(405)
+    
+    print(basket)
+    # redirect_url = request.POST.get('')
+    return redirect('/')
+
