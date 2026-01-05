@@ -31,6 +31,7 @@ class Product(models.Model):
     sub_category = models.CharField(max_length=200, blank=True, null=True)
     stock_level = models.IntegerField(default=0, blank=False, null=False)
     delivery_cost = models.DecimalField(max_digits=5, decimal_places=2)
+    promoted = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

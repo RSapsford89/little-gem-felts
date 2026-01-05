@@ -18,10 +18,10 @@ def all_products(request):
     sub_category = None
     
     if category.lower() != "all":
-        products = products.filter(main_category__iexact=category)
+        products = products.filter(main_category__name__icontains=category)
 
     if filter_query:
-        products = products.filter(Q(name__icontains=filter_query) | Q(main_category__icontains=filter_query) | Q(description__icontains=filter_query))
+        products = products.filter(Q(name__icontains=filter_query) | Q(main_category__name__icontains=filter_query) | Q(description__icontains=filter_query))
 
     context = {
         'products':products,
