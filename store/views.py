@@ -13,6 +13,7 @@ def all_products(request):
     :param request: Description
     """
     products = Product.objects.all()
+    promoted_products = Product.objects.filter(promoted=True)
     filter_query = request.GET.get("filter_input","").strip()
     category = request.GET.get("category","").strip()
     sub_category = None

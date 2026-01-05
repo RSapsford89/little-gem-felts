@@ -54,33 +54,23 @@
       <section class="latest-additions">
         <h2>Latest Additions</h2>
         <div class="wa-grid wa-gap-2" style="--min-column-size: 200px;">
+          {% for product in promoted_products %}
           <div>
             <wa-card class="card-overview">
-              <img slot="media" src="https://images.unsplash.com/photo-1559209172-0ff8f6d49ff7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80" alt="A kitten sits patiently between a terracotta pot and decorative grasses." />
-              <h3>Article Title</h3>
-              <p>Descriptive slug</p>
-              <wa-button size='small' class='footer-btn'  variant="brand" pill><i class="fa-solid fa-bag-shopping"></i> Shop</wa-button>
+              {% if product.images.first %}
+              <img slot="media" src="{{ product.images.first.image.url }}" alt="{{ product.name }}" />
+              {% else %}
+              <img slot="media" src="https://via.placeholder.com/500x300?text=No+Image" alt="{{ product.name }}" />
+              {% endif %}
+              <h3>{{ product.name }}</h3>
+              <p>£{{ product.price }}</p>
+              <wa-button size='small' class='footer-btn' variant="brand" pill href="{% url 'store:product_detail' product.pk %}"><i class="fa-solid fa-bag-shopping"></i> Shop</wa-button>
             </wa-card>
           </div>
-
-          <div>
-            <wa-card class="card-overview">
-              <img slot="media" src="https://images.unsplash.com/photo-1559209172-0ff8f6d49ff7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80" alt="A kitten sits patiently between a terracotta pot and decorative grasses." />
-              <h3>Article Title</h3>
-              <p>Descriptive slug</p>
-              <wa-button size='small' class='footer-btn'  variant="brand" pill><i class="fa-solid fa-bag-shopping"></i> Shop</wa-button>
-            </wa-card>
-          </div>
-
-          <div>      
-            <wa-card class="card-overview">
-              <img slot="media" src="https://images.unsplash.com/photo-1559209172-0ff8f6d49ff7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80" alt="A kitten sits patiently between a terracotta pot and decorative grasses." />
-              <h3>Article Title</h3>
-              <p>Descriptive slug</p>
-              <wa-button size='small' class='footer-btn'  variant="brand" pill><i class="fa-solid fa-bag-shopping"></i> Shop</wa-button>
-            </wa-card>
-          </div>
-          <wa-button size="large" class="latest-section-btn wa-span-grid" variant="brand" pill>Shop All</wa-button>
+          {% empty %}
+          <p>No promoted products to display.</p>
+          {% endfor %}
+          <wa-button size="large" class="latest-section-btn wa-span-grid" variant="brand" pill href="{% url 'store:store' %}">Shop All</wa-button>
         </div>
       </section>
       {% endblock latestAdditions %}
