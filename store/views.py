@@ -13,7 +13,7 @@ def all_products(request):
     :param request: Description
     """
     products = Product.objects.all()
-    promoted_products = Product.objects.filter(promoted=True)
+    promoted_products = promoted_products = Product.objects.filter(promoted=True).prefetch_related('images')[:3]
     filter_query = request.GET.get("filter_input","").strip()
     category = request.GET.get("category","").strip()
     sub_category = None
@@ -26,6 +26,7 @@ def all_products(request):
 
     context = {
         'products':products,
+        'promoted_products':promoted_products,
         'filter_input':filter_query,
         'category':category,
                }
