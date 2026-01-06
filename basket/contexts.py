@@ -22,24 +22,24 @@ def basket_contents(request):
         total += product_total
 
         if product.delivery_cost > delivery:
-            delivery =  product.delivery_cost        
+            delivery = product.delivery_cost        
 
         basket_items.append({
             'product_id': product_id,
-            'quantity':quantity,
-            'product':product,
-            'product_count':product_count,
-            'total':total,
+            'quantity': quantity,
+            'product': product,
+            'product_count': product_count,
+            'total': total,
         })
     grand_total = total + delivery
         # subtotal += (item.cost * qty)
         # for decimal qauntize: https://pythonguides.com/python-print-2-decimal-places/
     return {
-        'basket_items':basket_items,
-        'product_count':product_count,
-        'total':total.quantize(Decimal('0.01')),
-        'delivery':delivery.quantize(Decimal('0.01')),
-        'grand_total':grand_total.quantize(Decimal('0.01')),
+        'basket_items': basket_items,
+        'product_count': product_count,
+        'total': total.quantize(Decimal('0.01')),
+        'delivery': delivery.quantize(Decimal('0.01')),
+        'grand_total': grand_total.quantize(Decimal('0.01')),
     }
 
 

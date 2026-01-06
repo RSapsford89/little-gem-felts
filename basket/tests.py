@@ -13,7 +13,7 @@ class BasketTestCase(TestCase):
         cls.category = Category.objects.create(
             name='test',
         )
-        cls.product=Product.objects.create(
+        cls.product = Product.objects.create(
             name='Felted Bag',
             description='A beautiful handmade felted bag',
             price=Decimal('25.99'),
@@ -22,7 +22,15 @@ class BasketTestCase(TestCase):
             main_category=cls.category,
             promoted=False
         )
-
+        cls.product_single_stock = Product.objects.create(
+            name='Felt Kit',
+            description='Felt kit of sheep at sunset',
+            price=Decimal('28.00'),
+            stock_level=2,
+            delivery_cost=Decimal('3.00'),
+            main_category=cls.category,
+            promoted=False
+        )
 
     def tearDown(self):
         return super().tearDown()
@@ -54,6 +62,7 @@ class AddToBasketTest(BasketTestCase):
         the basket is empty
         when the user adds an item in stock
         then the item should be added to the basket
+        and a success message should be displayed
         """
         product = self.product
         quantity =1
@@ -81,4 +90,35 @@ class AddToBasketTest(BasketTestCase):
         basket_item = response.context['basket_items'][0]
         self.assertEqual(basket_item['product'].id, product.id)
         self.assertEqual(basket_item['quantity'], quantity)
-        self.assertEqual(basket_item['product_total'], Decimal('29.49'))
+        self.assertEqual(basket_item['total'], Decimal('25.99'))
+
+    def AddMultipleItems(self):
+        """
+        When the basket is empty
+        when the user adds 2 in stock items
+        then both items should be in the basket
+        totals should be for both items
+        """
+        product = self.product
+        product2 = self.product_single_stock
+        quantity = 1
+        quantity2 = 1
+
+        # the first item is added
+        self.client.post(
+            reverse('basket:add_to_basket', args=[product.id]),
+            data={'quantity': quantity}
+        )
+        #the second item is added
+        self.client.post(
+            reverse('basket:add_to_basket', args=[product2.id]),
+            data={'quantity': quantity2}
+        )
+
+        response = self.client.get(reverse('basket:view_basket'))
+
+        session = self.client.session
+        basket = session.get('basket',{})
+        # test the item id's and qty are present
+        self.assertIn(str(product.id), basket)
+        self.assertIn(str(product2.id), basket)
