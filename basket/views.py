@@ -15,8 +15,10 @@ def add_to_basket(request, product_id):
         basket = request.session.get('basket', {}) # get session basket
 
         if product.stock_level >= quantity:
-            if product_id in list(basket.keys()):
-                basket[product_id] += quantity
+            if str(product_id) in basket:
+                basket[str(product_id)] += quantity
+            else:
+                basket[str(product_id)] = quantity
                 
     else:
         return ()
@@ -25,7 +27,7 @@ def add_to_basket(request, product_id):
     request.session.modified=True
     print(basket)
     # redirect_url = request.POST.get('')
-    return redirect('')
+    return redirect('basket/basket.html')
 
 def update_basket(request):
     """

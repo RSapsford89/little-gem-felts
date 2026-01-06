@@ -9,22 +9,19 @@ from store.models import Product, Category
 class BasketTestCase(TestCase):
 
     @classmethod
-    def setUpTestData(self):
-        self.category = Category.objects.create(
+    def setUpTestData(cls):
+        cls.category = Category.objects.create(
             name='test',
         )
-        Product.objects.create(
-            id=0,
+        cls.product=Product.objects.create(
             name='Felted Bag',
             description='A beautiful handmade felted bag',
             price=Decimal('25.99'),
             stock_level=10,
             delivery_cost=Decimal('3.50'),
-            main_category=self.category,
+            main_category=cls.category,
             promoted=False
         )
-    
-    
 
 
     def tearDown(self):
@@ -49,8 +46,8 @@ class AddToBasketTest(BasketTestCase):
         self.assertEqual(response.context['product_count'],0)
         self.assertEqual(response.context['basket_items'],[])
         self.assertEqual(response.context['total'],0)
-        self.assertEqual(response.context['delivery'],3.50)
-        self.assertEqual(response.context['grand_total'],3.50)
+        self.assertEqual(response.context['delivery'],0)
+        self.assertEqual(response.context['grand_total'],0)
 
     def TestAddItem(self):
         """
@@ -58,9 +55,21 @@ class AddToBasketTest(BasketTestCase):
         when the user adds an item in stock
         then the item should be added to the basket
         """
-        product_id = self.setUpTestData.id
-        quantity =1
+        product = self.product
+        quantity =2
+
+        add_item = self.client.post(
+            reverse('basket:add_to_basket', args=[product.id]),
+            data={'quantity':quantity}
+        )
 
         response = self.client.get(reverse('basket:view_basket'))
 
+        session = self.client.session
+        basket = session.get('basket',{})
+
         self.assertNotEqual(response.context['basket_items'],[])
+        self.assertEqual(response.context['total'],Decimal('51.98'))
+        self.assertEqual(response.context['delivery'],3.5)
+        self.assertEqual(response.context['grand_total'],Decimal('55.48'))
+        self.assertEqual(response.context['product_count'],2)
