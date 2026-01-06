@@ -56,7 +56,7 @@ class AddToBasketTest(BasketTestCase):
         then the item should be added to the basket
         """
         product = self.product
-        quantity =2
+        quantity =1
 
         add_item = self.client.post(
             reverse('basket:add_to_basket', args=[product.id]),
@@ -67,9 +67,18 @@ class AddToBasketTest(BasketTestCase):
 
         session = self.client.session
         basket = session.get('basket',{})
+        self.assertIn(str(product.id),basket)
+        self.assertEqual(basket[str(product.id)],  quantity)
 
-        self.assertNotEqual(response.context['basket_items'],[])
-        self.assertEqual(response.context['total'],Decimal('51.98'))
-        self.assertEqual(response.context['delivery'],3.5)
-        self.assertEqual(response.context['grand_total'],Decimal('55.48'))
-        self.assertEqual(response.context['product_count'],2)
+        # Test 2: Check CONTEXT basket (processed data from context processor)
+        self.assertNotEqual(response.context['basket_items'], [])
+        self.assertEqual(response.context['total'], Decimal('25.99'))
+        self.assertEqual(response.context['delivery'], Decimal('3.50'))
+        self.assertEqual(response.context['grand_total'], Decimal('29.49'))
+        self.assertEqual(response.context['product_count'], 1)
+        
+        # Test 3: Verify basket item details
+        basket_item = response.context['basket_items'][0]
+        self.assertEqual(basket_item['product'].id, product.id)
+        self.assertEqual(basket_item['quantity'], quantity)
+        self.assertEqual(basket_item['product_total'], Decimal('29.49'))
