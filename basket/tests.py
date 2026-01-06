@@ -119,6 +119,10 @@ class AddToBasketTest(BasketTestCase):
 
         session = self.client.session
         basket = session.get('basket',{})
+        print(f"basket contents:{basket}")
+        print(f"context basket contents:{response.context['basket_items']}")
         # test the item id's and qty are present
         self.assertIn(str(product.id), basket)
         self.assertIn(str(product2.id), basket)
+        self.assertEqual(basket[str(product.id)], quantity)
+        self.assertEqual(basket[str(product2.id)], quantity2)
