@@ -4,6 +4,17 @@
 {% block content %}
 <section class="basket-section">
     <h1>Welcome to the bag page</h1>
-
+    {% if basket_items %}
+        <wa-card orientation="horizontal" class="horizontal-card" >
+            {% for item in basket_items %}
+                <h3>{{item.product.name}}</h3>
+                {% with primary_img=item.product.images.all|first %}
+                    {% if primary_img %}
+                        <img slot="media" size="200px" src="{{ primary_img.image.url }}" alt="{{ item.product.name }}">
+                    {% endif %}
+                {% endwith %}
+            {% endfor %}
+        </wa-card>
+    {% endif %}
 </section>
 {% endblock content %}

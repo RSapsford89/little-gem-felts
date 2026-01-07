@@ -32,7 +32,7 @@ def add_to_basket(request, product_id):
     request.session.modified=True
     print(basket)
     # redirect_url = request.POST.get('')
-    return redirect('basket/basket.html')
+    return redirect('basket:view_basket')
 
 def update_basket(request):
     """
@@ -45,4 +45,6 @@ def remove_basket(request):
 
 
 def view_basket(request):
+    basket = request.session.get('basket',{})
+    print(basket)
     return render(request,'basket/basket.html')

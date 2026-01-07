@@ -30,6 +30,7 @@
                 <form action="{% url 'basket:add_to_basket' product.id %}" method='POST'>
                     {% csrf_token %}
                     <input type="number" name="quantity" id="id_quantity" max="{{product.stock_level}}">
+                    <button >Add</button>
                 </form>
             </div>
             
