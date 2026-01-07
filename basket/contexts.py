@@ -1,6 +1,9 @@
 from django.shortcuts import get_object_or_404
-from store.models import Product
 from decimal import Decimal
+from django.contrib import messages
+from store.models import Product
+
+
 def basket_contents(request):
     """
     Docstring for basket.contexts

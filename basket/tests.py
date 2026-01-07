@@ -1,5 +1,6 @@
 from django.test import TestCase, Client
 from django.urls import reverse
+from django.contrib.messages import get_messages
 from decimal import Decimal
 from store.models import Product, Category
 
@@ -28,6 +29,15 @@ class BasketTestCase(TestCase):
             price=Decimal('28.00'),
             stock_level=2,
             delivery_cost=Decimal('3.00'),
+            main_category=cls.category,
+            promoted=False
+        )
+        cls.product_no_stock = Product.objects.create(
+            name='lamp',
+            description='I like lamp',
+            price=Decimal('75.00'),
+            stock_level=0,
+            delivery_cost=Decimal('5.00'),
             main_category=cls.category,
             promoted=False
         )
@@ -126,3 +136,43 @@ class AddToBasketTest(BasketTestCase):
         self.assertIn(str(product2.id), basket)
         self.assertEqual(basket[str(product.id)], quantity)
         self.assertEqual(basket[str(product2.id)], quantity2)
+
+        # qty 1 cost 25.99 del 3
+        # qty 1 cost 28 del 3.50 <- highest used
+        # total 53.99
+        # grand total 57.49
+        self.assertEqual(response.context['total'], Decimal('53.99'))
+        self.assertEqual(response.context['delivery'], Decimal('3.50'))
+        self.assertEqual(response.context['grand_total'], Decimal('57.49'))
+        self.assertEqual(response.context['product_count'], 2)
+
+    def oosItem(self):
+        """
+        when an item is out of stock
+        then a user tries to add to basket
+        the item is not added 
+        and a message is displayed notifying OOS
+        """
+        # id = 3
+        product = self.product_no_stock
+        quantity = 1
+
+        self.client.post(
+            reverse('basket:add_to_basket', args=[product.id]),
+            data = {'quantity': quantity}
+        )
+        
+        response = self.client.get(reverse('basket:view_basket'))
+        session = self.client.session
+        messages = list(get_messages(response.wsgi_request))
+        basket = session.get('basket',{})
+
+        print(messages)
+        print(f"basket contents:{basket}")
+        print(f"context basket contents:{response.context['basket_items']}")
+
+        self.assertEqual(str(messages[0]), f'This item only has {product.stock_level} left')
+        # self.assertIn(str(product.id), basket)
+        self.assertIsNot(str(product.id), basket)
+        # self.assertEqual(basket[str(product.id)], quantity)
+

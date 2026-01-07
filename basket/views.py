@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
 from store.models import Product  
 # Create your views here.
 
@@ -17,11 +18,15 @@ def add_to_basket(request, product_id):
         if product.stock_level >= quantity:
             if str(product_id) in basket:
                 basket[str(product_id)] += quantity
+                messages.success(request,f'Added {quantity} of {product.name} to the basket')
             else:
                 basket[str(product_id)] = quantity
-                
+                messages.success(request,f'Added {quantity} of {product.name} to the basket')
+        else:
+            messages.error(request,f'This item only has {product.stock_level} left')
     else:
-        return ()
+
+        return redirect('store:store')
     
     request.session['basket'] = basket
     request.session.modified=True
