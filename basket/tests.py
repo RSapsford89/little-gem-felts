@@ -176,3 +176,10 @@ class AddToBasketTest(BasketTestCase):
         self.assertIsNot(str(product.id), basket)
         # self.assertEqual(basket[str(product.id)], quantity)
 
+    def qtyInBasketGreaterThanStock(self):
+        """
+        when an item in the basket > remaining stock
+        then the user tries to add additional 
+        the item qty is updated to == remaining stock
+        
+        """

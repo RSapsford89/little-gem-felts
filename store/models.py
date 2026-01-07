@@ -36,6 +36,13 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+    # suggestion by AI - needed to return the object
+    # with primary_img or first image and not the string
+    # so that it can be used in the basket view easily
+    @property
+    def primary_image(self):
+        """Returns the primary image or first image if no primary is set"""
+        return self.images.filter(primary_image=True).first() or self.images.first()
 
 class Images(models.Model):
     product = models.ForeignKey(Product, on_delete= models.CASCADE, related_name='images')

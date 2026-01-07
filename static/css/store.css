@@ -65,3 +65,19 @@ wa-button.bag-btn::part(base) {
 wa-button.tool-btn::part(base) {
   background-color: var(--tropical-teal-c6);
 }
+/* Basket styles */
+.horizontal-card-grid{
+  grid-template-columns: 1fr;
+  
+  width: 100%;
+}
+.card-content{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin: 2rem;
+  gap: 2rem;
+}
+.horizontal-card-grid img{
+  max-width: 200px;
+}

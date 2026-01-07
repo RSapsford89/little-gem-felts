@@ -1,20 +1,42 @@
 {% extends "layout.html" %}
 {% load static %}
-
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/store.css' %}">
+{% endblock extra_css %}
 {% block content %}
 <section class="basket-section">
-    <h1>Welcome to the bag page</h1>
-    {% if basket_items %}
-        <wa-card orientation="horizontal" class="horizontal-card" >
-            {% for item in basket_items %}
-                <h3>{{item.product.name}}</h3>
-                {% with primary_img=item.product.images.all|first %}
-                    {% if primary_img %}
-                        <img slot="media" size="200px" src="{{ primary_img.image.url }}" alt="{{ item.product.name }}">
-                    {% endif %}
-                {% endwith %}
-            {% endfor %}
-        </wa-card>
+    {% if user.is_authenticated %}
+    <h1>{{user.username}}'s basket:</h1>
+    {% else %}
+    <h1>Your Basket</h1>
     {% endif %}
+    <div class="wa-grid horizontal-card-grid">
+        {% if basket_items %}
+            {% for item in basket_items %}
+                <div>
+                    <wa-card orientation="horizontal" class="horizontal-card" >
+                        {% if item.product.primary_image %}
+                        <img slot="media" src="{{ item.product.primary_image.image.url }}" alt="{{ item.product.name }}">
+                        {% endif %}
+                        <div class=" card-content">
+                            <div>
+                                <h3>{{item.product.name}}</h3>
+
+                            </div>
+                            <div>
+                                <p>Price: £{{item.product.price}}</p>
+
+                            </div>
+                            <div>
+                                <p>Quantity: {{item.quantity}}</p>                    
+
+                            </div>
+                        </div>
+                    </wa-card>
+                </div>
+            {% endfor %}
+                <p>Subtotal: £{{item.total}}</p>
+        {% endif %}
+    </div>
 </section>
 {% endblock content %}
