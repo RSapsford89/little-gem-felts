@@ -41,6 +41,16 @@ class BasketTestCase(TestCase):
             main_category=cls.category,
             promoted=False
         )
+        cls.product_ = Product.objects.create(
+            name='lamp',
+            description='I like lamp',
+            price=Decimal('75.00'),
+            stock_level=0,
+            delivery_cost=Decimal('5.00'),
+            main_category=cls.category,
+            promoted=False
+        )
+
 
     def tearDown(self):
         return super().tearDown()
@@ -179,7 +189,19 @@ class AddToBasketTest(BasketTestCase):
     def qtyInBasketGreaterThanStock(self):
         """
         when an item in the basket > remaining stock
-        then the user tries to add additional 
+        then the user tries to add additional item
         the item qty is updated to == remaining stock
+        and a message informs the user there is 'only <x> stock'
         
         """
+
+        # add the item once
+        self.client.post(
+            reverse('basket:add_to_basket', args=[product.id]),
+            data = {'quantity': quantity}
+        )
+        # add the same item again (exceeding stock levels)
+        self.client.post(
+            reverse('basket:add_to_basket', args=[product.id]),
+            data = {'quantity': quantity}
+        )
