@@ -45,7 +45,7 @@ class BasketTestCase(TestCase):
             name='lamp',
             description='I like lamp',
             price=Decimal('75.00'),
-            stock_level=1,
+            stock_level=3,
             delivery_cost=Decimal('5.00'),
             main_category=cls.category,
             promoted=False
@@ -193,35 +193,44 @@ class AddToBasketTest(BasketTestCase):
         
         """
         product = self.product_increment
-        quantity = 1
+        quantity = 2
+
         # add the item once
         self.client.post(
             reverse('basket:add_to_basket', args=[product.id]),
             data = {'quantity': quantity}
         )
+
         session = self.client.session
         basket = session.get('basket',{})
         print(f"First basket contents:{basket}")
+        firstResponse = self.client.get(reverse('basket:view_basket'))
+        firstMessages = list(get_messages(firstResponse.wsgi_request))
+        self.assertEqual(len(firstMessages), 1, "Should 1 message after first addition")
+        self.assertEqual(str(firstMessages[0]), f'Added {quantity} of {product.name} to the basket')
+        
+        print("---end first section---")
+
         # add the same item again (exceeding stock levels)
         self.client.post(
             reverse('basket:add_to_basket', args=[product.id]),
             data = {'quantity': quantity}
         )
 
-        response = self.client.get(reverse('basket:view_basket'))
         session = self.client.session
-        messages = list(get_messages(response.wsgi_request))
         basket = session.get('basket',{})
+        response = self.client.get(reverse('basket:view_basket'))
+        messages = list(get_messages(response.wsgi_request))
 
-        print(messages)
+        print(f'Second messages: {messages}')
         print(f"Second basket contents:{basket}")
-        print(f"There is {product.stock_level} stock left.")
         print(f"context basket contents:{response.context['basket_items']}")
 
         # check content of session bag
         # check content of context bag
         # check messages
-        self.assertEqual(str(messages[0]), f'This item only has {product.stock_level} left')
-        # self.assertIn(str(product.id), basket)
-        self.assertIsNot(str(product.id), basket)
-        # self.assertEqual(basket[str(product.id)], quantity)
+        self.assertIn(str(product.id), basket)
+        self.assertEqual(basket[str(product.id)], product.stock_level, f"Basket should be capped at stock level {product.stock_level}")
+        self.assertLessEqual(basket[str(product.id)], product.stock_level, f"Basket quantity {basket[str(product.id)]} exceeds stock level {product.stock_level}")        
+        # Check the error message is displayed
+        self.assertEqual(str(messages[1]), f'Only {product.stock_level} of {product.name} is available. {product.stock_level} has been updated.')

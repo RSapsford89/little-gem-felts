@@ -15,15 +15,19 @@ def add_to_basket(request, product_id):
         quantity = int(request.POST.get('quantity')) # get qty from  page, cast
         basket = request.session.get('basket', {}) # get session basket
 
-        if product.stock_level >= quantity:
-            if str(product_id) in basket:
-                basket[str(product_id)] += quantity
-                messages.success(request,f'Added {quantity} of {product.name} to the basket')
-            else:
+        if product.stock_level > 0 and quantity <= product.stock_level: # stock is available and adding <= stock available
+            if str(product_id) in basket: # is it in the basket already?
+                if (basket[str(product_id)] + quantity) > product.stock_level: #asking for too much
+                    basket[str(product_id)] = product.stock_level
+                    messages.error(request, f'Only {product.stock_level} of {product.name} is available. {product.stock_level} has been updated.')
+                else: # asking for available amount
+                    basket[str(product_id)] += quantity
+                    messages.success(request, f' {product.name} updated to {quantity}.')
+            else: # it isn't in the basket
                 basket[str(product_id)] = quantity
-                messages.success(request,f'Added {quantity} of {product.name} to the basket')
+                messages.success(request, f'Added {quantity} of {product.name} to the basket')
         else:
-            messages.error(request,f'This item only has {product.stock_level} left')
+            messages.error(request, f'This item only has {product.stock_level} left')
     else:
 
         return redirect('store:store')
