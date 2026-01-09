@@ -41,11 +41,11 @@ class BasketTestCase(TestCase):
             main_category=cls.category,
             promoted=False
         )
-        cls.product_ = Product.objects.create(
+        cls.product_increment = Product.objects.create(
             name='lamp',
             description='I like lamp',
             price=Decimal('75.00'),
-            stock_level=0,
+            stock_level=1,
             delivery_cost=Decimal('5.00'),
             main_category=cls.category,
             promoted=False
@@ -66,7 +66,7 @@ class AddToBasketTest(BasketTestCase):
         the page redirects to basket/basket.html
         the page has no product contents
         """
-        response= self.client.get(reverse('basket:view_basket'))
+        response = self.client.get(reverse('basket:view_basket'))
         
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'basket/basket.html')
@@ -182,9 +182,7 @@ class AddToBasketTest(BasketTestCase):
         print(f"context basket contents:{response.context['basket_items']}")
 
         self.assertEqual(str(messages[0]), f'This item only has {product.stock_level} left')
-        # self.assertIn(str(product.id), basket)
         self.assertIsNot(str(product.id), basket)
-        # self.assertEqual(basket[str(product.id)], quantity)
 
     def qtyInBasketGreaterThanStock(self):
         """
@@ -194,14 +192,36 @@ class AddToBasketTest(BasketTestCase):
         and a message informs the user there is 'only <x> stock'
         
         """
-
+        product = self.product_increment
+        quantity = 1
         # add the item once
         self.client.post(
             reverse('basket:add_to_basket', args=[product.id]),
             data = {'quantity': quantity}
         )
+        session = self.client.session
+        basket = session.get('basket',{})
+        print(f"First basket contents:{basket}")
         # add the same item again (exceeding stock levels)
         self.client.post(
             reverse('basket:add_to_basket', args=[product.id]),
             data = {'quantity': quantity}
         )
+
+        response = self.client.get(reverse('basket:view_basket'))
+        session = self.client.session
+        messages = list(get_messages(response.wsgi_request))
+        basket = session.get('basket',{})
+
+        print(messages)
+        print(f"Second basket contents:{basket}")
+        print(f"There is {product.stock_level} stock left.")
+        print(f"context basket contents:{response.context['basket_items']}")
+
+        # check content of session bag
+        # check content of context bag
+        # check messages
+        self.assertEqual(str(messages[0]), f'This item only has {product.stock_level} left')
+        # self.assertIn(str(product.id), basket)
+        self.assertIsNot(str(product.id), basket)
+        # self.assertEqual(basket[str(product.id)], quantity)
