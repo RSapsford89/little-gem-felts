@@ -3,6 +3,7 @@
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/store.css' %}">
 {% endblock extra_css %}
+{% block latestAdditions %}{% endblock latestAdditions %}
 {% block content %}
 <section class="basket-section">
     {% if user.is_authenticated %}
@@ -10,33 +11,50 @@
     {% else %}
     <h1>Your Basket</h1>
     {% endif %}
-    <div class="wa-grid horizontal-card-grid">
-        {% if basket_items %}
-            {% for item in basket_items %}
-                <div>
-                    <wa-card orientation="horizontal" class="horizontal-card" >
-                        {% if item.product.primary_image %}
-                        <img slot="media" src="{{ item.product.primary_image.image.url }}" alt="{{ item.product.name }}">
-                        {% endif %}
-                        <div class=" card-content">
-                            <div>
-                                <h3>{{item.product.name}}</h3>
-
+    <div class="container" >
+        <div class="horizontal-card-container">
+            {% if basket_items %}
+                {% for item in basket_items %}
+                    <div>
+                        <wa-card orientation="horizontal" class="horizontal-card" >
+                            {% if item.product.primary_image %}
+                                <img slot="media" src="{{ item.product.primary_image.image.url }}" alt="{{ item.product.name }}">
+                            {% endif %}
+                            <div class=" card-content">
+                                <div>
+                                    <h3>{{item.product.name}}</h3>
+                                </div>
+                                <div>
+                                    <p>Price: £{{item.product.price}}</p>
+                                </div>
+                                
+                                <wa-button-group orientation="horizontal">
+                                    <wa-button >
+                                        <wa-icon  name='minus' ></wa-icon>
+                                    </wa-button>
+                                    <wa-input placeholder='{{item.quantity}}'><wa-label slot="start">Qty</wa-label></wa-input>
+                                    <wa-button >
+                                        <wa-icon  name='plus' ></wa-icon>
+                                    </wa-button>
+                                </wa-button-group>
                             </div>
-                            <div>
-                                <p>Price: £{{item.product.price}}</p>
-
-                            </div>
-                            <div>
-                                <p>Quantity: {{item.quantity}}</p>                    
-
-                            </div>
-                        </div>
-                    </wa-card>
+                        </wa-card>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="totals-column">
+            <wa-card>
+                <h3 class='header'>Totals:</h3>
+                <div class="total-contents">
+                    <p>Number of items: <span><strong>{{product_count}}</strong></span></p>
+                    <p>Subtotal: <span><strong>{{total}}</strong></span></p>
+                    <p>Delivery: <span><strong>{{delivery}}</strong></span></p>
+                    <p>Grand Total: <span><strong>{{grand_total}}</strong></span></p>
                 </div>
-            {% endfor %}
-                <p>Subtotal: £{{item.total}}</p>
-        {% endif %}
+                <wa-button>Continue to Payment</wa-button>
+            </wa-card>
+        </div>
     </div>
 </section>
 {% endblock content %}

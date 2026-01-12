@@ -112,7 +112,6 @@ wa-button.round-btn::part(base){
   grid-template-columns: auto 1fr auto;
   align-items: start;
   gap: 2rem;
-  border: solid 1px;
   padding: 2rem;
 }
 

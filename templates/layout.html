@@ -31,7 +31,7 @@
           <wa-button class="nav-btn" pill href="{% url 'blog:blog_list'%}">Blog</wa-button>
         </li>
         <li>
-          <wa-button class="nav-btn" pill>Basket</wa-button>
+          <wa-button class="nav-btn" pill href="{% url 'basket:view_basket'%}">Basket</wa-button>
         </li>
         <li>
           {% if user.is_authenticated %}
