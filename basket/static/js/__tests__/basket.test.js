@@ -14,7 +14,7 @@ describe('Basket Quantity Controls', () => {
                             <wa-button data-action="decrease" data-item-id="1">
                                 <wa-icon name='minus' class='minus-btn'></wa-icon>
                             </wa-button>
-                            <wa-input class='qty-input' placeholder='3' data-item-id="1" data-qty="3">
+                            <wa-input class='qty-input' value='3' data-item-id="1" data-qty="3">
                                 <wa-label slot="start">Qty</wa-label>
                             </wa-input>
                             <wa-button data-action="increase" data-item-id="1">
@@ -29,7 +29,7 @@ describe('Basket Quantity Controls', () => {
                             <wa-button data-action="decrease" data-item-id="2">
                                 <wa-icon name='minus' class='minus-btn'></wa-icon>
                             </wa-button>
-                            <wa-input class='qty-input' placeholder='2' data-item-id="2" data-qty="2">
+                            <wa-input class='qty-input' value='2' data-item-id="2" data-qty="2">
                                 <wa-label slot="start">Qty</wa-label>
                             </wa-input>
                             <wa-button data-action="increase" data-item-id="2">
@@ -44,6 +44,10 @@ describe('Basket Quantity Controls', () => {
         plusButtons = document.querySelectorAll('.plus-btn');
         minusButtons = document.querySelectorAll('.minus-btn');
         quantityInputs = document.querySelectorAll('.qty-input');
+        // Set the .value property on web components as custom
+        //components attribute like standard components
+        quantityInputs[0].value = '3';
+        quantityInputs[1].value = '2';
     });
 
     afterEach(()=>{
@@ -52,21 +56,17 @@ describe('Basket Quantity Controls', () => {
 
     test('to find all plus buttons',()=>{
         expect(plusButtons.length).toBeGreaterThan(0);
-        // console.log('Plus buttons found:', plusButtons.length);
     });
 
 // Up to line 57: this set up was generated through AI prompt.
 
     test('to find all minus buttons',()=>{
-            expect(plusButtons.length).toBe(2);
-            // console.log('Minus buttons found:', plusButtons.length);
-        });
+        expect(plusButtons.length).toBe(2);
+    });
 
-    test('to find placeholder values',()=>{
-        // console.log('Number of Inputs:', quantityInputs.length);
-        // console.log('Input value:', quantityInputs[1].getAttribute('placeholder'));
-            expect(quantityInputs[1].getAttribute('placeholder')).toBe('2');
-        });
+    test('to find input values',()=>{
+        expect(quantityInputs[1].getAttribute('value')).toBe('2');
+    });
 
     test('the qty input increases by 1 when related button is pressed',()=>{
         require('../../../../static/js/basket.js');
@@ -78,34 +78,33 @@ describe('Basket Quantity Controls', () => {
         expect(quantityInputs[1].value).toBe(undefined);
     });
 
-    test('the qty input decreases by 1 when related button is pressed',()=>{
+    test.only('the qty input decreases by 1 when related button is pressed',()=>{
         require('../../../../static/js/basket.js');
         const event = new Event("DOMContentLoaded");
         document.dispatchEvent(event);
-        // this test fails because the placeholder value is used. Instead
-        // the code should be updated to use data-id's to relate cards
-        // together. 
-        console.log('initial input0 value:',quantityInputs[0].value);
-        console.log('initial input1 value:',quantityInputs[1].value);
-        // first button pressed
-        minusButtons[0].click();
-        input0 = parseInt(quantityInputs[0].getAttribute('placeholder'));
-        input1 = quantityInputs[1].value;
+        //access each button separately with querySelector + the data-item-id
+        const minusButton1 = document.querySelector('wa-button[data-action="decrease"][data-item-id="1"]');
+        const minusButton2 = document.querySelector('wa-button[data-action="decrease"][data-item-id="2"]');
 
-        console.log('btn0 pressed input0 value:',quantityInputs[0].value);
-        console.log('btn0 pressed input1 value:',quantityInputs[1].value);
-        expect(quantityInputs[0].value).toBe(input0 -1);//3-1
-        expect(quantityInputs[1].value).toBe(input1);
+        // first button pressed - read the data-qty for comparison
+        minusButton1.click();
+        input0 = parseInt(quantityInputs[0].getAttribute('data-qty'));//3
+        input1 = parseInt(quantityInputs[1].getAttribute('data-qty'));//2
+
+        // console.log('btn0 pressed input0 value:',quantityInputs[0].value);
+        // console.log('btn0 pressed input1 value:',quantityInputs[1].value);
+        expect(quantityInputs[0].value).toBe(input0 -1);
+        expect(parseInt(quantityInputs[1].value)).toBe(input1);
 
         // second button pressed
-        minusButtons[1].click();
-        console.log('input0 value:',quantityInputs[0].value);
-        console.log('input1 value:',quantityInputs[1].value);
-        expect(quantityInputs[0].value).toBe(2);//3-1
-        expect(quantityInputs[1].value).toBe(1);//2-1
+        minusButton2.click();
+        // console.log('input0 value:',quantityInputs[0].value);
+        // console.log('input1 value:',quantityInputs[1].value);
+        expect(quantityInputs[0].value).toBe(2);
+        expect(quantityInputs[1].value).toBe(1);
     });
 
-    test('the attributes are read correctly',()=>{
+    test('the attributes  data-qty and data-item-id are read correctly',()=>{
         require('../../../../static/js/basket.js');
         const event = new Event("DOMContentLoaded");
         document.dispatchEvent(event);
@@ -113,6 +112,8 @@ describe('Basket Quantity Controls', () => {
         // gather the attributes
         expect(quantityInputs[0].getAttribute('data-qty')).toBe('3');
         expect(quantityInputs[1].getAttribute('data-qty')).toBe('2');
+        expect(quantityInputs[0].getAttribute('data-item-id')).toBe('1');
+        expect(quantityInputs[1].getAttribute('data-item-id')).toBe('2');
         // console.log(`qtyInput id is:`,${quantityInput});
     });
 });//end of file

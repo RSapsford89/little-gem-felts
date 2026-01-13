@@ -5,32 +5,34 @@ document.addEventListener('DOMContentLoaded', function(){
     plusButtons.forEach(button=>{
         button.addEventListener('click', function(e){
             e.preventDefault();
-            const btnAction = button.getAttribute('data-action');
             const btnId = button.getAttribute('data-item-id');
             const quantityInput = document.querySelector(`.qty-input[data-item-id="${btnId}"]`);
             let currentQty = parseInt(quantityInput.getAttribute('data-qty'));
-            currentQty += 1;
-            console.log(currentQty);
-            // incrementDecrement(quantityInput, currentQty);
-            quantityInput.value = currentQty;
+            
+            quantityInput.value = incrementDecrement(true, currentQty);
         });
     });
 
     minusButtons.forEach(button=>{
         button.addEventListener('click', function(e){
             e.preventDefault();
-            const btnAction = button.getAttribute('data-action');
             const btnId = button.getAttribute('data-item-id');
             const quantityInput = document.querySelector(`.qty-input[data-item-id="${btnId}"]`);
             let currentQty = parseInt(quantityInput.getAttribute('data-qty'));
-            currentQty -= 1;
-            console.log(currentQty);
-            // incrementDecrement(quantityInput, currentQty);
-            quantityInput.value = currentQty;
+            
+            console.log(`initial qty is:,${quantityInput.value}`);
+            quantityInput.value = incrementDecrement(false, currentQty);
+            console.log(`sent false, inputValue is, ${quantityInput.value}`);
         });
     });
-
-    function incrementDecrement(qtyInput, currentInputValue){
-        qtyInput.value = currentInputValue;
+    
+    function incrementDecrement(trueFalse, currentQty){
+        if (trueFalse === true){
+            currentQty +=1;
+        }
+        else if(trueFalse === false){
+            currentQty -=1;
+        }
+        return currentQty;
     }
 });
