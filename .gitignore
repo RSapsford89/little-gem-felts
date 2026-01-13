@@ -3,5 +3,5 @@ __pycache__/
 *.pyc
 media/
 *.sqlite3
-
+node_modules/
 db.sqlite3

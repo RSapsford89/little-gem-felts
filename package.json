@@ -1,0 +1,26 @@
+{
+  "name": "little-gem-felts",
+  "version": "1.0.0",
+  "description": "JavaScript tests for Little Gem Felts Django project",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "testMatch": [
+      "**/static/**/__tests__/**/*.test.js",
+      "**/static/**/*.test.js"
+    ],
+    "collectCoverageFrom": [
+      "**/static/js/**/*.js",
+      "!**/static/js/**/*.test.js",
+      "!**/node_modules/**"
+    ]
+  }
+}

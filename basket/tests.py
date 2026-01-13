@@ -234,3 +234,34 @@ class AddToBasketTest(BasketTestCase):
         self.assertLessEqual(basket[str(product.id)], product.stock_level, f"Basket quantity {basket[str(product.id)]} exceeds stock level {product.stock_level}")        
         # Check the error message is displayed
         self.assertEqual(str(messages[1]), f'Only {product.stock_level} of {product.name} is available. {product.stock_level} has been updated.')
+
+class updateBasket(BasketTestCase):
+    def testUpdateInput(self):
+        """
+        when there is an item in the basket
+        the qty input displays the current qty
+        then the user presses the plus button
+        and the input's display is increased by 1
+        and the item qty increases by 1 in the session basket & context
+        """
+
+        product = self.product
+        quantity = 1
+
+        # add the item once
+        self.client.post(
+            reverse('basket:add_to_basket', args=[product.id]),
+            data = {'quantity': quantity}
+        )
+
+        # view the basket
+        response = self.client.get(reverse('basket:view_basket'))
+
+        # unmodifed by button press
+        session = self.client.session
+        basket = session.get('basket',{})
+        print(f"First basket contents:{basket}")
+        firstResponse = self.client.get(reverse('basket:view_basket'))
+        firstMessages = list(get_messages(firstResponse.wsgi_request))
+        self.assertEqual(len(firstMessages), 1, "Should 1 message after first addition")
+        self.assertEqual(str(firstMessages[0]), f'Added {quantity} of {product.name} to the basket')
