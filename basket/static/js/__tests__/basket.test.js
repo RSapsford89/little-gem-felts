@@ -104,4 +104,15 @@ describe('Basket Quantity Controls', () => {
         expect(quantityInputs[0].value).toBe(2);//3-1
         expect(quantityInputs[1].value).toBe(1);//2-1
     });
+
+    test('the attributes are read correctly',()=>{
+        require('../../../../static/js/basket.js');
+        const event = new Event("DOMContentLoaded");
+        document.dispatchEvent(event);
+        const plusButtons = document.querySelectorAll('wa-button[data-action="increase"][data-item-id="1"]');
+        // gather the attributes
+        expect(quantityInputs[0].getAttribute('data-qty')).toBe('3');
+        expect(quantityInputs[1].getAttribute('data-qty')).toBe('2');
+        // console.log(`qtyInput id is:`,${quantityInput});
+    });
 });//end of file
