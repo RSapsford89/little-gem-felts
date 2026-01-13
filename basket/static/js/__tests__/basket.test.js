@@ -8,31 +8,31 @@ describe('Basket Quantity Controls', () => {
         // Setup DOM structure
         document.body.innerHTML = `
             <div class="horizontal-card-container">
-                <div>
+                <div data-basket-item="1">
                     <wa-card>
                         <wa-button-group>
-                            <wa-button>
+                            <wa-button data-action="decrease" data-item-id="1">
                                 <wa-icon name='minus' class='minus-btn'></wa-icon>
                             </wa-button>
-                            <wa-input class='qty-input' placeholder='3'>
+                            <wa-input class='qty-input' placeholder='3' data-item-id="1" data-qty="3">
                                 <wa-label slot="start">Qty</wa-label>
                             </wa-input>
-                            <wa-button>
+                            <wa-button data-action="increase" data-item-id="1">
                                 <wa-icon name='plus' class='plus-btn'></wa-icon>
                             </wa-button>
                         </wa-button-group>
                     </wa-card>
                 </div>
-                <div>
+                <div data-basket-item="2">
                     <wa-card>
                         <wa-button-group>
-                            <wa-button>
+                            <wa-button data-action="decrease" data-item-id="2">
                                 <wa-icon name='minus' class='minus-btn'></wa-icon>
                             </wa-button>
-                            <wa-input class='qty-input' placeholder='2'>
+                            <wa-input class='qty-input' placeholder='2' data-item-id="2" data-qty="2">
                                 <wa-label slot="start">Qty</wa-label>
                             </wa-input>
-                            <wa-button>
+                            <wa-button data-action="increase" data-item-id="2">
                                 <wa-icon name='plus' class='plus-btn'></wa-icon>
                             </wa-button>
                         </wa-button-group>
@@ -74,7 +74,7 @@ describe('Basket Quantity Controls', () => {
         document.dispatchEvent(event);
 
         plusButtons[0].click();
-        expect(quantityInputs[0].value).toBe(2);
+        expect(quantityInputs[0].value).toBe(4);
         expect(quantityInputs[1].value).toBe(undefined);
     });
 
@@ -82,7 +82,9 @@ describe('Basket Quantity Controls', () => {
         require('../../../../static/js/basket.js');
         const event = new Event("DOMContentLoaded");
         document.dispatchEvent(event);
-
+        // this test fails because the placeholder value is used. Instead
+        // the code should be updated to use data-id's to relate cards
+        // together. 
         console.log('initial input0 value:',quantityInputs[0].value);
         console.log('initial input1 value:',quantityInputs[1].value);
         // first button pressed

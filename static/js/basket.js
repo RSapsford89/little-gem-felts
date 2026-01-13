@@ -1,26 +1,32 @@
 document.addEventListener('DOMContentLoaded', function(){
-    const plusButton = document.querySelectorAll('.plus-btn');
-    const minusButton = document.querySelectorAll('.minus-btn');
+    const plusButtons = document.querySelectorAll('wa-button[data-action="increase"]');
+    const minusButtons = document.querySelectorAll('wa-button[data-action="decrease"]');
 
-    plusButton.forEach(button=>{
+    plusButtons.forEach(button=>{
         button.addEventListener('click', function(e){
             e.preventDefault();
-            const quantityInput = document.querySelector('.qty-input');
-            let currentQty = parseInt(quantityInput.getAttribute('placeholder'));
+            const btnAction = button.getAttribute('data-action');
+            const btnId = button.getAttribute('data-item-id');
+            const quantityInput = document.querySelector(`.qty-input[data-item-id="${btnId}"]`);
+            let currentQty = parseInt(quantityInput.getAttribute('data-qty'));
             currentQty += 1;
             console.log(currentQty);
-            incrementDecrement(quantityInput, currentQty);
+            // incrementDecrement(quantityInput, currentQty);
+            quantityInput.value = currentQty;
         });
     });
 
-    minusButton.forEach(button=>{
+    minusButtons.forEach(button=>{
         button.addEventListener('click', function(e){
             e.preventDefault();
-            const quantityInput = document.querySelector('.qty-input');
-            let currentQty = parseInt(quantityInput.getAttribute('placeholder'));
+            const btnAction = button.getAttribute('data-action');
+            const btnId = button.getAttribute('data-item-id');
+            const quantityInput = document.querySelector(`.qty-input[data-item-id="${btnId}"]`);
+            let currentQty = parseInt(quantityInput.getAttribute('data-qty'));
             currentQty -= 1;
             console.log(currentQty);
-            incrementDecrement(quantityInput, currentQty);
+            // incrementDecrement(quantityInput, currentQty);
+            quantityInput.value = currentQty;
         });
     });
 
