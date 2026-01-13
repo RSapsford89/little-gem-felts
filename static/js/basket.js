@@ -8,8 +8,9 @@ document.addEventListener('DOMContentLoaded', function(){
             const btnId = button.getAttribute('data-item-id');
             const quantityInput = document.querySelector(`.qty-input[data-item-id="${btnId}"]`);
             let currentQty = parseInt(quantityInput.getAttribute('data-qty'));
-            
+            console.log(`initial qty is:,${quantityInput.value}`);
             quantityInput.value = incrementDecrement(true, currentQty);
+            console.log(`sent true, inputValue is, ${quantityInput.value}`);
         });
     });
 

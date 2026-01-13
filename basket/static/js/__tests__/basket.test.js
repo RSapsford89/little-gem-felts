@@ -73,12 +73,24 @@ describe('Basket Quantity Controls', () => {
         const event = new Event("DOMContentLoaded");
         document.dispatchEvent(event);
 
-        plusButtons[0].click();
-        expect(quantityInputs[0].value).toBe(4);
-        expect(quantityInputs[1].value).toBe(undefined);
+        const plusButton1 = document.querySelector('wa-button[data-action="increase"][data-item-id="1"]');
+        const plusButton2 = document.querySelector('wa-button[data-action="increase"][data-item-id="2"]');
+
+        // first button pressed - read the data-qty for comparison
+        plusButton1.click();
+        input0 = parseInt(quantityInputs[0].getAttribute('data-qty'));//3
+        input1 = parseInt(quantityInputs[1].getAttribute('data-qty'));//2
+
+        expect(quantityInputs[0].value).toBe(input0 +1);//3 + 1 = 4
+        expect(parseInt(quantityInputs[1].value)).toBe(input1);// unchanged 2
+
+        // second button pressed
+        plusButton2.click();
+        expect(quantityInputs[0].value).toBe(4);// unchanged 4
+        expect(quantityInputs[1].value).toBe(3);// 2 + 1 =3
     });
 
-    test.only('the qty input decreases by 1 when related button is pressed',()=>{
+    test('the qty input decreases by 1 when related button is pressed',()=>{
         require('../../../../static/js/basket.js');
         const event = new Event("DOMContentLoaded");
         document.dispatchEvent(event);
@@ -91,15 +103,11 @@ describe('Basket Quantity Controls', () => {
         input0 = parseInt(quantityInputs[0].getAttribute('data-qty'));//3
         input1 = parseInt(quantityInputs[1].getAttribute('data-qty'));//2
 
-        // console.log('btn0 pressed input0 value:',quantityInputs[0].value);
-        // console.log('btn0 pressed input1 value:',quantityInputs[1].value);
         expect(quantityInputs[0].value).toBe(input0 -1);
         expect(parseInt(quantityInputs[1].value)).toBe(input1);
 
         // second button pressed
         minusButton2.click();
-        // console.log('input0 value:',quantityInputs[0].value);
-        // console.log('input1 value:',quantityInputs[1].value);
         expect(quantityInputs[0].value).toBe(2);
         expect(quantityInputs[1].value).toBe(1);
     });
