@@ -10,7 +10,8 @@ document.addEventListener('DOMContentLoaded', function(){
             let currentQty = parseInt(quantityInput.getAttribute('data-qty'));
             // console.log(`initial qty is:,${quantityInput.value}`);
             const newVal = incrementDecrement(true, currentQty);
-            quantityInput.value = newVal;
+            
+            quantityInput.setAttribute('value',newVal); 
             quantityInput.setAttribute('data-qty',newVal); 
             // console.log(`sent true, inputValue is, ${quantityInput.value}`);
         });
@@ -25,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function(){
             
             // console.log(`initial qty is:,${quantityInput.value}`);
             const newVal = incrementDecrement(false, currentQty);
-            quantityInput.value = newVal;
+            quantityInput.setAttribute('value',newVal);
             quantityInput.setAttribute('data-qty',newVal); 
             // console.log(`sent false, inputValue is, ${quantityInput.value}`);
         });
