@@ -76,10 +76,10 @@ describe('Basket Quantity Controls', () => {
         const plusButton1 = document.querySelector('wa-button[data-action="increase"][data-item-id="1"]');
         const plusButton2 = document.querySelector('wa-button[data-action="increase"][data-item-id="2"]');
 
-        // first button pressed - read the data-qty for comparison
-        plusButton1.click();
         input0 = parseInt(quantityInputs[0].getAttribute('data-qty'));//3
         input1 = parseInt(quantityInputs[1].getAttribute('data-qty'));//2
+        // first button pressed - read the data-qty for comparison
+        plusButton1.click();
 
         expect(quantityInputs[0].value).toBe(input0 +1);//3 + 1 = 4
         expect(parseInt(quantityInputs[1].value)).toBe(input1);// unchanged 2
@@ -99,10 +99,10 @@ describe('Basket Quantity Controls', () => {
         const minusButton2 = document.querySelector('wa-button[data-action="decrease"][data-item-id="2"]');
 
         // first button pressed - read the data-qty for comparison
-        minusButton1.click();
         input0 = parseInt(quantityInputs[0].getAttribute('data-qty'));//3
         input1 = parseInt(quantityInputs[1].getAttribute('data-qty'));//2
-
+        
+        minusButton1.click();
         expect(quantityInputs[0].value).toBe(input0 -1);
         expect(parseInt(quantityInputs[1].value)).toBe(input1);
 
@@ -125,7 +125,7 @@ describe('Basket Quantity Controls', () => {
         // console.log(`qtyInput id is:`,${quantityInput});
     });
 
-    test.only('the data-qty is updated when the input.value is updated',()=>{
+    test('the data-qty is updated when the input.value is updated',()=>{
         require('../../../../static/js/basket.js');
         const event = new Event("DOMContentLoaded");
         document.dispatchEvent(event);

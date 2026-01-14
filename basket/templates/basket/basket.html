@@ -18,7 +18,7 @@
         <div class="horizontal-card-container">
             {% if basket_items %}
                 {% for item in basket_items %}
-                    <div data-item-id="{{item.id}}">
+                    <div data-item-id="{{item.product_id}}">
                         <wa-card orientation="horizontal" class="horizontal-card" >
                             {% if item.product.primary_image %}
                                 <img slot="media" src="{{ item.product.primary_image.image.url }}" alt="{{ item.product.name }}">
@@ -32,13 +32,13 @@
                                 </div>
                                 
                                 <wa-button-group orientation="horizontal">
-                                    <wa-button data-item-id="{{item.id}}" data-action="decrease" >
+                                    <wa-button data-item-id="{{item.product_id}}" data-action="decrease" >
                                         <wa-icon name='minus' class='minus-btn'></wa-icon>
                                     </wa-button>
-                                    <wa-input data-item-id="{{item.id}}" class='qty-input' value='{{item.quantity}}' data-qty='{{item.quantity}}'>
+                                    <wa-input data-item-id="{{item.product_id}}" class='qty-input' value='{{item.quantity}}' data-qty='{{item.quantity}}'>
                                         <wa-label slot="start">Qty</wa-label>
                                     </wa-input>
-                                    <wa-button data-item-id="{{item.id}}" data-action="increase">
+                                    <wa-button data-item-id="{{item.product_id}}" data-action="increase">
                                         <wa-icon name='plus' class='plus-btn'></wa-icon>
                                     </wa-button>
                                 </wa-button-group>
