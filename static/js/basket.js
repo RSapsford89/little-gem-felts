@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', function(){
     const plusButtons = document.querySelectorAll('wa-button[data-action="increase"]');
     const minusButtons = document.querySelectorAll('wa-button[data-action="decrease"]');
+    const removeButtons = document.querySelectorAll('wa-button[data-action="remove"]');
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
     plusButtons.forEach(button=>{
         button.addEventListener('click', function(e){
@@ -29,6 +31,32 @@ document.addEventListener('DOMContentLoaded', function(){
             quantityInput.setAttribute('value',newVal);
             quantityInput.setAttribute('data-qty',newVal); 
             // console.log(`sent false, inputValue is, ${quantityInput.value}`);
+        });
+    });
+
+    removeButtons.forEach(button=>{
+        button.addEventListener('click', function(e){
+            e.preventDefault();
+            const btnId = button.getAttribute('data-item-id');
+            const item = document.querySelector(`[data-item-id="${btnId}"]`);
+            
+            //csrf from the top, remove from basket, remove from context/session
+
+            fetch(`/basket/remove/${btnId}`,{
+                method: 'POST',
+                headers:{
+                    'X-CSRFToken': csrfToken,
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success){
+                    $item.remove();
+                    
+                }
+            })
+
         });
     });
     

@@ -41,11 +41,17 @@
                                     <wa-button data-item-id="{{item.product_id}}" data-action="increase">
                                         <wa-icon name='plus' class='plus-btn'></wa-icon>
                                     </wa-button>
+                                    <wa-button data-item-id="{{item.product_id}}" data-action="remove">
+                                        <wa-icon name='trash-can' class='plus-btn'></wa-icon>
+                                    </wa-button>
                                 </wa-button-group>
                             </div>
                         </wa-card>
                     </div>
                 {% endfor %}
+                <div class="alter-container">
+                    
+                </div>
             {% endif %}
         </div>
         <div class="totals-column">
