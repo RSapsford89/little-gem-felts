@@ -14,7 +14,7 @@ def basket_contents(request):
     product_count = 0
     total = Decimal('0.00')
     delivery = Decimal('0.00')
- # the minimum cost of an order
+    # the minimum cost of an order
     
     basket = request.session.get('basket', {}) # needs to fetch the items from the basket when implemented
 
