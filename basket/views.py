@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from django.contrib import messages
 from decimal import Decimal
+import json
 from store.models import Product  
 # Create your views here.
 
@@ -39,12 +40,86 @@ def add_to_basket(request, product_id):
     # redirect_url = request.POST.get('')
     return redirect('basket:view_basket')
 
-def update_basket(request):
+def update_basket(request, product_id):
     """
     Docstring for update_basket
     update the quantity of items in the basket
-    :param request: Description
     """
+    if request.method == "POST":
+        try:
+            product = get_object_or_404(Product, pk=product_id)# obj from DB
+            basket = request.session.get('basket',{})
+            data = json.loads(request.body)
+            quantity = int(data.get('quantity')) # get qty from json obj
+            # if prod id is in basket
+                # find the requestedQty
+                # stock is available and less than max... 
+                # if available, set basket to requestedQty
+                # addition: could add another model field 'preOrder' which = stock level - requested
+                # then, if preOrder = > stocklevel, can't add the stock
+            if str(product_id) in basket:
+                if product.stock_level > 0 and quantity <= product.stock_level: 
+                    basket[str(product_id)] = quantity # make prodId's value = quantity from json
+                    request.session['basket'] = basket
+                    request.session.modified = True
+                    from basket.contexts import basket_contents
+                    context = basket_contents(request)
+                    return JsonResponse({
+                        'success': True,
+                        'product_count': context['product_count'],
+                        'total': str(context['total']),
+                        'delivery': str(context['delivery']),
+                        'grand_total': str(context['grand_total']),
+                        'message': f'Updated {product.name} quantity to: {quantity}',
+                    })
+                elif quantity > product.stock_level:
+                    # if stock_level < quantity ?
+                    # there is stock, but not enough for the customer's request
+                    # set the basket to remaining stock level
+                    basket[str(product_id)] = product.stock_level
+                    request.session['basket'] = basket
+                    request.session.modified = True
+                    from basket.contexts import basket_contents
+                    context = basket_contents(request)
+                    return JsonResponse({
+                        'success': True,
+                        'product_count': context['product_count'],
+                        'total': str(context['total']),
+                        'delivery': str(context['delivery']),
+                        'grand_total': str(context['grand_total']),
+                        'message': f'Only {product.stock_level} available. Updated to: {product.stock_level}',
+                    })
+                elif quantity <= 0:
+                    # if you request 0 or negative
+                    del basket[str(product_id)]
+                    request.session['basket'] = basket
+                    request.session.modified = True
+                    from basket.contexts import basket_contents
+                    context = basket_contents(request)
+                    return JsonResponse({
+                        'success': True,
+                        'product_count': context['product_count'],
+                        'total': str(context['total']),
+                        'delivery': str(context['delivery']),
+                        'grand_total': str(context['grand_total']),
+                        'message': f'Removed {product.name} from the basket'
+                    })
+            else:
+                return JsonResponse({
+                    'success': False,
+                    'message': 'Product no in basket'
+                }, status=404)
+            
+        except Exception as error:
+            return JsonResponse({
+                'success': False,
+                'message': f'Error updating item! {str(error)}'
+            }, status=500)
+    return JsonResponse({
+        'success': False,
+        'message': 'Invalid request method'
+    }, status=400)
+
 
     # general idea taken from Boutique Ado project.
     # used AI to assist with the JSON formatting
@@ -54,7 +129,6 @@ def remove_basket(request, product_id):
     Remove an item from the basket and update totals.
     Using AJAX with jsonresponse to update basket context
     """
-
     if request.method == 'POST':
         try:
             product = get_object_or_404(Product, pk=product_id)

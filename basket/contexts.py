@@ -31,8 +31,7 @@ def basket_contents(request):
             'product_id': product_id,
             'quantity': quantity,
             'product': product,
-            'product_count': product_count,
-            'total': total,
+            'product_total': product_total,  # Changed from 'total'
         })
     grand_total = total + delivery
         # subtotal += (item.cost * qty)
