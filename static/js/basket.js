@@ -31,20 +31,19 @@ document.addEventListener('DOMContentLoaded', function(){
             quantityInput.setAttribute('value',newVal);
             quantityInput.setAttribute('data-qty',newVal); 
             // console.log(`sent false, inputValue is, ${quantityInput.value}`);
+            updateBasket(btnId,newVal);
         });
     });
-
+//implementation of the fetch and promises created with help of AI.
     removeButtons.forEach(button=>{
         button.addEventListener('click', function(e){
             e.preventDefault();
             const btnId = button.getAttribute('data-item-id');
-            const item = document.querySelector(`[data-item-id="${btnId}"]`);
-            
+            const item = document.querySelector(`[data-item-id="${btnId}"]`);            
             //csrf from the top, remove from basket, remove from context/session
-
-            fetch(`/basket/remove/${btnId}`,{
+            fetch(`/basket/remove/${btnId}/`, {
                 method: 'POST',
-                headers:{
+                headers: {
                     'X-CSRFToken': csrfToken,
                     'Content-Type': 'application/json',
                 },
@@ -52,11 +51,22 @@ document.addEventListener('DOMContentLoaded', function(){
             .then(response => response.json())
             .then(data => {
                 if(data.success){
-                    $item.remove();
+                    item.remove();
+                    updateBasketTotals(data);
                     
+                    const remainingItems = document.querySelectorAll('[data-item-id]').length;
+                    if (remainingItems === 0) {
+                        displayEmptyBasket();
+                    }
+                } else {
+                    alert('Error: ' + data.message);
                 }
             })
-
+            .catch(error => {
+                alert('Failed to remove item. Reloading page...');
+                console.log(error);
+                location.reload();
+            });
         });
     });
     
@@ -69,4 +79,38 @@ document.addEventListener('DOMContentLoaded', function(){
         }
         return currentQty;
     }
-});
+// this function was created with the help of AI on how to use
+//fetch and format for xcrsftoken
+    function updateBasket(productId, quantity){
+        fetch(`/basket/update/${productId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': csrfToken,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                quantity: quantity,
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.success){
+                updateBasketTotals(data);
+            } else {
+                alert('Error: ' + data.message);
+                location.reload();
+            }
+        })
+        .catch(error => {
+            alert('Failed to update basket');
+            console.log(error);
+            location.reload();
+        });       
+    }
+
+    function updateBasketTotals(data){
+        //update each element with the new basket context
+        return;
+    }
+
+});//end of file

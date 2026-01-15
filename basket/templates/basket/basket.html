@@ -4,11 +4,13 @@
 <link rel="stylesheet" href="{% static 'css/store.css' %}">
 {% endblock extra_css %}
 {% block extra_js %}
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="{% static 'js/basket.js' %}"></script>
 {% endblock extra_js %}
 {% block latestAdditions %}{% endblock latestAdditions %}
 {% block content %}
 <section class="basket-section">
+    {% csrf_token %}
     {% if user.is_authenticated %}
     <h1>{{user.username}}'s basket:</h1>
     {% else %}
