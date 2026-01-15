@@ -35,7 +35,7 @@ def add_to_basket(request, product_id):
         return redirect('store:store')
     
     request.session['basket'] = basket
-    request.session.modified=True
+    request.session.modified = True
     #print(basket)
     # redirect_url = request.POST.get('')
     return redirect('basket:view_basket')
@@ -58,7 +58,22 @@ def update_basket(request, product_id):
                 # addition: could add another model field 'preOrder' which = stock level - requested
                 # then, if preOrder = > stocklevel, can't add the stock
             if str(product_id) in basket:
-                if product.stock_level > 0 and quantity <= product.stock_level: 
+                if quantity <= 0:
+                    # if you request 0 or negative
+                    del basket[str(product_id)]
+                    request.session['basket'] = basket
+                    request.session.modified = True
+                    from basket.contexts import basket_contents
+                    context = basket_contents(request)
+                    return JsonResponse({
+                        'success': True,
+                        'product_count': context['product_count'],
+                        'total': str(context['total']),
+                        'delivery': str(context['delivery']),
+                        'grand_total': str(context['grand_total']),
+                        'message': f'Removed {product.name} from the basket'
+                    })
+                elif product.stock_level > 0 and quantity <= product.stock_level: 
                     basket[str(product_id)] = quantity # make prodId's value = quantity from json
                     request.session['basket'] = basket
                     request.session.modified = True
@@ -88,21 +103,6 @@ def update_basket(request, product_id):
                         'delivery': str(context['delivery']),
                         'grand_total': str(context['grand_total']),
                         'message': f'Only {product.stock_level} available. Updated to: {product.stock_level}',
-                    })
-                elif quantity <= 0:
-                    # if you request 0 or negative
-                    del basket[str(product_id)]
-                    request.session['basket'] = basket
-                    request.session.modified = True
-                    from basket.contexts import basket_contents
-                    context = basket_contents(request)
-                    return JsonResponse({
-                        'success': True,
-                        'product_count': context['product_count'],
-                        'total': str(context['total']),
-                        'delivery': str(context['delivery']),
-                        'grand_total': str(context['grand_total']),
-                        'message': f'Removed {product.name} from the basket'
                     })
             else:
                 return JsonResponse({

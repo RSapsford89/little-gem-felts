@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function(){
             quantityInput.setAttribute('value',newVal); 
             quantityInput.setAttribute('data-qty',newVal); 
             // console.log(`sent true, inputValue is, ${quantityInput.value}`);
+            updateBasket(btnId,newVal);
         });
     });
 
