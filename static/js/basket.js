@@ -99,12 +99,12 @@ document.addEventListener('DOMContentLoaded', function(){
                 updateBasketTotals(data);
                 showToast(data.message,'success')
             } else {
-                alert('Error: ' + data.message);
+                showToast(data.message,'success')
                 location.reload();
             }
         })
         .catch(error => {
-            alert('Failed to update basket');
+            showToast(data.message,'success')
             console.log(error);
             location.reload();
         });       

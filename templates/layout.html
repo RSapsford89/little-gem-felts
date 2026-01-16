@@ -127,8 +127,20 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="{% static 'js/toasts.js' %}"></script>
     <script src="{% static 'js/base.js' %}"></script>
+    {% for message in messages %}
+    <script type =text/javascript>
+      document.addEventListener('DOMContentLoaded', function(){
+        
+        console.log({{message.text}});
+          showToast({{message.text}});
+        
+        
+      });
+    </script>
+    {% endfor %}
     {% block extra_js %}
     {% comment %} extra page JS loaded here {% endcomment %}
     {% endblock extra_js %}
+      
 </body>
 </html>
