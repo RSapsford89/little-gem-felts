@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.webawesome.com/21ebcafd391742ca.js" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/4d2d2c68b5.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="shortcut icon" href="{% static 'images/favicon.png'%}" >
     <link rel="stylesheet" href="{%static 'css/base.css'%}">
     {% block extra_css %}
@@ -123,9 +124,11 @@
       </div>
   </div>
 </footer>
-    <script src="{% static 'js/main.js' %}"></script>
-        {% block extra_js %}
-        {% comment %} extra page JS  loaded here {% endcomment %}
-        {% endblock extra_js %}
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="{% static 'js/toasts.js' %}"></script>
+    <script src="{% static 'js/base.js' %}"></script>
+    {% block extra_js %}
+    {% comment %} extra page JS loaded here {% endcomment %}
+    {% endblock extra_js %}
 </body>
 </html>

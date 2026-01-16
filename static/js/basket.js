@@ -97,6 +97,7 @@ document.addEventListener('DOMContentLoaded', function(){
         .then(data => {
             if(data.success){
                 updateBasketTotals(data);
+                showToast(data.message,'success')
             } else {
                 alert('Error: ' + data.message);
                 location.reload();
@@ -115,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function(){
         const subtotal = document.querySelector('td[data-id="subtotal"]');
         const delivery = document.querySelector('td[data-id="delivery"]');
         const grandTotal = document.querySelector('td[data-id="grandTotal"]');
-        
+
         totalItems.textContent=data.product_count
         subtotal.textContent=data.total
         delivery.textContent=data.delivery
