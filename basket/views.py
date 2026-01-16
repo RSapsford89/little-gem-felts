@@ -39,7 +39,7 @@ def add_to_basket(request, product_id):
     #print(basket)
     # redirect_url = request.POST.get('')
     return redirect('basket:view_basket')
-
+# UX bug with the value. if JS input value display not updated to match basket after update
 def update_basket(request, product_id):
     """
     Docstring for update_basket

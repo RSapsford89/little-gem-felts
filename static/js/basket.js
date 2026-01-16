@@ -111,7 +111,15 @@ document.addEventListener('DOMContentLoaded', function(){
 
     function updateBasketTotals(data){
         //update each element with the new basket context
-        return;
+        const totalItems = document.querySelector('td[data-id="totalItems"]');
+        const subtotal = document.querySelector('td[data-id="subtotal"]');
+        const delivery = document.querySelector('td[data-id="delivery"]');
+        const grandTotal = document.querySelector('td[data-id="grandTotal"]');
+        
+        totalItems.textContent=data.product_count
+        subtotal.textContent=data.total
+        delivery.textContent=data.delivery
+        grandTotal.textContent=data.grand_total
     }
 
 });//end of file

@@ -66,12 +66,24 @@
         <div class="totals-column">
             <wa-card>
                 <h3 class='header'>Totals:</h3>
-                <div class="total-contents">
-                    <p>Number of items: <span><strong>{{product_count}}</strong></span></p>
-                    <p>Subtotal: <span><strong>{{total}}</strong></span></p>
-                    <p>Delivery: <span><strong>{{delivery}}</strong></span></p>
-                    <p>Grand Total: <span><strong>{{grand_total}}</strong></span></p>
-                </div>
+                <table class="total-contents">
+                    <tr>
+                        <td>Number of items:</td>
+                        <td data-id="totalItems"><strong>{{product_count}}</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Subtotal:</td>
+                        <td data-id="subtotal"><strong>{{total}}</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Delivery:</td>
+                        <td data-id="delivery"><strong>{{delivery}}</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Grand Total:</td>
+                        <td data-id="grandTotal"><strong>{{grand_total}}</strong></td>
+                    </tr>
+                </table>
                 <wa-button>Continue to Payment</wa-button>
             </wa-card>
         </div>
