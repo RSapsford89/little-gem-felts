@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.contrib import messages
+
 from store.models import Product
 from blog.models import Post
 
@@ -8,6 +10,7 @@ def home(request):
     Updated to  also  fetch promoted products to display
     :param request: Description
     """
+    messages.success(request, "Test toast!")
     promoted_products = Product.objects.filter(promoted=True).prefetch_related('images')[:3]
     blog_posts = Post.objects.filter(publish=True).order_by('-date_created')[:3]
     context = {

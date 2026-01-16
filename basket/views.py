@@ -17,7 +17,7 @@ def add_to_basket(request, product_id):
         product = get_object_or_404(Product, pk=product_id) # get the obj from DB
         quantity = int(request.POST.get('quantity')) # get qty from  page, cast
         basket = request.session.get('basket', {}) # get session basket
-
+        redirect_url = request.POST.get('redirect_url')
         if product.stock_level > 0 and quantity <= product.stock_level: # stock is available and adding <= stock available
             if str(product_id) in basket: # is it in the basket already?
                 if (basket[str(product_id)] + quantity) > product.stock_level: #asking for too much
@@ -38,7 +38,7 @@ def add_to_basket(request, product_id):
     request.session.modified = True
     #print(basket)
     # redirect_url = request.POST.get('')
-    return redirect('basket:view_basket')
+    return redirect(redirect_url)
 # UX bug with the value. if JS input value display not updated to match basket after update
 def update_basket(request, product_id):
     """

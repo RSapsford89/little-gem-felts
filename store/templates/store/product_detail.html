@@ -28,7 +28,9 @@
                 <div class="add-to-basket">
                     <form action="{% url 'basket:add_to_basket' product.id %}" method='POST'>
                         {% csrf_token %}
-                        <input type="number" name="quantity" id="id_quantity" max="{{product.stock_level}}">
+                        <input type="hidden" name="redirect_url" value="{{ request.path }}">
+                        <input type="number" name="quantity" id="id_quantity" {% if product.stock_level < 1 %} value = "0" {% else %} value="1"{% endif %} min="0"max="{{product.stock_level}}">
+                        {% if product.stock_level < 1 || id_ %}{% endif %}
                         <button >Add</button>
                     </form>
                 </div>
