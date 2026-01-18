@@ -13,26 +13,40 @@ def add_to_basket(request, product_id):
     :param request: Description
     :param product_id: from prodduct_detail page 
     """
-    if request.method == 'POST': # this ccould be a decorator instead?
-        product = get_object_or_404(Product, pk=product_id) # get the obj from DB
-        quantity = int(request.POST.get('quantity')) # get qty from  page, cast
-        basket = request.session.get('basket', {}) # get session basket
-        redirect_url = request.POST.get('redirect_url')
-        if product.stock_level > 0 and quantity <= product.stock_level: # stock is available and adding <= stock available
-            if str(product_id) in basket: # is it in the basket already?
-                if (basket[str(product_id)] + quantity) > product.stock_level: #asking for too much
-                    basket[str(product_id)] = product.stock_level
-                    messages.error(request, f'Only {product.stock_level} of {product.name} is available. {product.stock_level} has been updated.')
-                else: # asking for available amount
-                    basket[str(product_id)] += quantity
-                    messages.success(request, f' {product.name} updated to {quantity}.')
-            else: # it isn't in the basket
-                basket[str(product_id)] = quantity
-                messages.success(request, f'Added {quantity} of {product.name} to the basket')
-        else:
-            messages.error(request, f'This item only has {product.stock_level} left')
-    else:
-        return redirect('store:store')
+    # need to validate values as being INT, positive and the stock exists - would crispy forms help here?
+    if request.method == 'POST': # this could be a decorator instead?
+        try:
+            product = get_object_or_404(Product, pk=product_id) # get the obj from DB
+            quantity = int(request.POST.get('quantity')) # get qty from  page, cast
+            basket = request.session.get('basket', {}) # get session basket
+            redirect_url = request.POST.get('redirect_url')
+            
+            # check quantity is positive
+            if quantity < 1:
+                messages.error(request, 'Quantity must be at least 1')
+                return redirect(redirect_url)
+                        
+            if product.stock_level > 0 and quantity <= product.stock_level: # stock is available and adding <= stock available
+
+                if str(product_id) in basket: # is it in the basket already?
+                    if (basket[str(product_id)] + quantity) > product.stock_level: #asking for too much
+                        basket[str(product_id)] = product.stock_level
+                        messages.error(request, f'Only {product.stock_level} of {product.name} is available. {product.stock_level} has been updated.')
+                    else: # asking for available amount
+
+                        basket[str(product_id)] += quantity
+                        messages.success(request, f' {product.name} updated to {quantity}.')
+                else: # it isn't in the basket
+                    
+                    basket[str(product_id)] = quantity
+                    messages.success(request, f'Added {quantity} of {product.name} to the basket')
+            else:
+                messages.error(request, f'This item only has {product.stock_level} left')
+            return redirect(redirect_url)
+        except (ValueError,TypeError):
+            messages.error(request, 'Invalid quantity entered')
+            return redirect(redirect_url)
+        
     
     request.session['basket'] = basket
     request.session.modified = True
