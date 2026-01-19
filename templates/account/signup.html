@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock extra_css %}
+{% block latestAdditions %}{% endblock latestAdditions %}
+
+{% block content %}
+<section class="auth-section">
+  <div class="auth-container">
+    <h1>Sign Up</h1>
+    
+    <form method="POST" action="{% url 'account_signup' %}">
+      {% csrf_token %}
+      {{ form|crispy }}
+      
+      {% if redirect_field_value %}
+      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+      {% endif %}
+      
+      <wa-button type="submit" variant="brand" pill>Sign Up</wa-button>
+    </form>
+    
+    <p>Already have an account? <a href="{% url 'account_login' %}">Log in here</a></p>
+  </div>
+</section>
+{% endblock content %}

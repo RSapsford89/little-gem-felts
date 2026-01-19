@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock extra_css %}
+{% block latestAdditions %}{% endblock latestAdditions %}
+
+{% block content %}
+<section class="auth-section">
+  <div class="auth-container">
+    <h1>Log Out</h1>
+    
+    <p>Are you sure you want to log out?</p>
+    
+    <form method="POST" action="{% url 'account_logout' %}">
+    {% csrf_token %}
+    {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+    {% endif %}
+    
+    <wa-button type="submit" variant="brand" pill>Log Out</wa-button>
+    <wa-button type="button" variant="outline" pill onclick="window.history.back()">Cancel</wa-button>
+    </form>
+  </div>
+</section>
+{% endblock content %}
