@@ -1,13 +1,17 @@
 {% extends "layout.html" %}
 {% load static %}
+
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/store.css' %}">
+    <link rel="stylesheet" href="{% static 'css/store.css' %}">
 {% endblock extra_css %}
+
 {% block extra_js %}
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="{% static 'js/basket.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="{% static 'js/basket.js' %}"></script>
 {% endblock extra_js %}
+
 {% block latestAdditions %}{% endblock latestAdditions %}
+
 {% block content %}
 <section class="basket-section">
     {% csrf_token %}

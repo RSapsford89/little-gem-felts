@@ -42,17 +42,14 @@ def add_to_basket(request, product_id):
                     messages.success(request, f'Added {quantity} of {product.name} to the basket')
             else:
                 messages.error(request, f'This item only has {product.stock_level} left')
+            
+            # Save basket to session before redirecting
+            request.session['basket'] = basket
+            request.session.modified = True
             return redirect(redirect_url)
         except (ValueError,TypeError):
             messages.error(request, 'Invalid quantity entered')
             return redirect(redirect_url)
-        
-    
-    request.session['basket'] = basket
-    request.session.modified = True
-    #print(basket)
-    # redirect_url = request.POST.get('')
-    return redirect(redirect_url)
 # UX bug with the value. if JS input value display not updated to match basket after update
 def update_basket(request, product_id):
     """
