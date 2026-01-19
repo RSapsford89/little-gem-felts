@@ -25,7 +25,7 @@ def add_to_basket(request, product_id):
             if quantity < 1:
                 messages.error(request, 'Quantity must be at least 1')
                 return redirect(redirect_url)
-                        
+
             if product.stock_level > 0 and quantity <= product.stock_level: # stock is available and adding <= stock available
 
                 if str(product_id) in basket: # is it in the basket already?
