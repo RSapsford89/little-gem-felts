@@ -44,7 +44,11 @@ INSTALLED_APPS = [
     'blog',
     'store',
     'basket',
+    'userprofile',
     # additional library apps
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
 ]
 
 MIDDLEWARE = [
@@ -55,7 +59,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # all auth
+    'allauth.account.middleware.AccountMiddleware',
 ]
+
 
 ROOT_URLCONF = 'little_gem_felts.urls'
 
@@ -69,7 +76,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'basket.contexts.basket_contents' # custom basket contexts file
+                'basket.contexts.basket_contents', # custom basket contexts file
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -77,7 +85,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'little_gem_felts.wsgi.application'
 
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
 
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
