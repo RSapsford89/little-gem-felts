@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock extra_css %}
+{% block latestAdditions %}{% endblock latestAdditions %}
+{% block content %}
+<section class="auth-section">
+  <div class="auth-container">
+    <h1>Verify Your Email Address</h1>
+        
+    <p>We have sent an email to you for verification. Follow the link provided to finalize the signup process. If you do not see the verification email in your main inbox, check your spam folder. Please contact us if you do not receive the verification email within a few minutes.</p>
+  </div>
+</section>
+{% endblock content %}
