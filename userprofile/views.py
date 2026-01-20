@@ -13,14 +13,14 @@ def profile_view(request):
     user_testimonial = Testimonial.objects.filter(user=request.user).first() # the first review which is retruned for this id
     if request.method == 'POST':
         # if user has bought, populate form
-        if user.profile.has_purchased:
+        if request.user.profile.has_purchased:
             testimonial_form = TestimonialForm(request.POST)
             # check the form is valid
             if testimonial_form.is_valid():
                 testimonial = testimonial_form.save(commit=False)
                 testimonial.user = request.user
                 testimonial.save()
-                return redirect('userProfile:profile_view')
+                return redirect('userprofile:profile_view')
             
     context = {
         'testimonial_form' : testimonial_form,

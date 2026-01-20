@@ -77,7 +77,7 @@
         <div class="testimonial">
             <h2>Your Testimonial</h2>
             {% if user_testimonial %}
-                <strong>Rating:</strong> <wa-rating label="Overall rating">{{ user_testimonial.rating }}</wa-rating>
+                <strong>Rating:</strong> <wa-rating value="{{ user_testimonial.rating }}" readonly label="Overall rating"></wa-rating>
                 <p><strong>Review:</strong> {{ user_testimonial.short_review }}</p>
                 {% if user_testimonial.approved %}
                     <p><em>Status: Approved</em></p>
