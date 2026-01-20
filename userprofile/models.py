@@ -9,6 +9,7 @@ class userProfile(models.Model):
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     profile_pic = models.ImageField(upload_to='profile_pics/', blank=True, null=True, default='profile_pics/default.jpg')
+    ship_name = models.CharField(max_length=100, blank=True, null=True)
     phoneNumber = models.CharField(max_length=20, blank=True, null=True)
     street_address1 = models.CharField(max_length=80, blank=True, null=True)
     street_address2 = models.CharField(max_length=80, blank=True, null=True)

@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock extra_css %}
+
+{% block latestAdditions %}{% endblock latestAdditions %}
+
+{% block content %}
+<section class="profile-edit">
+    <h1>Edit Profile</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <div class="button-group">
+            <wa-button type="submit" variant="brand" pill>Save Changes</wa-button>
+            <wa-button type="button" variant="outline" pill onclick="window.history.back()">Cancel</wa-button>
+        </div>
+    </form>
+</section>
+{% endblock content %}

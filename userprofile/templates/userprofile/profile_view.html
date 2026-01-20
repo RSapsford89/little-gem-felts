@@ -1,7 +1,79 @@
 {% extends "layout.html" %}
-
-
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock extra_css %}
 
 {% block latestAdditions %}{% endblock latestAdditions %}
 
-{% block content %}{% endblock content %}
+{% block content %}
+<section class="profile-data">
+    {% if user.is_authenticated %}
+    <h1>{{user.username}}</h1>
+    {% if user.profile.profile_pic %}
+    <img src="{{ user.profile.profile_pic.url }}" alt="Profile picture" class="profile-pic">
+{% else %}
+    <p>No profile picture uploaded</p>
+{% endif %}
+    <div class="profile">
+        <h2>Profile Information</h2>
+        <table class="profile-details">
+            <tr>
+                <td>Username:</td>
+                <td>{{user.username}}</td>
+            </tr>
+            <tr>
+                <td>email</td>
+                <td>{{user.email}}</td>
+            </tr>
+            <tr>
+                <td>First name:</td>
+                <td>{{user.first_name}}</td>
+            </tr>
+            <tr>
+                <td>Last name:</td>
+                <td>{{user.last_name}}</td>
+            </tr>
+            <tr>
+                <td>Contact number:</td>
+                <td>{{user.profile.phoneNumber}}</td>
+            </tr>
+            <tr>
+                <td>Member since:</td>
+                <td>{{user.date_joined}}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="shipping">
+        <h2>Shipping Information</h2>
+        <table class="shipping-details">
+            <tr>
+                <td>Addressed to:</td>
+                <td>{{user.profile.ship_name}}</td>
+            </tr>
+            <tr>
+                <td>Contact number:</td>
+                <td>{{user.profile.phoneNumber}}</td>
+            </tr>
+            <tr>
+                <td>Address line 1:</td>
+                <td>{{user.profile.street_address1}}</td>
+            </tr>
+            <tr>
+                <td>Address line 2:</td>
+                <td>{{user.profile.street_address2}}</td>
+            </tr>
+            <tr>
+                <td>Town or city:</td>
+                <td>{{user.profile.town_city}}</td>
+            </tr>
+            <tr>
+                <td>Postcode:</td>
+                <td>{{user.profile.postcode}}</td>
+            </tr>
+        </table>
+    </div>
+    {% endif %}
+</section>
+<wa-button href="{% url 'userprofile:edit_view' %}" variant="outline" pill>Edit Profile</wa-button>
+{% endblock content %}

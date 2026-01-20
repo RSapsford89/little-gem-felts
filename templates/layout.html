@@ -36,7 +36,7 @@
         </li>
         <li>
           {% if user.is_authenticated %}
-          <wa-button class="nav-btn" pill>{{user.username}}'s Profile</wa-button>
+          <wa-button class="nav-btn" pill href="{% url 'userprofile:profile_view'%}">{{user.username}}'s Profile</wa-button>
           <wa-button class="nav-btn" pill href="{% url 'account_logout' %}">Logout</wa-button>
           {% else %}
           <wa-button class="nav-btn" pill href="{% url 'account_login' %}">Log-in / Sign-up</wa-button>

@@ -1,0 +1,7 @@
+td{
+    width:50%
+}
+td:first-child {
+    font-weight: bold;
+    width: 30%;
+}
