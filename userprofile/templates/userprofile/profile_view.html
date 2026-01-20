@@ -74,6 +74,7 @@
                 </tr>
             </table>
         </div>
+        <wa-button href="{% url 'userprofile:edit_view' %}" variant="outline" pill>Edit Profile</wa-button>
         <div class="testimonial">
             <h2>Your Testimonial</h2>
             {% if user_testimonial %}
@@ -100,5 +101,5 @@
     </div>
     {% endif %}
 </section>
-<wa-button href="{% url 'userprofile:edit_view' %}" variant="outline" pill>Edit Profile</wa-button>
+
 {% endblock content %}

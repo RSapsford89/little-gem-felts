@@ -5,3 +5,14 @@ td:first-child {
     font-weight: bold;
     width: 30%;
 }
+.container{
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+}
+.profile, .shipping, .testimonial{
+    margin: auto;
+}
+.shipping{
+
+}
