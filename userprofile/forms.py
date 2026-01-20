@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from .models import userProfile
+from .models import userProfile, Testimonial
 
 User = get_user_model()
 # This code is based largely on the custom form built in
@@ -55,4 +55,17 @@ class ProfileForm(forms.ModelForm):
             'town_city': forms.TextInput(attrs={'class': 'form-control'}),
             'postcode': forms.TextInput(attrs={'class': 'form-control'}),
             'profile_pic': forms.FileInput(attrs={'class': 'form-control', 'accept': 'image/*'})
+        }
+
+class TestimonialForm(forms.ModelForm):
+    """
+    Form for submitting testimonials
+    """
+    class Meta:
+        model = Testimonial
+        fields = ['rating', 'short_review', 'long_review']
+        widgets = {
+            'rating': forms.Select(attrs={'class': 'form-control'}),
+            'short_review': forms.Textarea(attrs={'class': 'form-control', 'rows': 1}),
+            'long_review': forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
         }

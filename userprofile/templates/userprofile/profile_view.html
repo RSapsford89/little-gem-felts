@@ -15,63 +15,88 @@
 {% else %}
     <p>No profile picture uploaded</p>
 {% endif %}
-    <div class="profile">
-        <h2>Profile Information</h2>
-        <table class="profile-details">
-            <tr>
-                <td>Username:</td>
-                <td>{{user.username}}</td>
-            </tr>
-            <tr>
-                <td>email</td>
-                <td>{{user.email}}</td>
-            </tr>
-            <tr>
-                <td>First name:</td>
-                <td>{{user.first_name}}</td>
-            </tr>
-            <tr>
-                <td>Last name:</td>
-                <td>{{user.last_name}}</td>
-            </tr>
-            <tr>
-                <td>Contact number:</td>
-                <td>{{user.profile.phoneNumber}}</td>
-            </tr>
-            <tr>
-                <td>Member since:</td>
-                <td>{{user.date_joined}}</td>
-            </tr>
-        </table>
-    </div>
-    <div class="shipping">
-        <h2>Shipping Information</h2>
-        <table class="shipping-details">
-            <tr>
-                <td>Addressed to:</td>
-                <td>{{user.profile.ship_name}}</td>
-            </tr>
-            <tr>
-                <td>Contact number:</td>
-                <td>{{user.profile.phoneNumber}}</td>
-            </tr>
-            <tr>
-                <td>Address line 1:</td>
-                <td>{{user.profile.street_address1}}</td>
-            </tr>
-            <tr>
-                <td>Address line 2:</td>
-                <td>{{user.profile.street_address2}}</td>
-            </tr>
-            <tr>
-                <td>Town or city:</td>
-                <td>{{user.profile.town_city}}</td>
-            </tr>
-            <tr>
-                <td>Postcode:</td>
-                <td>{{user.profile.postcode}}</td>
-            </tr>
-        </table>
+    <div class="container">
+        <div class="profile">
+            <h2>Profile Information</h2>
+            <table class="profile-details">
+                <tr>
+                    <td>Username:</td>
+                    <td>{{user.username}}</td>
+                </tr>
+                <tr>
+                    <td>email</td>
+                    <td>{{user.email}}</td>
+                </tr>
+                <tr>
+                    <td>First name:</td>
+                    <td>{{user.first_name}}</td>
+                </tr>
+                <tr>
+                    <td>Last name:</td>
+                    <td>{{user.last_name}}</td>
+                </tr>
+                <tr>
+                    <td>Contact number:</td>
+                    <td>{{user.profile.phoneNumber}}</td>
+                </tr>
+                <tr>
+                    <td>Member since:</td>
+                    <td>{{user.date_joined}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="shipping">
+            <h2>Shipping Information</h2>
+            <table class="shipping-details">
+                <tr>
+                    <td>Addressed to:</td>
+                    <td>{{user.profile.ship_name}}</td>
+                </tr>
+                <tr>
+                    <td>Contact number:</td>
+                    <td>{{user.profile.phoneNumber}}</td>
+                </tr>
+                <tr>
+                    <td>Address line 1:</td>
+                    <td>{{user.profile.street_address1}}</td>
+                </tr>
+                <tr>
+                    <td>Address line 2:</td>
+                    <td>{{user.profile.street_address2}}</td>
+                </tr>
+                <tr>
+                    <td>Town or city:</td>
+                    <td>{{user.profile.town_city}}</td>
+                </tr>
+                <tr>
+                    <td>Postcode:</td>
+                    <td>{{user.profile.postcode}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="testimonial">
+            <h2>Your Testimonial</h2>
+            {% if user_testimonial %}
+                <strong>Rating:</strong> <wa-rating label="Overall rating">{{ user_testimonial.rating }}</wa-rating>
+                <p><strong>Review:</strong> {{ user_testimonial.short_review }}</p>
+                {% if user_testimonial.approved %}
+                    <p><em>Status: Approved</em></p>
+                {% else %}
+                    <p><em>Status: Pending approval</em></p>
+                {% endif %}
+            {% else %}
+            <form method="POST">
+                {% csrf_token %}
+                {% if user.profile.has_purchased %}
+                {{ testimonial_form }}
+                <wa-textarea label="Review" hint="Leave us a review!"></wa-textarea>
+                <wa-button type='submit'>Submit your review</button>
+                {% else %}
+                <wa-textarea appearance="filled" label="Review" hint="Complete a purchase to leave a review." disabled></wa-textarea>
+                {% endif %}
+            </form>
+            {% endif %}
+        </div>
     </div>
     {% endif %}
 </section>
