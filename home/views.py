@@ -3,6 +3,7 @@ from django.contrib import messages
 
 from store.models import Product
 from blog.models import Post
+from userprofile.models import Testimonial
 
 def home(request):
     """
@@ -10,11 +11,12 @@ def home(request):
     Updated to  also  fetch promoted products to display
     :param request: Description
     """
-    messages.success(request, "Test toast!")
     promoted_products = Product.objects.filter(promoted=True).prefetch_related('images')[:3]
     blog_posts = Post.objects.filter(publish=True).order_by('-date_created')[:3]
+    featured_testmonials = Testimonial.objects.filter(approved=True, featured=True).select_related('user')
     context = {
         'promoted_products': promoted_products,
         'blog_posts': blog_posts,
+        'featured_testimonials': featured_testmonials,
     }
     return render(request, 'home/index.html', context)

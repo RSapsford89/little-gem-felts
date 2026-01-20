@@ -20,7 +20,8 @@ body {
 }
 body {
   display: flex;
-  flex-direction: column;  
+  flex-direction: column;
+  background-color: #d6d5ee;  
 }
 main {
   flex: 1; 
@@ -43,7 +44,7 @@ p {
 section {
   /* margin-bottom: 15rem; */
   max-width: 900px;
-  margin: 5rem auto;
+  margin: clamp(2rem, 20vw, 20rem) auto;
 }
 .navbar {
   font-family: var(--title-font);
@@ -60,6 +61,9 @@ section {
   list-style: none;
   gap: 1rem;
   margin-right: 2rem;
+}
+.large-space{
+  margin-bottom: clamp(2rem 5vh 10rem);
 }
 wa-button.nav-btn::part(base) {
   padding: 0.5rem;
@@ -78,13 +82,7 @@ wa-button.nav-btn::part(base):hover {
 wa-button.nav-btn::part(base):active {
   transform: translateY(1px);
 }
-body {
-  background-color: #d6d5ee;
-}
-/* .latest-additions-container{
-  display:grid;
-  grid-template-columns: auto auto auto;
-} */
+
  /* Latest Additions Responsive Grid */
 .latest-additions .wa-grid {
   display: grid;

@@ -12,26 +12,25 @@
   --tropical-teal-c6:#16BAC5;
 
 }
-.cta-overlay{
-    position: relative;
-    background-color: rgb(86, 77, 172, 0.8);
-    padding: 3rem;
-    border-radius: 10px;
-    text-align: left;
-    font-size: 1.6rem;
-    color: white;
-    inset: -15% -20% ;
-}
 .cta-section{
     position:relative;
-    margin: 5rem auto;
     width: clamp(300px, 60%, 900px);
-    height: 300px;
+    height: clamp(470px, 25vh, 550px);
     background: no-repeat url('/media/drying-fibres.webp');
     background-size: cover;
     display: flex;
     justify-content: center;
     inset: 5% 4%;
+}
+.cta-overlay{
+    position: relative;
+    background-color: rgb(86, 77, 172, 0.8);
+    padding: 2rem 3rem;
+    border-radius: 10px;
+    text-align: left;
+    font-size: 1.6rem;
+    color: white;
+    inset: -15% -20% ;
 }
 .cta-img{
     position: relative;
@@ -117,4 +116,7 @@ wa-button.button-dark::part(base){
 }
 .event-item{
     text-align: left;
+}
+wa-card.testimonial-card{
+    max-width: 200px;
 }

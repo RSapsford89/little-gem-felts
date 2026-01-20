@@ -18,7 +18,16 @@ class UserProfileAdmin(admin.ModelAdmin):
 
 class TestimonialAdmin(admin.ModelAdmin):
     model = Testimonial
+    list_display = [
+        'user',
+        'rating',
+        'approved',
+        'short_review',
+        'featured',
+        'date_created',
+    ]
     fields = [
+        'user',
         'rating',
         'approved',
         'short_review',
