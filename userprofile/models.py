@@ -1,5 +1,8 @@
 from django.db import models
+from django.db.models.signals import post_save, post_delete # found in BoutiqueAdo
+from django.dispatch import receiver # found in Boutique Ado
 from django.contrib.auth.models import User
+from django_countries.fields import CountryField
 # Create your models here.
 
 class userProfile(models.Model):
@@ -15,7 +18,7 @@ class userProfile(models.Model):
     street_address2 = models.CharField(max_length=80, blank=True, null=True)
     town_city = models.CharField(max_length=60, blank=True, null=True)
     postcode = models.CharField(max_length=20, blank=True, null=True)
-    postcode = models.CharField(max_length=40, blank=True, null=True)
+    country = CountryField(blank_label='Country', blank=True, null=True)
 
     stripe_pid = models.CharField(max_length=255, blank=True, null=True)
 
@@ -25,6 +28,14 @@ class userProfile(models.Model):
     def __str__(self):
         return f'Profile for {self.user.username}'
 
+@receiver(post_save, sender=User)
+def createUpdateProfile(sender, instance, created, **kwargs):
+    """
+    createUpdateProfile creates or updates the userProfile
+    """
+    if created: # a user exists
+        userProfile.objects.create(user=instance)
+        instance.profile.save()
 
 RATING = [(1,'1'),(2,'2'),(3,'3'),(4,'4'),(5,'5'),]
 
