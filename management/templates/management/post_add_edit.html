@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/store.css' %}">
+{% endblock extra_css %}
+{% block latestAdditions %}{% endblock latestAdditions %}
+{% block titles %}
+{% if edit %}
+<h1>Edit Blog Post</h1>
+{% else %}
+<h1>Add New Blog Post</h1>
+{% endif %}
+{% endblock titles %}
+{% block content %}
+<section class="product-listing">
+    <div class="container">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <wa-button type="submit" variant="brand">
+                {% if edit %}
+                Update Post
+                {% else %}
+                Add Post
+                {% endif %}
+            </wa-button>
+            <wa-button href="{% url 'management:blog_management' %}" variant="outline">Cancel</wa-button>
+        </form>
+    </div>
+</section>
+{% endblock content %}

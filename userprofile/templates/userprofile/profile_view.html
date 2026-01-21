@@ -75,9 +75,12 @@
             </table>
         </div>
         <wa-button href="{% url 'userprofile:edit_view' %}" variant="outline" pill>Edit Profile</wa-button>
+        
         {% if user.is_staff %}
         <wa-button href="{% url 'management:product_management' %}" variant="brand" pill>Product Management</wa-button>
+        <wa-button href="{% url 'management:blog_management' %}" variant="brand" pill>Blog Post Management</wa-button>
         {% endif %}
+        
         <div class="testimonial">
             <h2>Your Testimonial</h2>
             {% if user_testimonial %}
@@ -94,7 +97,7 @@
                 {% if user.profile.has_purchased %}
                 {{ testimonial_form }}
                 <wa-textarea label="Review" hint="Leave us a review!"></wa-textarea>
-                <wa-button type='submit'>Submit your review</button>
+                <wa-button type='submit'>Submit your review</wa-button>
                 {% else %}
                 <wa-textarea appearance="filled" label="Review" hint="Complete a purchase to leave a review." disabled></wa-textarea>
                 {% endif %}

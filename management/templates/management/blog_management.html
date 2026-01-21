@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock extra_css %}
+{% block titles %}
+<h1>Blog Post Management</h1>
+{% endblock titles %}
+{% block latestAdditions %}{% endblock latestAdditions %}
+{% block content %}
+<section class="product-listing">
+    <div>
+        <wa-button href="{% url 'management:add_post' %}" variant="brand" pill>Add New Post</wa-button>
+    </div>
+    <div class="container">
+        <wa-scroller orientation="horizontal">
+            <table>
+                <tr>
+                    <th><h3>Blog Posts:</h3></th>
+                </tr>
+                <tr>
+                    <th>Title</th>
+                    <th>Slug</th>
+                    <th>Content</th>
+                    <th>Author</th>
+                    <th>Location</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Is Event</th>
+                    <th>Allow Comments</th>
+                    <th>Published</th>
+                    <th>Date Created</th>
+                    <th>Edit</th>
+                </tr>
+                {% for post in posts %}
+                <tr>
+                    <td>
+                        <div class="cell-content">{{post.title}}</div>
+                    </td>
+                    <td>
+                        <div class="cell-content">{{post.slug}}</div>
+                    </td>
+                    <td>
+                        <div class="cell-content">{{post.content}}</div>
+                    </td>
+                    <td>
+                        <div class="cell-content">{{post.author}}</div>
+                    </td>
+                    <td>
+                        <div class="cell-content">{{post.location}}</div>
+                    </td>
+                    <td>
+                        <div class="cell-content">{{post.start_date|date:"Y-m-d H:i"}}</div>
+                    </td>
+                    <td>
+                        <div class="cell-content">{{post.end_date|date:"Y-m-d H:i"}}</div>
+                    </td>
+                    <td>
+                        <div class="cell-content">{{post.is_event}}</div>
+                    </td>
+                    <td>
+                        <div class="cell-content">{{post.allow_comments}}</div>
+                    </td>
+                    <td>
+                        <div class="cell-content">{{post.publish}}</div>
+                    </td>
+                    <td>
+                        <div class="cell-content">{{post.date_created|date:"Y-m-d"}}</div>
+                    </td>
+                    <td>
+                        <div class="cell-content"><a href="{% url 'management:edit_post' post.id %}">Edit</a></div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="12">No blog posts found.</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </wa-scroller>
+    </div>
+</section>
+{% endblock content %}
