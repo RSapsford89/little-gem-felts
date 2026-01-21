@@ -75,6 +75,9 @@
             </table>
         </div>
         <wa-button href="{% url 'userprofile:edit_view' %}" variant="outline" pill>Edit Profile</wa-button>
+        {% if user.is_staff %}
+        <wa-button href="{% url 'management:product_management' %}" variant="brand" pill>Product Management</wa-button>
+        {% endif %}
         <div class="testimonial">
             <h2>Your Testimonial</h2>
             {% if user_testimonial %}

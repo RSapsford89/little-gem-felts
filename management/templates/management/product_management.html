@@ -6,10 +6,28 @@
 {% block titles %}
 <h1>Product listings</h1>
 {% endblock titles %}
+{% block latestAdditions %}{% endblock latestAdditions %}
 {% block content %}
 <section class="product-listing">
+    <div>
+        <wa-button href="{% url 'management:add_product' %}" variant="brand" pill>Add New Product</wa-button>
+    </div>
     <div class="container">
         <table>
+            <tr>
+                <th><h3>Products:</h3></th>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Main Category</th>
+                <th>Sub Category</th>
+                <th>Stock Level</th>
+                <th>Delivery Cost</th>
+                <th>Promoted(T/F)</th>
+                <th>Edit</th>
+            </tr>
             {% for product in products %}
             <tr>
                 <td>
@@ -35,6 +53,9 @@
                     </td>
                     <td>
                         {{product.promoted}}
+                    </td>
+                    <td>
+                        <a href="{% url 'management:edit_product' product.id %}">Edit</a>
                     </td>
                 </tr>
                 {% endfor %}

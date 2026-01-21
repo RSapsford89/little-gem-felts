@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/store.css' %}">
+{% endblock extra_css %}
+{% block latestAdditions %}{% endblock latestAdditions %}
+{% block titles %}
+<h1>Product listings</h1>
+{% endblock titles %}
+{% block content %}
+<section class="product-listing">
+    <div class="container">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <wa-button type="submit" variant="brand">
+                {% if edit %}
+                Update Product
+                {% else %}
+                Add Product
+                {% endif %}
+            </wa-button>
+            <wa-button href="{% url 'management:product_management' %}" variant="outline">Cancel</wa-button>
+        </form>
+    </div>
+</section>
+{% endblock content %}
