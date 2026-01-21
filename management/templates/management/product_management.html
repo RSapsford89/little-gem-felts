@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% load static %}
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/store.css' %}">
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
 {% endblock extra_css %}
 {% block titles %}
 <h1>Product listings</h1>
@@ -13,53 +13,55 @@
         <wa-button href="{% url 'management:add_product' %}" variant="brand" pill>Add New Product</wa-button>
     </div>
     <div class="container">
-        <table>
-            <tr>
-                <th><h3>Products:</h3></th>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Main Category</th>
-                <th>Sub Category</th>
-                <th>Stock Level</th>
-                <th>Delivery Cost</th>
-                <th>Promoted(T/F)</th>
-                <th>Edit</th>
-            </tr>
-            {% for product in products %}
-            <tr>
-                <td>
-                    {{product.name}}
-                </td>
-                <td>
-                    {{product.description}}
-                </td>
-                <td>
-                        {{product.price}}
-                    </td>
-                    <td>
-                        {{product.main_category}}
-                    </td>
-                    <td>
-                        {{product.sub_category}}
-                    </td>
-                    <td>
-                        {{product.stock_level}}
-                    </td>
-                    <td>
-                        {{product.delivery_cost}}
-                    </td>
-                    <td>
-                        {{product.promoted}}
-                    </td>
-                    <td>
-                        <a href="{% url 'management:edit_product' product.id %}">Edit</a>
-                    </td>
+        <wa-scroller orientation="horizontal">
+            <table>
+                <tr>
+                    <th><h3>Products:</h3></th>
                 </tr>
-                {% endfor %}
-            </table>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Main Category</th>
+                    <th>Sub Category</th>
+                    <th>Stock Level</th>
+                    <th>Delivery Cost</th>
+                    <th>Promoted(T/F)</th>
+                    <th>Edit</th>
+                </tr>
+                {% for product in products %}
+                <tr>
+                    <td>
+                        {{product.name}}
+                    </td>
+                    <td>
+                        <div class="description-cell">{{product.description}}</div>
+                    </td>
+                    <td>
+                            {{product.price}}
+                        </td>
+                        <td>
+                            {{product.main_category}}
+                        </td>
+                        <td>
+                            {{product.sub_category}}
+                        </td>
+                        <td>
+                            {{product.stock_level}}
+                        </td>
+                        <td>
+                            {{product.delivery_cost}}
+                        </td>
+                        <td>
+                            {{product.promoted}}
+                        </td>
+                        <td>
+                            <a href="{% url 'management:edit_product' product.id %}">Edit</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+        </wa-scroller>
         </div>
     </section>
 {% endblock content %}

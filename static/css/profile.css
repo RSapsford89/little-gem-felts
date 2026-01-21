@@ -1,9 +1,19 @@
 td{
-    width:50%
+    width:50%;
+    /* min-width:150px; */
+    
 }
 td:first-child {
     font-weight: bold;
     width: 30%;
+}
+tr{
+    max-height: 200px;
+}
+.description-cell{
+    max-height:200px;
+    min-width: 200px;
+    overflow-y: auto;
 }
 .container{
     display: flex;
