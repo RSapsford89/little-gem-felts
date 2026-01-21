@@ -62,7 +62,7 @@
               {% if product.images.first %}
               <img slot="media" src="{{ product.images.first.image.url }}" alt="{{ product.name }}" />
               {% else %}
-              <img slot="media" src="https://via.placeholder.com/500x300?text=No+Image" alt="{{ product.name }}" />
+              <img slot="media" src="{{MEDIA_URL}}no-img-knit.png" alt="{{ product.name }}" />
               {% endif %}
               <h3>{{ product.name }}</h3>
               <p>£{{ product.price }}</p>

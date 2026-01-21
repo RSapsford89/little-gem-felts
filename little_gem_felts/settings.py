@@ -82,6 +82,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'basket.contexts.basket_contents', # custom basket contexts file
                 'django.template.context_processors.request',
+                'django.template.context_processors.media',
             ],
         },
     },
