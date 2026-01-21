@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/store.css' %}">
+{% endblock extra_css %}
+{% block titles %}
+<h1>Product listings</h1>
+{% endblock titles %}
+{% block content %}
+<section class="product-listing">
+    <div class="container">
+        <table>
+            {% for product in products %}
+            <tr>
+                <td>
+                    {{product.name}}
+                </td>
+                <td>
+                    {{product.description}}
+                </td>
+                <td>
+                        {{product.price}}
+                    </td>
+                    <td>
+                        {{product.main_category}}
+                    </td>
+                    <td>
+                        {{product.sub_category}}
+                    </td>
+                    <td>
+                        {{product.stock_level}}
+                    </td>
+                    <td>
+                        {{product.delivery_cost}}
+                    </td>
+                    <td>
+                        {{product.promoted}}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </section>
+{% endblock content %}

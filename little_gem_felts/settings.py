@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'store',
     'basket',
     'userprofile',
+    'management',
     # additional library apps
     'allauth',
     'allauth.account',

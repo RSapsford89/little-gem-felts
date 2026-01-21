@@ -3,6 +3,9 @@ from django import forms
 from .models import Product,Category
 
 class ProductForm(forms.ModelForm):
+    """
+    Form for admin to add new products to the site
+    """
     class Meta:
         model = Product
         fields = ['name','description','price','main_category','sub_category','stock_level','delivery_cost','promoted',]
