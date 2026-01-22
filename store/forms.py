@@ -21,7 +21,7 @@ class ImageForm(forms.ModelForm):
     """
     class Meta:
         model = Images
-        fields = ['product','image','position','primary_image',]
+        fields = ['image','position','primary_image',]
         widgets = {
             'image': forms.FileInput(attrs={'accept': 'image/*'}),
             'position': forms.NumberInput(attrs={'min': 0}),

@@ -17,7 +17,14 @@
             {{image_formset.management_form}}
             {% for form in image_formset %}
                 <div class="image-form">
-                    {{form.as_p}}
+                    {{ form.id }}
+                    {% if form.instance.image %}
+                        <div class="current-image mb-2">
+                            <p><strong>Current image:</strong></p>
+                            <img src="{{ form.instance.image.url }}" alt="Product image" style="max-width: 200px;">
+                        </div>
+                    {% endif %}
+                    {{ form.as_p }}
                 </div>
             {% endfor %}
             <wa-button type="submit" variant="brand">
