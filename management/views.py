@@ -170,3 +170,23 @@ def edit_post(request, post_id):
         'edit': True,
     }
     return render(request, 'management/post_add_edit.html', context)
+
+@staff_member_required
+def delete_post(request, post_id):
+    """
+    View to delete the selected blog post
+    Uses staff decorator
+    """
+    if request.method == 'POST':
+        try:
+            post = get_object_or_404(Post, pk=post_id)
+            post_title = post.title
+            post.delete()
+            messages.success(request, f'Successfully deleted blog post: {post_title}')
+            return redirect('management:blog_management')
+        except Exception as error:
+            messages.error(request, f'Error deleting blog post: {str(error)}')
+            return redirect('management:blog_management')
+    else:
+        messages.error(request, 'Invalid request method')
+        return redirect('management:blog_management')
