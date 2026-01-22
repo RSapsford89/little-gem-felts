@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.admin.views.decorators import staff_member_required
-from store.forms import ProductForm
+from store.forms import ProductForm, ImageFormSet
 from store.models import Product
 from blog.forms import PostForm
 from blog.models import Post
@@ -30,14 +30,18 @@ def edit_product(request,product_id):
     product = get_object_or_404(Product,pk=product_id)
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES, instance=product)
-        if form.is_valid():
+        image_formset = ImageFormSet(request.POST, request.FILES, instance=product)
+        if form.is_valid() and image_formset.is_valid():
             form.save()
+            image_formset.save()
             return redirect('management:product_management')
     else:
         form = ProductForm(instance=product)
+        image_formset = ImageFormSet(instance=product)
     context = {
         'product': product,
         'form': form,
+        'image_formset': image_formset,
         'edit': True,
 
     }
@@ -51,13 +55,18 @@ def add_product(request):
     """
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
+        image_formset = ImageFormSet(request.POST, request.FILES)
+        if form.is_valid() and image_formset.is_valid():
+            product =form.save()
+            image_formset.instance = product
+            image_formset.save()
             return redirect('management:product_management')
     else:
         form = ProductForm()
+        image_formset = ImageFormSet()
     context ={
         'form': form,
+        'image_formset': image_formset,
         'edit':False,
     }
     return render(request, 'management/product_add_edit.html', context)

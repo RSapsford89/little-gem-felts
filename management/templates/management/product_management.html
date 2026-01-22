@@ -27,6 +27,7 @@
                     <th>Stock Level</th>
                     <th>Delivery Cost</th>
                     <th>Promoted(T/F)</th>
+                    <th>Primary Image</th>
                     <th>Edit</th>
                 </tr>
                 {% for product in products %}
@@ -54,6 +55,11 @@
                         </td>
                         <td>
                             {{product.promoted}}
+                        </td>
+                        <td>
+                            <div>
+                            <img src="{{product.images.first.image.url}}" alt="{{product.images.first.image}}">
+                            </div>
                         </td>
                         <td>
                             <a href="{% url 'management:edit_product' product.id %}">Edit</a>
