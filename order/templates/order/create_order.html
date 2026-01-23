@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/store.css' %}">
+{% endblock extra_css %}
+
+{% block latestAdditions %}{% endblock latestAdditions %}
+
+{% block content %}
+<section class="basket-section">
+    {% if user.is_authenticated %}
+    <h1>{{user.username}}'s Shipping Details:</h1>
+    {% else %}
+    <h1>Shipping Details</h1>
+    {% endif %}
+    {%if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li>{{message}}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <div class="container" >
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            
+            <wa-button type="submit" variant="brand">
+                Create Order
+            </wa-button>
+            <wa-button href="{% url 'basket:view_basket' %}" variant="outline">Cancel</wa-button>
+        </form>
+        <div class="totals-column">
+            <wa-card>
+                <h3 class='header'>Basket Summary:</h3>
+                <table class="total-contents">
+                    <tr>
+                        <td>Number of items:</td>
+                        <td><strong>{{product_count}}</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Subtotal:</td>
+                        <td><strong>£{{total}}</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Delivery:</td>
+                        <td><strong>£{{delivery}}</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Grand Total:</td>
+                        <td><strong>£{{grand_total}}</strong></td>
+                    </tr>
+                </table>
+            </wa-card>
+        </div>
+    </div>
+</section>
+{% endblock content %}

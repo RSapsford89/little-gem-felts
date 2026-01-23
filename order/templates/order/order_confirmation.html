@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/store.css' %}">
+{% endblock extra_css %}
+
+{% block latestAdditions %}{% endblock latestAdditions %}
+
+{% block content %}
+<section>
+    <div class="container">
+        <h1>Thank you for your order</h1>
+        <div class="order-summary">
+            <h2>Order Summary</h2>
+            <table>
+                <tr>
+                    <td>Order ID:</td>
+                    <td> {{order.order_id}}</td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th>Product name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Line Total</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                {% for item in order.lineitems.all %}
+                <tr>
+                    <td>Item:</td>
+                    <td> {{item.product_name}}</td>
+                    <td> {{item.product_price}}</td>
+                    <td> {{item.quantity}}</td>
+                    <td> {{item.line_total}}</td>
+                    
+                </tr>
+                
+                {% endfor %}
+                <tr>
+                    <th>Delivery Cost</th>
+                    <td>{{order.delivery_cost}}</td>
+                </tr>
+                <tr>
+                    <th>Grand Total</th>
+                    <td>{{order.grand_total}}</td>
+                </tr>
+            </table>
+            <h2>Shipping details:</h2>
+            <table>
+                <tr>
+                    <td>{{order.full_name}}</td>
+                </tr>
+                <tr>
+                    <td>{{order.email}}</td>
+                </tr>
+                <tr>
+                    <td>{{order.street_address1}}</td>
+                </tr>
+                <tr>
+                    <td>{{order.street_address2}}</td>
+                </tr>
+                <tr>
+                    <td>{{order.town_city}}</td>
+                </tr>
+                <tr>
+                    <td>{{order.postcode}}</td>
+                </tr>
+                <tr>
+                    <td>{{order.country}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock content %}

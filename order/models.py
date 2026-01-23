@@ -1,5 +1,7 @@
 from django.db import models
 from django.db.models import Sum, Max
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django_countries.fields import CountryField
 import uuid
@@ -43,6 +45,7 @@ class Order(models.Model):
             self.order_total = self.lineitems.aggregate(Sum('line_total'))['line_total__sum'] or 0
             self.delivery_cost = self.lineitems.aggregate(Max('product_delivery'))['product_delivery__max'] or 0
             self.grand_total = self.order_total + self.delivery_cost
+            self.save()
         else:
             raise ValueError("Payment already processed, not allowed to alter the order")
 
@@ -68,3 +71,20 @@ class OrderLineItem(models.Model):
 
     def __str__(self):
         return f'{self.product_name}, {self.quantity} on order number: {self.order.order_id}'
+
+# suggestion by AI to ensure updates are saved to the Order table
+@receiver(post_save, sender=OrderLineItem)
+def update_on_save(sender, instance, **kwargs):
+    """
+    Update order totals when a line item is saved
+    """
+    instance.order.update_total()
+
+
+# suggestion by AI to ensure updates are saved to the Order table
+@receiver(post_delete, sender=OrderLineItem)
+def update_on_delete(sender, instance, **kwargs):
+    """
+    Update order totals when a line item is deleted
+    """
+    instance.order.update_total()
