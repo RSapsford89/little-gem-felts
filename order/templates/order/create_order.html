@@ -1,8 +1,7 @@
 {% extends "layout.html" %}
 {% load static %}
-
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/store.css' %}">
+<link rel="stylesheet" href="{% static 'css/store.css' %}">
 {% endblock extra_css %}
 
 {% block latestAdditions %}{% endblock latestAdditions %}
@@ -17,7 +16,7 @@
     {%if messages %}
     <ul class="messages">
         {% for message in messages %}
-            <li>{{message}}</li>
+        <li>{{message}}</li>
         {% endfor %}
     </ul>
     {% endif %}
@@ -52,11 +51,23 @@
                         <td><strong>£{{grand_total}}</strong></td>
                     </tr>
                 </table>
-                {% if user.is_authenticated %}
-                    <wa-button slot="footer">Continue with saved details</wa-button>
-                {% endif %}
             </wa-card>
         </div>
     </div>
+    {% comment %} from stripe docs {% endcomment %}
+    <form id="payment-form" data-return-url="{% url 'order:order_confirmation' %}" data-client-secret="{{ client_secret }}" data-stripe-public-key="{{ stripe_public_key }}">
+        <div id="payment-element">
+            <!--Stripe.js injects the Payment Element-->
+        </div>
+        <button id="submit">
+            <div class="spinner hidden" id="spinner"></div>
+            <span id="button-text">Pay now</span>
+        </button>
+        <div id="payment-message" class="hidden"></div>
+    </form>
 </section>
 {% endblock content %}
+{% block extra_js %}
+<script src="{% static 'js/checkout.js' %}" defer></script>
+
+{% endblock extra_js %}
