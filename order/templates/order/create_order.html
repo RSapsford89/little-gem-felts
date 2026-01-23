@@ -52,6 +52,9 @@
                         <td><strong>£{{grand_total}}</strong></td>
                     </tr>
                 </table>
+                {% if user.is_authenticated %}
+                    <wa-button slot="footer">Continue with saved details</wa-button>
+                {% endif %}
             </wa-card>
         </div>
     </div>

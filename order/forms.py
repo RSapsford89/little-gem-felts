@@ -10,7 +10,8 @@ class ShippingForm(forms.ModelForm):
     """
     class Meta:
         model = Order
-        fields = ['full_name',
+        fields = [
+                'full_name',
                 'email',
                 'phoneNumber',
                 'street_address1',

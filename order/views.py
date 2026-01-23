@@ -4,7 +4,6 @@ from decimal import Decimal
 from store.models import Product
 from order.models import Order, OrderLineItem
 from .forms import ShippingForm
-from userprofile.models import userProfile
 
 # Create your views here.
 
@@ -23,8 +22,6 @@ def create_order(request):
             form = ShippingForm(request.POST)
             if form.is_valid():
                 order = form.save(commit=False)
-                if request.user.is_authenticated:
-                    order.user = request.user
                 order.save()
                 try:
                     for product_id, quantity in basket.items():
@@ -63,7 +60,22 @@ def create_order(request):
         if not basket:
             messages.error(request, 'Your basket is empty')
             return redirect('basket:view_basket')
-        form = ShippingForm()
+        if request.user.is_authenticated:
+            user = request.user
+            prefill_data ={
+                'full_name': user.profile.ship_name,
+                'email': user.email,
+                'phoneNumber': user.profile.phoneNumber,
+                'street_address1': user.profile.street_address1,
+                'street_address2': user.profile.street_address2,
+                'town_city': user.profile.town_city,
+                'postcode': user.profile.postcode,
+                'country': user.profile.country,
+            }
+            form = ShippingForm(initial=prefill_data)
+            messages.success(request,"User's saved detail loaded")
+        else:
+            form = ShippingForm()
 
     context = {
         'form': form,

@@ -3,7 +3,8 @@ from django.http import JsonResponse
 from django.contrib import messages
 from decimal import Decimal
 import json
-from store.models import Product  
+from store.models import Product
+
 # Create your views here.
 
 def add_to_basket(request, product_id):
