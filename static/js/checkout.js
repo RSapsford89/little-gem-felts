@@ -1,7 +1,6 @@
 // Get Stripe public key and client secret from the page
 document.addEventListener('DOMContentLoaded', function() {
 const paymentForm = document.querySelector("#payment-form");
-const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
 if (!paymentForm){
   console.error("Stripe payment form not found");
@@ -11,10 +10,11 @@ if (!paymentForm){
 const stripePublicKey = paymentForm.dataset.stripePublicKey;
 const clientSecret = paymentForm.dataset.clientSecret;
 const stripe = Stripe(stripePublicKey);
+const dataUrl = paymentForm.getAttribute('data-url')
 let elements;
 
 initialize();
-
+checkStatus();
 document.querySelector("#payment-form").addEventListener("submit", handleSubmit);
 
 // Initialize Stripe elements with the client secret from Django
@@ -23,11 +23,11 @@ async function initialize() {
     theme: 'stripe',
   };
   elements = stripe.elements({ appearance, clientSecret });
-
+  
   const paymentElementOptions = {
     layout: "accordion",
   };
-
+  
   const paymentElement = elements.create("payment", paymentElementOptions);
   paymentElement.mount("#payment-element");
 }
@@ -35,24 +35,64 @@ async function initialize() {
 async function handleSubmit(e) {
   e.preventDefault();
   setLoading(true);
+  
+  const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
   const formData = new FormData(paymentForm)
-  const { error } = await stripe.confirmPayment({
-    elements,
-    confirmParams: {
-      return_url: "http://127.0.0.1:8000/order/confirmation/",
-    },
-  });
 
-  if (error.type === "card_error" || error.type === "validation_error") {
-    showMessage(error.message);
-  } else {
-    showMessage("An unexpected error occurred.");
+  try {
+      const response = await fetch(dataUrl,{
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': csrfToken,
+        },
+        body: formData,
+      });
+      const data = await response.json();
+
+      if(data.success){
+        const { error } = await stripe.confirmPayment({
+          elements,
+          confirmParams: {
+            return_url: window.location.origin +  "/order/confirmation/",
+          },
+        });
+
+        if (error.type === "card_error" || error.type === "validation_error") {
+            showMessage(error.message);
+        } 
+        else {
+          showMessage("An unexpected error occurred.");
+        }
+      }
+      else{
+        console.error("error with data", data.error);
+      }
+      
+  } 
+  catch (error) {
+    console.error("connection error", error)
   }
-
+  
   setLoading(false);
+
 }
 
 // ------- UI helpers -------
+async function checkStatus() {
+    const clientSecret = new URLSearchParams(window.location.search).get(
+      "payment_intent_client_secret"
+    );
+    if (!clientSecret) return;
+
+    const { paymentIntent } = await stripe.retrievePaymentIntent(clientSecret);
+
+    switch (paymentIntent.status) {
+      case "succeeded": showMessage("Payment succeeded!"); break;
+      case "processing": showMessage("Your payment is processing."); break;
+      case "requires_payment_method": showMessage("Your payment was not successful, please try again."); break;
+      default: showMessage("Something went wrong."); break;
+    }
+  }
 
 function showMessage(messageText) {
   const messageContainer = document.querySelector("#payment-message");
