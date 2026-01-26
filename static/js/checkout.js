@@ -1,16 +1,21 @@
 // Get Stripe public key and client secret from the page
+document.addEventListener('DOMContentLoaded', function() {
 const paymentForm = document.querySelector("#payment-form");
+const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+if (!paymentForm){
+  console.error("Stripe payment form not found");
+  return;
+}
+
 const stripePublicKey = paymentForm.dataset.stripePublicKey;
 const clientSecret = paymentForm.dataset.clientSecret;
 const stripe = Stripe(stripePublicKey);
-
 let elements;
 
 initialize();
 
-document
-  .querySelector("#payment-form")
-  .addEventListener("submit", handleSubmit);
+document.querySelector("#payment-form").addEventListener("submit", handleSubmit);
 
 // Initialize Stripe elements with the client secret from Django
 async function initialize() {
@@ -30,7 +35,7 @@ async function initialize() {
 async function handleSubmit(e) {
   e.preventDefault();
   setLoading(true);
-
+  const formData = new FormData(paymentForm)
   const { error } = await stripe.confirmPayment({
     elements,
     confirmParams: {
@@ -73,4 +78,4 @@ function setLoading(isLoading) {
   }
 }
 
-console.log("Client secret:", clientSecret);
+});

@@ -142,7 +142,15 @@ def payment(request):
     return render(request, 'order/payment.html', context)
 
 from django.views.decorators.csrf import csrf_exempt
-
+# what errors do we need to catch?
+# if order doesnt exist
+# if payment intent doesn't create
+# if basket is empty
+# if stock does not exist
+# if form not valid
+# if payment fails
+# if data is wrong type?
+# if form is blank, no order or payment to be made
 def create_order(request):
     basket = request.session.get('basket', {})
     

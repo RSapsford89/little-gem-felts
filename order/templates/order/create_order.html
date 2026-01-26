@@ -21,13 +21,20 @@
     </ul>
     {% endif %}
     <div class="container" >
-        <form method="POST" id="shipping-form" data-url="{% url 'order:create_order'%}">
-            {% csrf_token %}
-            {{ form.as_p }}
+        <form method="POST" id="shipping-form" >
+            
             
             <wa-button type="submit" variant="brand" >Confirm Shipping Details</wa-button>
             <wa-button href="{% url 'basket:view_basket' %}" variant="outline">Cancel</wa-button>
         </form>
+    </div>
+    {% comment %} from stripe docs {% endcomment %}
+    <form id="payment-form" data-url="{% url 'order:create_order'%}" data-return-url="{% url 'order:order_confirmation' %}" data-client-secret="{{ client_secret }}" data-stripe-public-key="{{ stripe_public_key }}">
+        {% csrf_token %}
+        <fieldset class="shipping-form">
+            {{ form.as_p }}
+            
+        </fieldset>
         <div class="totals-column">
             <wa-card>
                 <h3 class='header'>Basket Summary:</h3>
@@ -51,17 +58,15 @@
                 </table>
             </wa-card>
         </div>
-    </div>
-    {% comment %} from stripe docs {% endcomment %}
-    <form id="payment-form" data-return-url="{% url 'order:order_confirmation' %}" data-client-secret="{{ client_secret }}" data-stripe-public-key="{{ stripe_public_key }}">
         <div id="payment-element">
             <!--Stripe.js injects the Payment Element-->
         </div>
+        <div id="payment-message" class="hidden"></div>
         <button id="submit">
             <div class="spinner hidden" id="spinner"></div>
             <span id="button-text">Pay now</span>
         </button>
-        <div id="payment-message" class="hidden"></div>
+        <wa-button href="{% url 'basket:view_basket' %}" variant="outline">Cancel</wa-button>
     </form>
 </section>
 {% endblock content %}
