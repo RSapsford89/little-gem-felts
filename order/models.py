@@ -49,6 +49,21 @@ class Order(models.Model):
         else:
             raise ValueError("Payment already processed, not allowed to alter the order")
 
+    def clean_up(self):
+        """
+        if an order remains unpaid for 15 minutes, 
+        put the stock back and delete the order.
+        """
+        if self.is_paid is False:
+            #find the order put back stock
+            #delete order
+            for line_item in self.lineitems.all():
+                product = line_item.product
+                product.stock_level += line_item.quantity
+                product.save()
+            self.delete()
+
+
 # Taken from BoutiqueAdo
 class OrderLineItem(models.Model):
     """

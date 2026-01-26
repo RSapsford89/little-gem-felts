@@ -143,14 +143,7 @@ def payment(request):
 
 from django.views.decorators.csrf import csrf_exempt
 # what errors do we need to catch?
-# if order doesnt exist
-# if payment intent doesn't create
-# if basket is empty
-# if stock does not exist
-# if form not valid
-# if payment fails
 # if data is wrong type?
-# if form is blank, no order or payment to be made
 def create_order(request):
     basket = request.session.get('basket', {})
     
@@ -163,8 +156,14 @@ def create_order(request):
         if form.is_valid():
             order = form.save(commit=False)
             pid = request.session.get('id')
+            order.stripe_pid = pid
+
             if pid:
-                order.stripe_pid = pid
+                repeat_order = Order.objects.filter(stripe_pid=pid, is_paid=False).first()
+                if repeat_order:
+                    # use the clean_up def to remove
+                    repeat_order.clean_up()
+                    repeat_order.delete()
             
             if request.user.is_authenticated:
                 user = request.user
@@ -172,23 +171,31 @@ def create_order(request):
 
             order.save()
 
-            for product_id, quantity in basket.items():
-                product = get_object_or_404(Product, pk=product_id)
+            try:
+                for product_id, quantity in basket.items():
+                    product = get_object_or_404(Product, pk=product_id)
 
-                if quantity <= product.stock_level:
-                    OrderLineItem.objects.create(
-                        order=order,
-                        product=product,
-                        product_name=product.name,
-                        product_price=product.price,
-                        product_delivery=product.delivery_cost,
-                        quantity=quantity,
-                    )
-                else:
-                    order.delete()
-                    return JsonResponse({'success': False, 'error': f'{product.name} does not have enough stock'}, status=400)
+                    if quantity <= product.stock_level:
+                        # reduce stock qty
+                        product.stock_level -= quantity
+                        product.save()
+
+                        OrderLineItem.objects.create(
+                            order=order,
+                            product=product,
+                            product_name=product.name,
+                            product_price=product.price,
+                            product_delivery=product.delivery_cost,
+                            quantity=quantity,
+                        )
+                    else:
+                        order.delete()
+                        return JsonResponse({'success': False, 'error': f'{product.name} does not have enough stock'}, status=400)
+            except Exception as e:
+                #adjust stock to previous level before finishing
+                order.clean_up()
                 
-            order.update_total()
+                return JsonResponse({'success': False, 'error': f'Error creating order: {e}'}, status=400)
             
             if pid:
                 try:
@@ -201,11 +208,11 @@ def create_order(request):
                     )
                 except Exception as e:
                     print(f'error with pid {e}')
-                    return JsonResponse({'success':False, 'error':'Payment processing error'}, status=400)
+                    return JsonResponse({'success': False, 'error': 'Payment processing error'}, status=400)
                 
             request.session['order_id'] = str(order.order_id)
             
-            messages.success(request,'order created')
+            messages.success(request, 'order created')
             return JsonResponse({'success': True, 'message': f'Order created{str(order)}'})
         else:
             return JsonResponse({'success': False, 'error': form.errors}, status=400)
@@ -213,15 +220,18 @@ def create_order(request):
     else: # For GET requests, render the form as usual
         basket_context = basket_contents(request)
         grand_total = basket_context['grand_total']
-        print(grand_total)
-        intent = stripe.PaymentIntent.create(
-            amount=int(grand_total * 100),
-            currency='gbp',
-            automatic_payment_methods={'enabled': True},
-        )
+
+        try:
+            intent = stripe.PaymentIntent.create(
+                amount=int(grand_total * 100),
+                currency='gbp',
+                automatic_payment_methods={'enabled': True},
+            )
+            request.session['client_secret'] = intent.client_secret
+            request.session['id'] = intent.id
+        except Exception as e:
+            return JsonResponse({'error', 'Failed to create Payment Intent: {e}'})
         
-        request.session['client_secret'] = intent.client_secret
-        request.session['id'] = intent.id
 
         if request.user.is_authenticated:
             user = request.user
@@ -245,34 +255,3 @@ def create_order(request):
         'client_secret': intent.client_secret,
     }
     return render(request, 'order/create_order.html', context)
-
-def shippingForm(request):
-    """ Post form data for AJAX response"""
-    if request.method == 'POST':
-        form = ShippingForm(request.POST)
-
-        if form.is_valid():
-            order = form.cleaned_data
-            order = form.save(commit=False)
-            order.save()
-            messages.error(request,order)
-            for product_id, quantity in basket.items():
-                product = get_object_or_404(Product, pk=product_id)
-
-                if quantity <= product.stock_level:
-                    OrderLineItem.objects.create(
-                        order = order,
-                        product = product,
-                        product_name = product.name,
-                        product_price = product.price,
-                        product_delivery = product.delivery_cost,
-                        quantity = quantity,
-                    )
-            order.update_total()
-
-        basket_context = basket_contents(request)
-        grand_total = basket_context['grand_total']
-        return JsonResponse({'success':True, 'message':'form submitted'})
-    else:
-        return JsonResponse({'success':False, 'error':form.errors}, status=400)
-        #ELSE

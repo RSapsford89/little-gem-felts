@@ -26,14 +26,16 @@ class StripeWH_Handler:
         order_id = metadata.get('order_id')
         if not order_id:
             # no order id sent in metadata
+            print("no order_id")
             return HttpResponse(content="PaymentIntent succeeded but no order_id in metadata")
         
         try:
             order = Order.objects.get(order_id=order_id)
             order.stripe_pid = intent.id
-            order.is_paid=True
+            order.is_paid = True
             order.save()
-
+            print(order.is_paid)
+            print(order.order_id)
             return HttpResponse(content='PaymentIntent was successful!', status=200)
         
         except Order.DoesNotExist:
