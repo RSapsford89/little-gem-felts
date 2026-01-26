@@ -34,7 +34,7 @@ async function handleSubmit(e) {
   const { error } = await stripe.confirmPayment({
     elements,
     confirmParams: {
-      return_url: window.location.origin + document.querySelector("#payment-form").dataset.returnUrl,
+      return_url: "http://127.0.0.1:8000/order/confirmation/",
     },
   });
 
@@ -72,3 +72,5 @@ function setLoading(isLoading) {
     document.querySelector("#button-text").classList.remove("hidden");
   }
 }
+
+console.log("Client secret:", clientSecret);

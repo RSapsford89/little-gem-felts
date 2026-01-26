@@ -21,13 +21,11 @@
     </ul>
     {% endif %}
     <div class="container" >
-        <form method="POST">
+        <form method="POST" id="shipping-form" data-url="{% url 'order:create_order'%}">
             {% csrf_token %}
             {{ form.as_p }}
             
-            <wa-button type="submit" variant="brand">
-                Create Order
-            </wa-button>
+            <wa-button type="submit" variant="brand" >Confirm Shipping Details</wa-button>
             <wa-button href="{% url 'basket:view_basket' %}" variant="outline">Cancel</wa-button>
         </form>
         <div class="totals-column">
@@ -69,5 +67,6 @@
 {% endblock content %}
 {% block extra_js %}
 <script src="{% static 'js/checkout.js' %}" defer></script>
+<script src="{% static 'js/ajax_checkout.js' %}" defer></script>
 
 {% endblock extra_js %}
