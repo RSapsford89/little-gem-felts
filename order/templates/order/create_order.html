@@ -13,22 +13,7 @@
     {% else %}
     <h1>Shipping Details</h1>
     {% endif %}
-    {%if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li>{{message}}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    <div class="container" >
-        <form method="POST" id="shipping-form" >
-            
-            
-            <wa-button type="submit" variant="brand" >Confirm Shipping Details</wa-button>
-            <wa-button href="{% url 'basket:view_basket' %}" variant="outline">Cancel</wa-button>
-        </form>
-    </div>
-    {% comment %} from stripe docs {% endcomment %}
+    {% comment %} from stripe docs with fieldset to combine forms{% endcomment %}
     <form id="payment-form" data-url="{% url 'order:create_order'%}" data-return-url="{% url 'order:order_confirmation' %}" data-client-secret="{{ client_secret }}" data-stripe-public-key="{{ stripe_public_key }}">
         {% csrf_token %}
         <fieldset class="shipping-form">
@@ -72,6 +57,4 @@
 {% endblock content %}
 {% block extra_js %}
 <script src="{% static 'js/checkout.js' %}" defer></script>
-{% comment %} <script src="{% static 'js/ajax_checkout.js' %}" defer></script> {% endcomment %}
-
 {% endblock extra_js %}

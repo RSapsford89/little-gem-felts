@@ -169,10 +169,12 @@ def create_order(request):
             if request.user.is_authenticated:
                 user = request.user
                 order.user = user
+
             order.save()
 
             for product_id, quantity in basket.items():
                 product = get_object_or_404(Product, pk=product_id)
+
                 if quantity <= product.stock_level:
                     OrderLineItem.objects.create(
                         order=order,
@@ -185,7 +187,9 @@ def create_order(request):
                 else:
                     order.delete()
                     return JsonResponse({'success': False, 'error': f'{product.name} does not have enough stock'}, status=400)
+                
             order.update_total()
+            
             if pid:
                 try:
                     stripe.PaymentIntent.modify(

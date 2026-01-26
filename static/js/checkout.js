@@ -4,6 +4,7 @@ const paymentForm = document.querySelector("#payment-form");
 
 if (!paymentForm){
   console.error("Stripe payment form not found");
+  showToast(data.error || "Stripe is unavailable", "error");
   return;
 }
 
@@ -58,19 +59,19 @@ async function handleSubmit(e) {
         });
 
         if (error.type === "card_error" || error.type === "validation_error") {
-            showMessage(error.message);
+          showToast("Stripe payment error", "error");
         } 
         else {
-          showMessage("An unexpected error occurred.");
+          showToast("An unexpected error has occured", "error");
         }
       }
       else{
-        console.error("error with data", data.error);
+        showToast("Order failed","error");
       }
       
   } 
   catch (error) {
-    console.error("connection error", error)
+    showToast("Unable to get Order from server", "error");
   }
   
   setLoading(false);
@@ -87,24 +88,12 @@ async function checkStatus() {
     const { paymentIntent } = await stripe.retrievePaymentIntent(clientSecret);
 
     switch (paymentIntent.status) {
-      case "succeeded": showMessage("Payment succeeded!"); break;
-      case "processing": showMessage("Your payment is processing."); break;
-      case "requires_payment_method": showMessage("Your payment was not successful, please try again."); break;
-      default: showMessage("Something went wrong."); break;
+      case "succeeded": showToast("Payment successful"); break;
+      case "processing": showToast("Your payment is processing.","info"); break;
+      case "requires_payment_method": showToast("Your payment was not successful, please try again.","error"); break;
+      default: showToast("Something went wrong.","error"); break;
     }
   }
-
-function showMessage(messageText) {
-  const messageContainer = document.querySelector("#payment-message");
-
-  messageContainer.classList.remove("hidden");
-  messageContainer.textContent = messageText;
-
-  setTimeout(function () {
-    messageContainer.classList.add("hidden");
-    messageContainer.textContent = "";
-  }, 4000);
-}
 
 function setLoading(isLoading) {
   if (isLoading) {

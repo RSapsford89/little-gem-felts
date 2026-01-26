@@ -42,11 +42,25 @@ class StripeWH_Handler:
             return HttpResponse(content=f"unable to update order: {e}", status=500)
 
 
-
     def handle_payment_intent_failed(self, event):
-        # Add your logic here
-       # print('payment intent FAILED', event)
-        return HttpResponse(content='PaymentIntent failed.', status=200)
+        # get the order ID, PID, update order with the PID and paid to True
+        intent = event.data.object
+        metadata = intent.get('metadata',{})
+        order_id = metadata.get('order_id')
+        if not order_id:
+            # no order id sent in metadata
+            return HttpResponse(content="PaymentIntent failed - no order_id in metadata")
+
+        try:
+            order = Order.objects.get(order_id=order_id)
+            order.delete()            
+
+            return HttpResponse(content=f'PaymentIntent was failed! Removed Order {order_id}', status=200)
+
+        except Order.DoesNotExist:
+            return HttpResponse(content="order not found",status=400)
+        except Exception as e:
+            return HttpResponse(content=f"unable to update order: {e}", status=500)
 
 @require_POST
 @csrf_exempt
@@ -82,6 +96,7 @@ def webhook(request):
     event_map = {
         'payment_intent.succeeded': handler.handle_payment_intent_succeeded,
         'payment_intent.payment_failed': handler.handle_payment_intent_failed,
+        
     }
 
     # get webhook type from Stripe
