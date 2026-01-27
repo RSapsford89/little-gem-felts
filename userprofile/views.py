@@ -14,17 +14,22 @@ def profile_view(request):
     if request.method == 'POST':
         # if user has bought, populate form
         if request.user.profile.has_purchased:
-            testimonial_form = TestimonialForm(request.POST)
+            testimonial_form = TestimonialForm(request.POST, instance=user_testimonial)
             # check the form is valid
             if testimonial_form.is_valid():
                 testimonial = testimonial_form.save(commit=False)
                 testimonial.user = request.user
                 testimonial.save()
                 return redirect('userprofile:profile_view')
-            
+    else:
+        if user_testimonial:
+            testimonial_form = TestimonialForm(instance=user_testimonial)
+        else:
+            testimonial_form = TestimonialForm()
+
     context = {
-        'testimonial_form' : testimonial_form,
-        'user_testimonial' : user_testimonial,
+        'testimonial_form': testimonial_form,
+        'user_testimonial': user_testimonial,
     }
     return render(request, 'userprofile/profile_view.html', context)
 
@@ -34,7 +39,6 @@ def edit_view(request):
     Edit the user profile view. CustomUserFormEdit
     has no password or username field to edit.
     """
-    # user = get_object_or_404(userProfile, pk=user_id)
 
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=request.user.profile,)

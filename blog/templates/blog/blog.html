@@ -24,4 +24,13 @@
 
   </div>
 </section>
+<section class="comments-section">
+  <div class="container">
+    <form method="POST">
+      {% csrf_token %}
+      {{CommentForm}}
+      <wa-button type="submit">Submit your comment</wa-button>
+    </form>
+  </div>
+</section>
 {% endblock content %}

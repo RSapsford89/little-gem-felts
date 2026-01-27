@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Post
+from .models import Post, Comment
+from .forms import CommentForm
 
 def blog(request):
     """
@@ -25,4 +26,5 @@ def blog_details(request, slug):
     :param request: Description
     """
     post = get_object_or_404(Post, slug=slug, publish=True)
+    
     return render(request, 'blog/blog.html', {'post':post})

@@ -4,6 +4,7 @@ from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django_countries.fields import CountryField
+from django.core.validators import MinValueValidator, MaxValueValidator
 import uuid
 from store.models import Product
 # Create your models here.
@@ -74,7 +75,7 @@ class OrderLineItem(models.Model):
     product_name = models.CharField(max_length=200, null=False, blank=False)
     product_price = models.DecimalField(max_digits=5, decimal_places=2, null=False, blank=False)
     product_delivery = models.DecimalField(max_digits=5, decimal_places=2, null=False, blank=False)
-    quantity = models.IntegerField(max_length=2, default=1, null=False, blank=False)
+    quantity = models.IntegerField(default=1, validators=[MinValueValidator(0), MaxValueValidator(10)], null=False, blank=False)
     line_total = models.DecimalField(max_digits=5, decimal_places=2, editable=False)
 
     def save(self, *args, **kwargs):
@@ -82,7 +83,7 @@ class OrderLineItem(models.Model):
         override default save to calculate the line total
         """
         self.line_total = self.product_price * self.quantity
-        super().save(*args,**kwargs)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f'{self.product_name}, {self.quantity} on order number: {self.order.order_id}'

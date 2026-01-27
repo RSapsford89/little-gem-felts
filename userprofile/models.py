@@ -58,3 +58,18 @@ class Testimonial(models.Model):
     def __str__(self):
         return f'Testimonial by {self.user.username} - {self.rating}' # use WA-rating on self.rating
 
+    def save(self, *args, **kwargs):
+        """
+        if testimonial rating/short/long review is edited,
+        set approved to false, featured to false
+        """
+        if self.pk:
+            try:
+                testimonial = Testimonial.objects.get(pk=self.pk)
+                if testimonial.rating != self.rating or testimonial.short_review != self.short_review or testimonial.long_review != self.long_review:
+                    self.approved = False
+                    self.featured = False
+
+            except Testimonial.DoesNotExist:
+                pass
+        super().save(*args, **kwargs)
