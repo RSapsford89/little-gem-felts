@@ -26,11 +26,32 @@
 </section>
 <section class="comments-section">
   <div class="container">
-    <form method="POST">
-      {% csrf_token %}
-      {{CommentForm}}
-      <wa-button type="submit">Submit your comment</wa-button>
-    </form>
-  </div>
+    {% for comment in comments %}
+        <div class="comment">
+            <strong>{{ comment.author.username }}</strong> 
+            <span class="text-muted">- {{ comment.date_created|date:"M d, Y" }}</span>
+            <p>{{ comment.content }}</p>
+        </div>
+    {% empty %}
+        <p>No comments yet.</p>
+    {% endfor %}
+
+    <div class="mt-4">
+        {% if post.allow_comments %}
+            {% if user.is_authenticated %}
+                <form method="post">
+                    {% csrf_token %}
+                    {{ comment_form.as_p }}
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            {% else %}
+                <p>Please <a href="{% url 'account_login' %}">login</a> to leave a comment.</p>
+            {% endif %}
+        {% else %}
+            <div class="alert alert-secondary">
+                Comments are closed for this post.
+            </div>
+        {% endif %}
+    </div>
 </section>
 {% endblock content %}
