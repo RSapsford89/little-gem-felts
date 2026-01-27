@@ -1,7 +1,7 @@
 env.py
 __pycache__/
 *.pyc
-media/
+media/products/
 *.sqlite3
 node_modules/
 db.sqlite3

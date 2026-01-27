@@ -16,6 +16,29 @@
     <p>No profile picture uploaded</p>
 {% endif %}
     <div class="container">
+        <div class="orders">
+            <table>
+                <h2>Order History:</h2>
+                {% for order in order_list %}
+                <tr>
+                    <td>{{order.order_id}}</td>
+                    {% for lineitem in order.lineitems.all %}
+                    <tr>
+                        <td>
+                            {{lineitem.product_name}}
+                        </td>
+                        <td>
+                            {{lineitem.quantity}}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    <td>£ {{order.grand_total}}</td>
+                    <td>Order place on: {{order.date}}</td>
+                </tr>
+                {% endfor %}
+
+            </table>
+        </div>
         <div class="profile">
             <h2>Profile Information</h2>
             <table class="profile-details">

@@ -2,15 +2,18 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import ProfileForm, ProfilePictureForm, TestimonialForm
 from .models import userProfile, Testimonial
+from order.models import Order
 # Create your views here.
 
 @login_required
 def profile_view(request):
     """
     display the profile with testimonial form
+    and order history
     """
     testimonial_form = TestimonialForm()
     user_testimonial = Testimonial.objects.filter(user=request.user).first() # the first review which is retruned for this id
+    order_list = Order.objects.filter(user=request.user).all()
     if request.method == 'POST':
         # if user has bought, populate form
         if request.user.profile.has_purchased:
@@ -26,10 +29,12 @@ def profile_view(request):
             testimonial_form = TestimonialForm(instance=user_testimonial)
         else:
             testimonial_form = TestimonialForm()
+        
 
     context = {
         'testimonial_form': testimonial_form,
         'user_testimonial': user_testimonial,
+        'order_list':order_list,
     }
     return render(request, 'userprofile/profile_view.html', context)
 
