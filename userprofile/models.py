@@ -3,6 +3,8 @@ from django.db.models.signals import post_save, post_delete # found in BoutiqueA
 from django.dispatch import receiver # found in Boutique Ado
 from django.contrib.auth.models import User
 from django_countries.fields import CountryField
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill
 # Create your models here.
 
 class userProfile(models.Model):
@@ -11,7 +13,7 @@ class userProfile(models.Model):
     Extend with shipping detail, Stripe, testimonial check
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    profile_pic = models.ImageField(upload_to='profile_pics/', blank=True, null=True, default='profile/default-portrait.svg')
+    profile_pic = ProcessedImageField(upload_to='profile_pics/', processors=[ResizeToFill(300,300)], format='JPEG', options={'quality': 80}, blank=True, null=True, default='profile/default-portrait.png')
     ship_name = models.CharField(max_length=100, blank=True, null=True)
     phoneNumber = models.CharField(max_length=20, blank=True, null=True)
     street_address1 = models.CharField(max_length=80, blank=True, null=True)
@@ -27,6 +29,9 @@ class userProfile(models.Model):
 
     def __str__(self):
         return f'Profile for {self.user.username}'
+    
+    
+
 
 @receiver(post_save, sender=User)
 def createUpdateProfile(sender, instance, created, **kwargs):
