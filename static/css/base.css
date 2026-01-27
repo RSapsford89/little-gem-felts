@@ -43,9 +43,8 @@ p {
   font-family: var(--content-font);
 }
 section {
-  /* margin-bottom: 15rem; */
   max-width: 900px;
-  margin: clamp(2rem, 20vw, 20rem) auto;
+  margin: 0 auto clamp(2rem, 15vw, 20rem);
 }
 .navbar {
   font-family: var(--title-font);
@@ -64,7 +63,8 @@ section {
   margin-right: 2rem;
 }
 .large-space{
-  margin-bottom: clamp(2rem 5vh 10rem);
+  height: 150px;
+  /* margin-top: clamp(2rem 5vh 10rem); */
 }
 .background-svg{
   position: fixed;

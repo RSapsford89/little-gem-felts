@@ -144,14 +144,16 @@
         </wa-tab-group>
         
         
+        
+        
+    </div>
+    <div class="profile-buttons">
         <wa-button href="{% url 'userprofile:edit_view' %}" variant="outline" pill>Edit Profile</wa-button>
         
         {% if user.is_staff %}
         <wa-button href="{% url 'management:product_management' %}" variant="brand" pill>Product Management</wa-button>
         <wa-button href="{% url 'management:blog_management' %}" variant="brand" pill>Blog Post Management</wa-button>
         {% endif %}
-        
-        
     </div>
     {% endif %}
 </section>
