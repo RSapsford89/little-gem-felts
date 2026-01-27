@@ -20,116 +20,130 @@
         {% endif %}
     </div>
     <div class="container">
-        
-        <div class="profile">
-            <h2>Profile Information</h2>
-            <table class="profile-details">
-                <tr>
-                    <td>Username:</td>
-                    <td>{{user.username}}</td>
-                </tr>
-                <tr>
-                    <td>email</td>
-                    <td>{{user.email}}</td>
-                </tr>
-                <tr>
-                    <td>First name:</td>
-                    <td>{{user.first_name}}</td>
-                </tr>
-                <tr>
-                    <td>Last name:</td>
-                    <td>{{user.last_name}}</td>
-                </tr>
-                <tr>
-                    <td>Contact number:</td>
-                    <td>{{user.profile.phoneNumber}}</td>
-                </tr>
-                <tr>
-                    <td>Member since:</td>
-                    <td>{{user.date_joined}}</td>
-                </tr>
-            </table>
-        </div>
-        
-        
-        <div class="shipping">
-            <h2>Shipping Information</h2>
-            <table class="shipping-details">
-                <tr>
-                    <td>Addressed to:</td>
-                    <td>{{user.profile.ship_name}}</td>
-                </tr>
-                <tr>
-                    <td>Contact number:</td>
-                    <td>{{user.profile.phoneNumber}}</td>
-                </tr>
-                <tr>
-                    <td>Address line 1:</td>
-                    <td>{{user.profile.street_address1}}</td>
-                </tr>
-                <tr>
-                    <td>Address line 2:</td>
-                    <td>{{user.profile.street_address2}}</td>
-                </tr>
-                <tr>
-                    <td>Town or city:</td>
-                    <td>{{user.profile.town_city}}</td>
-                </tr>
-                <tr>
-                    <td>Postcode:</td>
-                    <td>{{user.profile.postcode}}</td>
-                </tr>
-            </table>
-        </div>
-        <div class="testimonial">
-            <div class="testimonial-container">
-                <h2>Your Testimonial</h2>
-                {% if user_testimonial %}
-                    <strong>Rating:</strong> <wa-rating value="{{ user_testimonial.rating }}" readonly label="Overall rating"></wa-rating>
-                    <p><strong>Review:</strong> {{ user_testimonial.short_review }}</p>
-                    {% if user_testimonial.approved %}
-                        <p><em>Status: Approved</em></p>
-                    {% else %}
-                        <p><em>Status: Pending approval</em></p>
-                    {% endif %}
-                {% endif %}
-            </div>
-            
-            <form method="POST">
-                {% csrf_token %}
-                {% if user.profile.has_purchased %}
-                {{ testimonial_form }}
-                
-                <wa-button type='submit'>Submit your review</wa-button>
-                {% else %}
-                <wa-textarea appearance="filled" label="Review" hint="Complete a purchase to leave a review." disabled></wa-textarea>
-                {% endif %}
-            </form>
-        </div>
-        <div class="orders">
-            <h2>Order History:</h2>
-            <div class="table-container">
-                <table>
-                    {% for order in order_list %}
-                    <tr>
-                        <td>{{order.order_id}}</td>
-                        {% for lineitem in order.lineitems.all %}
+        <wa-tab-group active="profile">
+            <wa-tab panel="profile">Profile</wa-tab>
+            <wa-tab panel="shipping">Shipping Info</wa-tab>
+            <wa-tab panel="orders">Order History</wa-tab>
+            <wa-tab panel="testimonial">Testimonial</wa-tab>
+
+            <wa-tab-panel name="profile">
+                <div class="profile">
+                    <h2>Profile Information</h2>
+                    <table class="profile-details">
                         <tr>
-                            <td>
-                                {{lineitem.product_name}}
-                            </td>
-                            <td>
-                                {{lineitem.quantity}}
-                            </td>
+                            <td>Username:</td>
+                            <td>{{user.username}}</td>
                         </tr>
-                        {% endfor %}
-                        <td>£ {{order.grand_total}}</td>
-                        <td>Order place on: {{order.date}}</td>
-                    </tr>
-                    {% endfor %}
-                </table>
-            </div>
-        </div>
+                        <tr>
+                            <td>email</td>
+                            <td>{{user.email}}</td>
+                        </tr>
+                        <tr>
+                            <td>First name:</td>
+                            <td>{{user.first_name}}</td>
+                        </tr>
+                        <tr>
+                            <td>Last name:</td>
+                            <td>{{user.last_name}}</td>
+                        </tr>
+                        <tr>
+                            <td>Contact number:</td>
+                            <td>{{user.profile.phoneNumber}}</td>
+                        </tr>
+                        <tr>
+                            <td>Member since:</td>
+                            <td>{{user.date_joined}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </wa-tab-panel>
+            <wa-tab-panel name="shipping">
+                <div class="shipping">
+                    <h2>Shipping Information</h2>
+                    <table class="shipping-details">
+                        <tr>
+                            <td>Addressed to:</td>
+                            <td>{{user.profile.ship_name}}</td>
+                        </tr>
+                        <tr>
+                            <td>Contact number:</td>
+                            <td>{{user.profile.phoneNumber}}</td>
+                        </tr>
+                        <tr>
+                            <td>Address line 1:</td>
+                            <td>{{user.profile.street_address1}}</td>
+                        </tr>
+                        <tr>
+                            <td>Address line 2:</td>
+                            <td>{{user.profile.street_address2}}</td>
+                        </tr>
+                        <tr>
+                            <td>Town or city:</td>
+                            <td>{{user.profile.town_city}}</td>
+                        </tr>
+                        <tr>
+                            <td>Postcode:</td>
+                            <td>{{user.profile.postcode}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </wa-tab-panel>
+            <wa-tab-panel name="orders">
+                <div class="orders">
+                    <h2>Order History:</h2>
+                    <div class="table-container">
+                        <table>
+                                {% for order in order_list %}
+                                <tr>
+                                    <td>{{order.order_id}}</td>
+                                    {% for lineitem in order.lineitems.all %}
+                                    <tr>
+                                        <td>
+                                            {{lineitem.product_name}}
+                                        </td>
+                                        <td>
+                                            {{lineitem.quantity}}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                    <td>£ {{order.grand_total}}</td>
+                                    <td>Order place on: {{order.date}}</td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                </div>
+            </wa-tab-panel>
+            <wa-tab-panel name="testimonial">
+                <div class="testimonial">
+                    <div class="testimonial-container">
+                        <h2>Your Testimonial</h2>
+                        {% if user_testimonial %}
+                            <strong>Rating:</strong> <wa-rating value="{{ user_testimonial.rating }}" readonly label="Overall rating"></wa-rating>
+                            <p><strong>Review:</strong> {{ user_testimonial.short_review }}</p>
+                            {% if user_testimonial.approved %}
+                                <p><em>Status: Approved</em></p>
+                            {% else %}
+                                <p><em>Status: Pending approval</em></p>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+            
+                    <form method="POST">
+                        {% csrf_token %}
+                        {% if user.profile.has_purchased %}
+                        {{ testimonial_form }}
+                        
+                        <wa-button type='submit'>Submit your review</wa-button>
+                        {% else %}
+                        <wa-textarea appearance="filled" label="Review" hint="Complete a purchase to leave a review." disabled></wa-textarea>
+                        {% endif %}
+                    </form>
+                </div>
+            </wa-tab-panel>
+        </wa-tab-group>
+        
+        
         <wa-button href="{% url 'userprofile:edit_view' %}" variant="outline" pill>Edit Profile</wa-button>
         
         {% if user.is_staff %}
