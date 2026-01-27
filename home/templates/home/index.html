@@ -9,8 +9,8 @@
   <div class="cta-overlay">
     <h1 class='cta-title'>LittleGemFelts</h1>
       <p>Handmade felt gifts and kits made with love for you in the North West of England - Paul & Silvia</p>      
-        <wa-button class="button-light"size='medium'pill>Upcoming Events</wa-button>
-        <wa-button class="button-dark"size='medium'pill>Shop All</wa-button>
+        <wa-button class="button-light"size='medium' href="{% url 'blog:blog_list'%}" pill>Upcoming Events</wa-button>
+        <wa-button class="button-dark"size='medium' href="{% url 'store:store'%}" pill>Shop All</wa-button>
   </div>
 </section>
 {% endblock cta %}
