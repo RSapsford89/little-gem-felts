@@ -76,7 +76,6 @@ wa-button.tool-btn::part(base) {
   flex-wrap: wrap;
   gap: 2rem;
 }
-
 .totals-column {
   min-width: 200px;
 }
@@ -108,14 +107,15 @@ wa-card.horizontal-card{
   width: 60px;
   font-size: 0.6rem;
 }
-/* minmax(300px, 2fr) minmax(250px, 1fr) */
-
-/* wa-button::part(base){
-  width: 20px;
-  height: 20px;
+.info-panel{
+  justify-items: center;
 }
-wa-input::part(base){
-  height:30px;
-  width: 30px;
-  font-size: 0.5rem;
-} */
+.description{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.add-to-basket{
+  align-items: center;
+}
