@@ -65,6 +65,23 @@ wa-button.bag-btn::part(base) {
 wa-button.tool-btn::part(base) {
   background-color: var(--tropical-teal-c6);
 }
+.description{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap:2rem;
+}
+.add-to-basket strong{
+  font-size: 1.5rem;
+}
+.add-to-basket input{
+  width:60px;
+}
+.add-to-basket wa-button::part(base){
+  width:60px;
+  background-color: var(--amethyst-c1);
+}
 /* Basket styles */
 
 .horizontal-card-container{
@@ -109,17 +126,4 @@ wa-card.horizontal-card{
 }
 .info-panel{
   justify-items: center;
-}
-.description{
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  gap:2rem;
-}
-.add-to-basket strong{
-  font-size: 1.5rem;
-}
-.add-to-basket input{
-  width:60px;
 }
