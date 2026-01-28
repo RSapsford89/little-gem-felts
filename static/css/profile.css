@@ -125,5 +125,5 @@ wa-rating {
     display: flex;
     justify-content:center ;
     margin: auto;
-     width: clamp(250px,60%, 600px);
+    width: clamp(250px,60%, 600px);
 }

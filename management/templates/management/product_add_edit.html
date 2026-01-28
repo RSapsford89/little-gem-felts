@@ -1,41 +1,52 @@
-{% extends "layout.html" %}
-{% load static %}
-{% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/store.css' %}">
-{% endblock extra_css %}
-{% block latestAdditions %}{% endblock latestAdditions %}
-{% block titles %}
+{% extends "layout.html" %} {% load static %} {% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/store.css' %}" />
+{% endblock extra_css %} {% block latestAdditions %}{% endblock latestAdditions%} {% block titles %}
 <h1>Product listings</h1>
-{% endblock titles %}
-{% block content %}
+{% endblock titles %} {% block content %}
 <section class="product-listing">
-    <div class="container">
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <h3>Product Images</h3>
-            {{image_formset.management_form}}
-            {% for form in image_formset %}
-                <div class="image-form">
-                    {{ form.id }}
-                    {% if form.instance.image %}
-                        <div class="current-image mb-2">
-                            <p><strong>Current image:</strong></p>
-                            <img src="{{ form.instance.image.url }}" alt="Product image" style="max-width: 200px;">
-                        </div>
-                    {% endif %}
-                    {{ form.as_p }}
-                </div>
-            {% endfor %}
-            <wa-button type="submit" variant="brand">
-                {% if edit %}
-                Update Product
-                {% else %}
-                Add Product
-                {% endif %}
-            </wa-button>
-            <wa-button href="{% url 'management:product_management' %}" variant="outline">Cancel</wa-button>
-        </form>
-    </div>
+  <div class="container">
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %} {{ form.as_p }}
+      <h3>Product Images</h3>
+      {{image_formset.management_form}} {% for form in image_formset %}
+      <div class="image-form">
+        {{ form.id }} {% if form.instance.image %}
+        <div class="current-image">
+          <p><strong>Current image:</strong></p>
+          <img
+            src="{{ form.instance.image.url }}"
+            alt="Product image"
+            style="max-width: 200px"
+          />
+        </div>
+        {% endif %}
+        <div class="image-form-fields">
+          <div class="checkbox-group">
+            {{ form.DELETE }}
+            <label for="{{ form.DELETE.id_for_label }}"
+              >Delete this image</label
+            >
+          </div>
+          <div class="form-group">
+            {{ form.image.label_tag }} {{ form.image }}
+          </div>
+
+          <div class="checkbox-group">
+            {{ form.primary_image }} {{ form.primary_image.label_tag }}
+          </div>
+        </div>
+      </div>
+      <hr>
+      {% endfor %}
+      <wa-button type="submit" variant="brand">
+        {% if edit %} Update Product {% else %} Add Product {% endif %}
+      </wa-button>
+      <wa-button
+        href="{% url 'management:product_management' %}"
+        variant="outline"
+        >Cancel</wa-button
+      >
+    </form>
+  </div>
 </section>
 {% endblock content %}
