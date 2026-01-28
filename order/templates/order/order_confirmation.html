@@ -13,40 +13,42 @@
         <h1>Thank you for your order</h1>
         <div class="order-summary">
             <h2>Order Summary</h2>
-            <table>
-                <tr>
-                    <td>Order ID:</td>
-                    <td> {{order.order_id}}</td>
-                </tr>
-                <tr>
-                    <th></th>
-                    <th>Product name</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Line Total</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-                {% for item in order.lineitems.all %}
-                <tr>
-                    <td>Item:</td>
-                    <td> {{item.product_name}}</td>
-                    <td> {{item.product_price}}</td>
-                    <td> {{item.quantity}}</td>
-                    <td> {{item.line_total}}</td>
-                    
-                </tr>
+            <div class="order-table">
+                <table>
+                    <tr>
+                        <td>Order ID:</td>
+                        <td> {{order.order_id}}</td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th>Product name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Line Total</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    {% for item in order.lineitems.all %}
+                    <tr>
+                        <td>Item:</td>
+                        <td> {{item.product_name}}</td>
+                        <td> {{item.product_price}}</td>
+                        <td> {{item.quantity}}</td>
+                        <td> {{item.line_total}}</td>
                 
-                {% endfor %}
-                <tr>
-                    <th>Delivery Cost</th>
-                    <td>{{order.delivery_cost}}</td>
-                </tr>
-                <tr>
-                    <th>Grand Total</th>
-                    <td>{{order.grand_total}}</td>
-                </tr>
-            </table>
+                    </tr>
+                
+                    {% endfor %}
+                    <tr>
+                        <th>Delivery Cost</th>
+                        <td>{{order.delivery_cost}}</td>
+                    </tr>
+                    <tr>
+                        <th>Grand Total</th>
+                        <td>{{order.grand_total}}</td>
+                    </tr>
+                </table>
+            </div>
             <h2>Shipping details:</h2>
             <table>
                 <tr>

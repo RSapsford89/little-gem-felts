@@ -14,23 +14,24 @@ def all_products(request):
     :param request: Description
     """
     products = Product.objects.all()
-    promoted_products = promoted_products = Product.objects.filter(promoted=True).prefetch_related('images')[:3]
-    filter_query = request.GET.get("filter_input","").strip()
-    category = request.GET.get("category","").strip()
-    sub_category = None
+    promoted_products = Product.objects.filter(promoted=True).prefetch_related('images')[:3]
+    filter_query = request.GET.get("filter_input", "").strip()
+    category = request.GET.get("category", "").strip()
+    sub_category = None # for later development
     
-    if category.lower() != "all":
+    if category and category.lower() != "all":
         products = products.filter(main_category__name__icontains=category)
 
     if filter_query:
         products = products.filter(Q(name__icontains=filter_query) | Q(main_category__name__icontains=filter_query) | Q(description__icontains=filter_query))
-
+    if not products.exists():
+        messages.info(request, "No products found matching your criteria.")
     context = {
-        'products':products,
-        'promoted_products':promoted_products,
-        'filter_input':filter_query,
-        'category':category,
-               }
+        'products': products,
+        'promoted_products': promoted_products,
+        'filter_input': filter_query,
+        'category': category,
+        }
     return render(request, 'store/products.html', context)
 
 

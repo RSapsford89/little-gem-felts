@@ -97,8 +97,7 @@ document.addEventListener('DOMContentLoaded', function(){
         .then(data => {
             if(data.success){
                 updateBasketTotals(data);
-                
-                // --- FIX START ---
+                document.querySelector(`.qty-input[data-item-id="${productId}"]`).value = data.quantity;
                 // If the new quantity is 0 (or less), remove the HTML element
                 if (quantity <= 0) {
                     const item = document.querySelector(`div[data-item-id="${productId}"]`);
@@ -109,21 +108,18 @@ document.addEventListener('DOMContentLoaded', function(){
                     // Check if that was the last item
                     const remainingItems = document.querySelectorAll('div[data-item-id]').length;
                     if (remainingItems === 0) {
-                        // Reload to show the "Your basket is empty" message
                         location.reload(); 
                     }
                 }
-                // --- FIX END ---
 
                 showToast(data.message, 'success');
             } else {
-                showToast(data.message, 'error'); // Changed to 'error' for clarity
+                showToast(data.message, 'error');
                 location.reload();
             }
         })
         .catch(error => {
             console.log(error);
-            // location.reload(); // Optional: reload on fatal error
         });       
     }
 

@@ -248,7 +248,9 @@ wa-card.horizontal-card {
 #submit:hover {
   background: var(--amethyst-c1);
 }
-
+.order-table{
+  overflow-x: scroll;
+}
 /* =========================================
    6. MANAGEMENT & FORMS
    ========================================= */

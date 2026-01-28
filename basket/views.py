@@ -4,6 +4,7 @@ from django.contrib import messages
 from decimal import Decimal
 import json
 from store.models import Product
+from basket.contexts import basket_contents
 
 # Create your views here.
 
@@ -16,11 +17,11 @@ def add_to_basket(request, product_id):
     """
     # need to validate values as being INT, positive and the stock exists - would crispy forms help here?
     if request.method == 'POST': # this could be a decorator instead?
+        redirect_url = request.POST.get('redirect_url', '/view-basket/')
         try:
             product = get_object_or_404(Product, pk=product_id) # get the obj from DB
             quantity = int(request.POST.get('quantity')) # get qty from  page, cast
             basket = request.session.get('basket', {}) # get session basket
-            redirect_url = request.POST.get('redirect_url')
             
             # check quantity is positive
             if quantity < 1:
@@ -39,8 +40,8 @@ def add_to_basket(request, product_id):
                         messages.success(request, f' {product.name} updated to {quantity}.')
                 else: # it isn't in the basket
                     
-                    basket[str(product_id)] = quantity
-                    messages.success(request, f'Added {quantity} of {product.name} to the basket')
+                    basket[str(product_id)] += quantity
+                    messages.success(request, f'Updated {product.name} quantity to {basket[str(product_id)]}')
             else:
                 messages.error(request, f'This item only has {product.stock_level} left')
             
@@ -51,16 +52,21 @@ def add_to_basket(request, product_id):
         except (ValueError,TypeError):
             messages.error(request, 'Invalid quantity entered')
             return redirect(redirect_url)
+    return redirect('store:all_products')
 # UX bug with the value. if JS input value display not updated to match basket after update
 def update_basket(request, product_id):
     """
     Docstring for update_basket
     update the quantity of items in the basket
+    using AJAX calls
     """
     if request.method == "POST":
         try:
+            # this if statement is an AI suggestion to protect against empty requests
+            if not request.body:
+                return JsonResponse({'success': False,'message':'No data has been sent'}, status=400)
             product = get_object_or_404(Product, pk=product_id)# obj from DB
-            basket = request.session.get('basket',{})
+            basket = request.session.get('basket', {})
             data = json.loads(request.body)
             quantity = int(data.get('quantity')) # get qty from json obj
             # if prod id is in basket
@@ -75,7 +81,6 @@ def update_basket(request, product_id):
                     del basket[str(product_id)]
                     request.session['basket'] = basket
                     request.session.modified = True
-                    from basket.contexts import basket_contents
                     context = basket_contents(request)
                     return JsonResponse({
                         'success': True,
@@ -83,13 +88,13 @@ def update_basket(request, product_id):
                         'total': str(context['total']),
                         'delivery': str(context['delivery']),
                         'grand_total': str(context['grand_total']),
+                        'quantity': 0,
                         'message': f'Removed {product.name} from the basket'
                     })
                 elif product.stock_level > 0 and quantity <= product.stock_level: 
                     basket[str(product_id)] = quantity # make prodId's value = quantity from json
                     request.session['basket'] = basket
                     request.session.modified = True
-                    from basket.contexts import basket_contents
                     context = basket_contents(request)
                     return JsonResponse({
                         'success': True,
@@ -97,6 +102,7 @@ def update_basket(request, product_id):
                         'total': str(context['total']),
                         'delivery': str(context['delivery']),
                         'grand_total': str(context['grand_total']),
+                        'quantity': quantity,
                         'message': f'Updated {product.name} quantity to: {quantity}',
                     })
                 elif quantity > product.stock_level:
@@ -106,7 +112,6 @@ def update_basket(request, product_id):
                     basket[str(product_id)] = product.stock_level
                     request.session['basket'] = basket
                     request.session.modified = True
-                    from basket.contexts import basket_contents
                     context = basket_contents(request)
                     return JsonResponse({
                         'success': True,
@@ -114,6 +119,7 @@ def update_basket(request, product_id):
                         'total': str(context['total']),
                         'delivery': str(context['delivery']),
                         'grand_total': str(context['grand_total']),
+                        'quantity': product.stock_level,
                         'message': f'Only {product.stock_level} available. Updated to: {product.stock_level}',
                     })
             else:

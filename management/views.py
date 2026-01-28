@@ -24,30 +24,35 @@ def product_management(request):
     return render(request, 'management/product_management.html', context)
 
 @staff_member_required
-def edit_product(request,product_id):
+def edit_product(request, product_id):
     """
     View to edit the selected item from the product list
     Uses staff decorator
     """
-    product = get_object_or_404(Product,pk=product_id)
+    product = get_object_or_404(Product, pk=product_id)
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES, instance=product)
         image_formset = ImageFormSet(request.POST, request.FILES, instance=product)
+        
         if form.is_valid() and image_formset.is_valid():
             form.save()
             image_formset.save()
+            messages.success(request, f'Successfully updated {product.name}')
             return redirect('management:product_management')
+        else:
+            # FIX: Added error feedback
+            messages.error(request, 'Failed to update. Check the form errors.')
     else:
         form = ProductForm(instance=product)
         image_formset = ImageFormSet(instance=product)
+        
     context = {
         'product': product,
         'form': form,
         'image_formset': image_formset,
         'edit': True,
-
     }
-    return render(request,'management/product_add_edit.html', context)
+    return render(request, 'management/product_add_edit.html', context)
 
 
 @staff_member_required
@@ -58,7 +63,7 @@ def delete_product(request, product_id):
     """
     if request.method == 'POST':
         try:
-            product = get_object_or_404(Product,pk=product_id)
+            product = get_object_or_404(Product, pk=product_id)
             item = product.name
             product.delete()
             messages.success(request, f'Successfully removed {item}')
@@ -88,7 +93,6 @@ def add_product(request):
                 messages.success(request, f'Successfully added {product.name}')
                 return redirect('management:product_management')
             else:
-                # Form validation failed - show errors
                 messages.error(request, 'Please correct the errors below.')
                 context = {
                     'form': form,
@@ -98,6 +102,7 @@ def add_product(request):
                 return render(request, 'management/product_add_edit.html', context)
         except Exception as error:
             messages.error(request, f'Unable to add item to database due to: {str(error)}')
+            # Re-initialize forms with data so user doesn't lose input
             form = ProductForm(request.POST, request.FILES)
             image_formset = ImageFormSet(request.POST, request.FILES)
             context = {
@@ -109,7 +114,7 @@ def add_product(request):
     else:
         form = ProductForm()
         image_formset = ImageFormSet()
-    
+
     context = {
         'form': form,
         'image_formset': image_formset,
@@ -141,7 +146,11 @@ def add_post(request):
             post = form.save(commit=False)
             post.author = request.user
             post.save()
+            messages.success(request, 'Successfully added blog post')
             return redirect('management:blog_management')
+        else:
+            # FIX: Added error feedback for invalid forms
+            messages.error(request, 'Failed to add post. Please check the form errors.')
     else:
         form = PostForm()
     context = {
@@ -161,7 +170,11 @@ def edit_post(request, post_id):
         form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             form.save()
+            messages.success(request, f'Successfully updated "{post.title}"')
             return redirect('management:blog_management')
+        else:
+            # FIX: Added error feedback
+            messages.error(request, 'Failed to update post. Please check the form errors.')
     else:
         form = PostForm(instance=post)
     context = {

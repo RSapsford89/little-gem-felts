@@ -15,7 +15,6 @@ class StripeWH_Handler:
         self.request = request
 
     def handle_event(self, event):
-       # print('unhandled event', event)
         return HttpResponse(content=f'Unhandled event type {event["type"]}', status=200)
         
 

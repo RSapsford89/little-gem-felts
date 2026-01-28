@@ -2,21 +2,13 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post, Comment
 from .forms import CommentForm
 
-def blog(request):
-    """
-    Docstring for blog
-    A test view to return the blog page    
-    :param request: Description
-    """
-    return render(request, 'blog/blog.html')
-
 def blog_list(request):
     """
     Docstring for blog_list
     A view to return all blog articles   
     :param request: Description
     """
-    posts = Post.objects.filter(publish=True).order_by('date_created')
+    posts = Post.objects.filter(publish=True).order_by('-date_created')
     return render(request, 'blog/blog_list.html', {'posts': posts})
 
 def blog_details(request, slug):
@@ -26,7 +18,7 @@ def blog_details(request, slug):
     :param request: Description
     """
     post = get_object_or_404(Post, slug=slug, publish=True)
-    comments = post.comments.all()
+    comments = post.comments.all().order_by('-created_on')
 
     comment_form = None
 
@@ -48,4 +40,4 @@ def blog_details(request, slug):
         'comments':comments,
         'comment_form':comment_form
     }
-    return render(request, 'blog/blog.html', context)
+    return render(request, 'blog/blog_details.html', context)
