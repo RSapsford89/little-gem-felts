@@ -125,7 +125,9 @@ wa-button.nav-btn::part(base):hover {
 wa-button.nav-btn::part(base):active {
   transform: translateY(1px);
 }
-
+.basket-section form{
+  width: 90%;
+}
  /* Latest Additions Responsive Grid */
 .latest-additions .wa-grid {
   display: grid;
@@ -153,12 +155,7 @@ wa-button.round-btn::part(base){
   grid-template-columns: auto 1fr auto;
   align-items: start;
   gap: 2rem;
-  padding: 2rem;
-}
-
-.footer-brand-section {
-  grid-column: 1;
-  border: solid 1px;
+  padding: 1rem;
 }
 
 .footer-link-section {
@@ -171,20 +168,14 @@ wa-button.round-btn::part(base){
   display: flex;
   flex-direction: column;
 }
-
-.footer-container {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: start;
-  gap: 2rem;
-  border: solid 1px;
-  padding: 2rem;
-}
-
 .footer-brand-section {
   display: flex;
   flex-direction: column;
+  grid-column: 1;
   gap: 1rem;
+}
+.footer-brand-section p{
+  font-size: 2rem;
 }
 
 .footer-social {
@@ -248,9 +239,6 @@ wa-card.card-overview::part(media){
 wa-button.footer-btn::part(base) {
   background-color: #a560b2;
   color: #000;
-}
-wa-button.footer-btn::part(base) {
-  padding: 1rem 3rem;
 }
 
 /* Responsive */

@@ -16,27 +16,29 @@
 <section class="basket-section">
     {% csrf_token %}
     {% if user.is_authenticated %}
-    <h1>{{user.username}}'s basket:</h1>
+        <h1>{{user.username}}'s basket:</h1>
     {% else %}
-    <h1>Your Basket</h1>
-    {%if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            <li>{{message}}</li>
-        {% endfor %}
-    </ul>
+        <h1>Your Basket</h1>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li>{{message}}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
     {% endif %}
-    {% endif %}
-    <div class="container" >
-        <div class="horizontal-card-container">
+
+    <div class="checkout-form">
+        
+        <div class="checkout-main">
             {% if basket_items %}
                 {% for item in basket_items %}
                     <div data-item-id="{{item.product_id}}">
-                        <wa-card orientation="horizontal" class="horizontal-card" >
+                        <wa-card orientation="horizontal" class="horizontal-card" style="width: 100%;">
                             {% if item.product.primary_image %}
                                 <img slot="media" src="{{ item.product.primary_image.image.url }}" alt="{{ item.product.name }}">
                             {% endif %}
-                            <div class=" card-content">
+                            <div class="card-content">
                                 <div>
                                     <h3>{{item.product.name}}</h3>
                                 </div>
@@ -62,13 +64,13 @@
                         </wa-card>
                     </div>
                 {% endfor %}
-                <div class="alter-container">
-                    
-                </div>
+            {% else %}
+                <p>Your basket is empty.</p>
             {% endif %}
         </div>
-        <div class="totals-column">
-            <wa-card>
+
+        <div class="checkout-sidebar">
+            <wa-card class="summary-card sticky-summary">
                 <h3 class='header'>Totals:</h3>
                 <table class="total-contents">
                     <tr>
@@ -77,18 +79,21 @@
                     </tr>
                     <tr>
                         <td>Subtotal:</td>
-                        <td data-id="subtotal"><strong>{{total}}</strong></td>
+                        <td data-id="subtotal"><strong>£{{total}}</strong></td>
                     </tr>
                     <tr>
                         <td>Delivery:</td>
-                        <td data-id="delivery"><strong>{{delivery}}</strong></td>
+                        <td data-id="delivery"><strong>£{{delivery}}</strong></td>
                     </tr>
                     <tr>
-                        <td>Grand Total:</td>
-                        <td data-id="grandTotal"><strong>{{grand_total}}</strong></td>
+                        <td class="grand-total-row">Grand Total:</td>
+                        <td class="grand-total-row" data-id="grandTotal"><strong>£{{grand_total}}</strong></td>
                     </tr>
                 </table>
-                <wa-button href="{% url 'order:create_order' %}">Continue to Payment</wa-button>
+                <br>
+                <wa-button href="{% url 'order:create_order' %}" style="width: 100%;">
+                    Continue to Payment
+                </wa-button>
             </wa-card>
         </div>
     </div>

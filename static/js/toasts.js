@@ -18,6 +18,9 @@ function showToast(message, type='success'){
         gravity: "top", // `top` or `bottom`
         position: "right", // `left`, `center` or `right`
         stopOnFocus: true, // Prevents dismissing of toast on hover
+        offset:{
+            y:40,
+        },
         style: {
             background: colour,//put custom colors here
         },

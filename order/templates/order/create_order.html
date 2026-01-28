@@ -13,15 +13,32 @@
     {% else %}
     <h1>Shipping Details</h1>
     {% endif %}
-    {% comment %} from stripe docs with fieldset to combine forms{% endcomment %}
-    <form id="payment-form" data-url="{% url 'order:create_order'%}" data-return-url="{% url 'order:order_confirmation' %}" data-client-secret="{{ client_secret }}" data-stripe-public-key="{{ stripe_public_key }}">
+
+    <form id="payment-form" class="checkout-form" data-url="{% url 'order:create_order'%}" data-return-url="{% url 'order:order_confirmation' %}" data-client-secret="{{ client_secret }}" data-stripe-public-key="{{ stripe_public_key }}">
         {% csrf_token %}
-        <fieldset class="shipping-form">
-            {{ form.as_p }}
+
+        <div class="checkout-main">
             
-        </fieldset>
-        <div class="totals-column">
-            <wa-card>
+            <fieldset class="shipping-form">
+                {{ form.as_p }}
+            </fieldset>
+
+            <div id="payment-element">
+                </div>
+            
+            <div id="payment-message" class="hidden"></div>
+            
+            <div class="checkout-actions">
+                <button id="submit" class="wa-btn-mimic">
+                    <div class="spinner hidden" id="spinner"></div>
+                    <span id="button-text">Pay now</span>
+                </button>
+                <wa-button href="{% url 'basket:view_basket' %}" variant="outline">Cancel</wa-button>
+            </div>
+        </div>
+
+        <div class="checkout-sidebar">
+            <wa-card class="summary-card sticky-summary">
                 <h3 class='header'>Basket Summary:</h3>
                 <table class="total-contents">
                     <tr>
@@ -37,24 +54,17 @@
                         <td><strong>£{{delivery}}</strong></td>
                     </tr>
                     <tr>
-                        <td>Grand Total:</td>
-                        <td><strong>£{{grand_total}}</strong></td>
+                        <td class="grand-total-row">Grand Total:</td>
+                        <td class="grand-total-row"><strong>£{{grand_total}}</strong></td>
                     </tr>
                 </table>
             </wa-card>
         </div>
-        <div id="payment-element">
-            <!--Stripe.js injects the Payment Element-->
-        </div>
-        <div id="payment-message" class="hidden"></div>
-        <button id="submit">
-            <div class="spinner hidden" id="spinner"></div>
-            <span id="button-text">Pay now</span>
-        </button>
-        <wa-button href="{% url 'basket:view_basket' %}" variant="outline">Cancel</wa-button>
+
     </form>
 </section>
 {% endblock content %}
+
 {% block extra_js %}
 <script src="{% static 'js/checkout.js' %}" defer></script>
 {% endblock extra_js %}

@@ -1,82 +1,105 @@
 :root {
+  /* Fonts */
   --title-font: "josefin sans", sans-serif;
   --heading-font: "Lora", sans-serif;
   --content-font: "cormorant", sans-serif;
+
+  /* Colors */
   --amethyst-c1: #a560b2;
   --violet-twilight-c2: #564dac;
   --light-gold-c3: #fcf69f;
   --lavender-c4: #d6d5ee;
   --ash-grey-c5: #a3c4bc;
   --tropical-teal-c6: #16bac5;
-  --green-c7:#09BC8A;
+  --green-c7: #09BC8A;
 }
-h3{
-  font-size:1.2rem ;
+
+/* =========================================
+   1. GLOBAL & LAYOUT HELPERS
+   ========================================= */
+h3 {
+  font-size: 1.2rem;
 }
+
+/* Fixes centering for Basket and Checkout pages */
+.basket-section,
+.container {
+  max-width: 900px; /* Wider than base 900px to fit side-by-side layout */
+  margin: 2rem auto; /* Centers the container */
+  padding: 0 1rem;   /* Prevents content touching screen edges on mobile */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Generic form group helpers */
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.image-form-fields {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* =========================================
+   2. SHOP FILTERS & BUTTONS
+   ========================================= */
 .shop-filter {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   background-color: var(--light-gold-c3);
   align-items: center;
-  justify-content:space-around;
+  justify-content: space-around;
   padding: 0.75rem;
   margin: 3rem 0;
 }
+
 .filter-container form {
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
 }
-.filter-container button{
+
+.filter-container button {
   border-radius: 50%;
   background-color: var(--amethyst-c1);
   height: 40px;
   width: 40px;
 }
 
-.category-change{
+.category-change {
   margin: 5px;
 }
 
-wa-button.all-btn::part(base)  {
-  background-color: var(--amethyst-c1);
-}
+/* Filter Button Variants */
+wa-button.all-btn::part(base)  { background-color: var(--amethyst-c1); }
+wa-button.kit-btn::part(base)  { background-color: var(--violet-twilight-c2); }
+wa-button.lamp-btn::part(base) { background-color: var(--green-c7); }
+wa-button.box-btn::part(base)  { background-color: var(--lavender-c4); color: #000; }
+wa-button.bag-btn::part(base)  { background-color: var(--ash-grey-c5); color: #000; }
+wa-button.tool-btn::part(base) { background-color: var(--tropical-teal-c6); color: #000; }
 
-wa-button.kit-btn::part(base) {
-  background-color: var(--violet-twilight-c2);
-}
-
-wa-button.lamp-btn::part(base) {
-  background-color: var(--green-c7);
-}
-
-wa-button.box-btn::part(base) {
-  background-color: var(--lavender-c4);
-  color: #000;
-}
-
-wa-button.bag-btn::part(base) {
-  background-color: var(--ash-grey-c5);
-  color: #000
-}
-
-wa-button.tool-btn::part(base) {
-  background-color: var(--tropical-teal-c6);
-  color: #000
-}
-.store-detail-container{
+/* =========================================
+   3. PRODUCT DETAIL VIEW
+   ========================================= */
+.store-detail-container {
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
-  
+  justify-content: center;
 }
-.store-detail-container .images{
-  min-width:300px;
+
+.store-detail-container .images {
+  min-width: 300px;
   width: 40%;
   margin: auto;
 }
-.description{
+
+.description {
   min-width: 300px;
   width: 40%;
   margin: auto;
@@ -84,40 +107,151 @@ wa-button.tool-btn::part(base) {
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  gap:2rem;
+  gap: 2rem;
 }
-.add-to-basket strong{
+
+.add-to-basket strong {
   font-size: 1.5rem;
 }
-.add-to-basket input{
-  width:60px;
+
+.add-to-basket input {
+  width: 60px;
 }
-.add-to-basket button{
-  width:60px;
+
+.add-to-basket button {
+  width: 60px;
   background-color: var(--amethyst-c1);
 }
-/* Basket styles */
 
-.horizontal-card-container{
+/* =========================================
+   4. BASKET CARDS
+   ========================================= */
+.horizontal-card-container {
   width: 60%;
-  min-width:300px;
+  min-width: 300px;
+  margin: 0 auto; /* Ensures list of items is centered */
 }
-.container{
+
+wa-card.horizontal-card {
+  width: 100%;
+  max-height: 150px;
+  margin-bottom: 1rem;
+}
+
+.card-content {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 0 2rem;
+  align-items: center;
+}
+
+.horizontal-card img[slot='media'] {
+  max-width: 200px;
+  height: auto;
+  object-fit: cover;
+  aspect-ratio: 3/4;
+}
+
+/* Basket tiny controls */
+.horizontal-card wa-button-group {
+  max-width: 200px;
+  font-size: 0.75rem;
+}
+
+.horizontal-card wa-button {
+  font-size: 0.6rem;
+}
+
+.horizontal-card wa-input {
+  width: 60px;
+  font-size: 0.6rem;
+}
+
+/* =========================================
+   5. CHECKOUT LAYOUT (Stripe & Summary)
+   ========================================= */
+.checkout-form {
+  display: grid;
+  grid-template-columns: 1fr 350px; /* Left: Flexible, Right: Fixed */
   gap: 2rem;
-  justify-content: center;
+  align-items: start;
+  margin-top: 1rem;
 }
-.container form{
-  width: 90%;
+
+/* Left Column: Form & Payment */
+.checkout-main {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
-.image-form-fields {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 1rem;
+
+.shipping-form {
+  border: none;
+  padding: 0;
+  margin: 0;
 }
-/* for the management Post add form */
+
+#payment-element {
+  margin-bottom: 1rem;
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Right Column: Summary */
+.checkout-sidebar {
+  position: sticky;
+  top: 20px;
+}
+
+.summary-card {
+  width: 100%;
+}
+
+.total-contents {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.total-contents td {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.grand-total-row {
+  font-size: 1.2rem;
+  border-bottom: none !important;
+  padding-top: 1rem !important;
+}
+
+/* Checkout Buttons */
+.checkout-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+#submit {
+  background: var(--violet-twilight-c2);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 25px;
+  font-family: var(--title-font);
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s;
+}
+
+#submit:hover {
+  background: var(--amethyst-c1);
+}
+
+/* =========================================
+   6. MANAGEMENT & FORMS
+   ========================================= */
 .post-form-row {
   display: flex;
   flex-wrap: wrap;
@@ -127,11 +261,12 @@ wa-button.tool-btn::part(base) {
 
 .post-form-group {
   display: flex;
-  flex-direction: column; 
-  flex: 1;                
-  min-width: 250px;       
-  margin-bottom: 1rem;    
+  flex-direction: column;
+  flex: 1;
+  min-width: 250px;
+  margin-bottom: 1rem;
 }
+
 .post-checkbox-row {
   display: flex;
   flex-wrap: wrap;
@@ -139,109 +274,112 @@ wa-button.tool-btn::part(base) {
   margin-top: 1rem;
   align-items: center;
 }
+
+.checkbox-group,
 .post-checkbox-group {
   display: flex;
-  align-items: center;    
-  gap: 8px; 
+  align-items: center;
+  gap: 8px;
+  margin-top: 5px;
 }
-/* end */
-.checkbox-group {
-    display: flex;
-    align-items: center;
-    gap: 8px; 
-    margin-top: 5px;
-}
-.form-group {
-    display: flex;
-    flex-direction: column;
-}
+
 .checkbox-group label {
-    margin-bottom: 0; 
-    cursor: pointer;
+  margin-bottom: 0;
+  cursor: pointer;
 }
+
 .current-image img {
-    max-width: 100%; 
-    height: auto;
-    border-radius: 4px;
-    margin-bottom: 10px;
-    display: block;
-}
-.totals-column {
-  min-width: 200px;
-}
-wa-card.horizontal-card{
-  width: 100%;
-  max-height:150px;
-}
-.card-content{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  gap: 0 2rem;
-}
-.horizontal-card img[slot='media']{
-  max-width:200px;
+  max-width: 100%;
   height: auto;
-  object-fit:cover;
-  aspect-ratio: 3/4;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  display: block;
 }
 
-.horizontal-card wa-button-group{
-  max-width: 200px;
-  font-size: 0.75rem;
-}
-.horizontal-card wa-button{
-  font-size: 0.6rem;
-}
-.horizontal-card wa-input{
-  width: 60px;
-  font-size: 0.6rem;
-}
-.info-panel{
-  justify-items: center;
-}
-/* carousel styles heavily based on https://www.w3schools.com/howto/howto_js_slideshow.asp */
-/* Container to keep images and buttons relative to each other */
+/* =========================================
+   7. CAROUSEL COMPONENT
+   ========================================= */
 .carousel-images {
-    position: relative;
-    max-width: 50%;
-    margin: auto;
+  position: relative;
+  max-width: 400px;
+  max-height: 400px;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* Ensures images don't overflow */
 }
 
-.slides {
-    display: none;
-}
-
-/* Make images responsive */
 .slides img {
-    width: 100%;
-    height: auto;
+  width: 100%;
+  height: 100%;
+  max-width: 400px;
+  max-height: 400px;
+  object-fit: contain; /* Ensures the image is fully visible and contained */
+  display: block;
+  margin: auto;
 }
 
-/* Navigation buttons */
 .prev, .next {
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    width: auto;
-    padding: 16px;
-    margin-top: -22px;
-    color: white;
-    font-weight: bold;
-    font-size: 18px;
-    transition: 0.6s ease;
-    border-radius: 0 3px 3px 0;
-    background-color: rgba(0,0,0,0.3);
+  cursor: pointer;
+  position: absolute;
+  top: 0;       
+  bottom: 0; 
+  width: 40px;  
+  height: 100%; 
+  padding: 0;   
+  
+  /* Suggestion from AI prompt to give better Visuals to the buttons */
+  color: white;
+  font-weight: bold;
+  font-size: 24px; /* Slightly larger arrow for visibility */
+  transition: 0.3s ease;
+  border-radius: 0; /* Square edges look better for full-height bars */
+  background-color: rgba(0,0,0,0.1); /* Subtle background so user knows clickable area exists */
+ 
+  /* Centering the Arrow Icon */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2; 
 }
 
-/* Position the "next button" to the right */
+.prev {
+  left: 0;
+}
+
 .next {
-    right: 0;
-    border-radius: 3px 0 0 3px;
+  right: 0;
+  border-radius: 3px 0 0 3px;
 }
-
-/* Add a hover effect */
 .prev:hover, .next:hover {
-    background-color: rgba(0,0,0,0.8);
+  background-color: rgba(0,0,0,0.8);
 }
-/* end of carousel styles */
+/* end of AI suggestion */
+
+/* =========================================
+   8. MEDIA QUERIES
+   ========================================= */
+@media (max-width: 900px) {
+  /* Stack checkout columns */
+  .checkout-form {
+    grid-template-columns: 1fr;
+  }
+  
+  .checkout-sidebar {
+    position: static;
+  }
+
+  /* Adjust Container Widths */
+  .basket-section,
+  .horizontal-card-container {
+    width: 90%;
+  }
+
+  /* Make carousel larger on mobile
+  .carousel-images {
+    max-width: 100%;
+  } */
+}
