@@ -24,20 +24,20 @@
                         {{product.description}}
                     </p>
                 </div>
-                <span><strong>{{product.price}}</strong></span>
                 <div class="add-to-basket">
+                    <span><strong>£ {{product.price}}</strong></span>
                     <form action="{% url 'basket:add_to_basket' product.id %}" method='POST'>
                         {% csrf_token %}
                         <input type="hidden" name="redirect_url" value="{{ request.path }}">
                         <input type="number" name="quantity" id="id_quantity" {% if product.stock_level < 1 %} value = "0" {% else %} value="1"{% endif %} min="0"max="{{product.stock_level}}" required>
-                        <div class="info-panel">
+                        
                             {% if product.stock_level < 1 %}
                             <p>Item not available</p>
                             {% else %}
                             <button >Add</button>
                             {% endif %}
                         </form>
-                    </div>
+                    
                 </div>                
             </div>
         </div>

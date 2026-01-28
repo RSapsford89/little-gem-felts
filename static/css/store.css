@@ -115,7 +115,11 @@ wa-card.horizontal-card{
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  gap:2rem;
 }
-.add-to-basket{
-  align-items: center;
+.add-to-basket strong{
+  font-size: 1.5rem;
+}
+.add-to-basket input{
+  width:60px;
 }
