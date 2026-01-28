@@ -92,6 +92,8 @@
                 <div class="orders">
                     <h2>Order History:</h2>
                     <div class="table-container">
+                        {% if order_list %}
+                        
                         <table>
                                 {% for order in order_list %}
                                 <tr>
@@ -111,51 +113,59 @@
                                 </tr>
                                 {% endfor %}
                             </table>
+                            {% else %}
+                            <h3>No orders found</h3>
+                            <p>Make your first purchase and check back here later</p>
+                            {% endif %}
                         </div>
                 </div>
             </wa-tab-panel>
             <wa-tab-panel name="testimonial">
-                <div class="testimonial">
-                    <div class="testimonial-container">
-                        <h2>Your Testimonial</h2>
-                        {% if user_testimonial %}
-                            <strong>Rating:</strong> <wa-rating value="{{ user_testimonial.rating }}" readonly label="Overall rating"></wa-rating>
-                            <p><strong>Review:</strong> {{ user_testimonial.short_review }}</p>
-                            {% if user_testimonial.approved %}
-                                <p><em>Status: Approved</em></p>
-                            {% else %}
-                                <p><em>Status: Pending approval</em></p>
-                            {% endif %}
+                <div>
+                    <h2>Your testimonial:</h2>
+                    <div class="testimonial-container">                    
+                        <wa-card class="testimonial-card">
+                            <img src="{{user_testimonial.user.profile.profile_pic.url}}" alt="profile picture" class="profile-pic">
+                            <div class="card-content">
+                            <wa-rating readonly value="{{user_testimonial.rating}}"></wa-rating>
+                            <p>"{{user_testimonial.short_review}}"</p>
+                            <p>- {{user_testimonial.user.username}}</p>
+                            </div>
+                        </wa-card>                    
+                    </div>
+                    <div class="approval">
+                        {% if user_testimonial.approved %}
+                            <p><em>Status: Approved</em></p>
+                        {% else %}
+                            <p><em>Status: Pending approval</em></p>
                         {% endif %}
                     </div>
-            
-                    <form method="POST">
-                        {% csrf_token %}
-                        {% if user.profile.has_purchased %}
-                        {{ testimonial_form }}
-                        
-                        <wa-button type='submit'>Submit your review</wa-button>
-                        {% else %}
-                        <wa-textarea appearance="filled" label="Review" hint="Complete a purchase to leave a review." disabled></wa-textarea>
-                        {% endif %}
-                    </form>
                 </div>
+                    <div class="testimonial-form">
+                        <form method="POST">
+                            {% csrf_token %}
+                            {% if user.profile.has_purchased %}
+                            {{ testimonial_form }}
+                            
+                            <wa-button type='submit'>Submit your review</wa-button>
+                            {% else %}
+                            <wa-textarea appearance="filled" label="Review" hint="Complete a purchase to leave a review." disabled></wa-textarea>
+                            {% endif %}
+                        </form>
+                    </div>
             </wa-tab-panel>
         </wa-tab-group>
         
-        
-        
-        
-    </div>
-    <div class="profile-buttons">
-        <wa-button href="{% url 'userprofile:edit_view' %}" variant="outline" pill>Edit Profile</wa-button>
-        
-        {% if user.is_staff %}
-        <wa-button href="{% url 'management:product_management' %}" variant="brand" pill>Product Management</wa-button>
-        <wa-button href="{% url 'management:blog_management' %}" variant="brand" pill>Blog Post Management</wa-button>
+        <div class="profile-buttons">
+            <wa-button href="{% url 'userprofile:edit_view' %}" variant="outline" pill>Edit Profile</wa-button>
+            
+            {% if user.is_staff %}
+            <wa-button href="{% url 'management:product_management' %}" variant="brand" pill>Product Management</wa-button>
+            <wa-button href="{% url 'management:blog_management' %}" variant="brand" pill>Blog Post Management</wa-button>
+            {% endif %}
+        </div>
         {% endif %}
     </div>
-    {% endif %}
 </section>
 
 {% endblock content %}

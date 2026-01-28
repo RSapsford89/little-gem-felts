@@ -34,6 +34,7 @@
       {% endfor %}
     </div>
     <div class="event-container">
+      <h2>Find us at our next event</h2>
       {% for post in blog_posts %}
         {% if post.is_event == True %}
             <div class="event-item">
@@ -55,15 +56,16 @@
 {% endblock content %}
 {% block testimonials %}
 <section class="testimonials-section">
-  <div class="testimonial-container">
+  <div >
     <h2>Testimonials from our customers:</h2>
-    <div>
+    <div class="testimonial-container">
       {% for testimonial in featured_testimonials %}
       <wa-card class="testimonial-card">
-        <div>
+        <img src="{{testimonial.user.profile.profile_pic.url}}" alt="profile picture" class="profile-pic">
+        <div class="card-content">
           <wa-rating readonly value="{{testimonial.rating}}"></wa-rating>
-          <p>"{{testimonial.short_review}}</p>
-          <p>{{testimonial.user.username}}</p>
+          <p>"{{testimonial.short_review}}"</p>
+          <p>- {{testimonial.user.username}}</p>
         </div>
       </wa-card>
       {% endfor %}

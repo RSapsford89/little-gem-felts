@@ -7,7 +7,7 @@
 {% comment %} The latest additions section is pulled from layout.html {% endcomment %}
 {% block titles %}
 <h1>Welcome to the Shop</h1>
-<div class="large-space"></div>
+{% comment %} <div class="large-space"></div> {% endcomment %}
 {% endblock titles %}
 {% block content %}
 <section class="product-section">
@@ -52,7 +52,6 @@
                     {% endif %}
                     <h3>{{item.name}}</h3>
                     <wa-button slot='footer' size='small' class='footer-btn' href="{% url 'store:product_detail' item.pk %}" variant="brand" pill><i class="fa-solid fa-bag-shopping"></i>£ {{item.price}}</wa-button>
-                    {% comment %} <wa-button size='small' class='footer-btn' href="{% url 'store:product_detail' item.pk %}" variant="brand" pill>read more</wa-button> {% endcomment %}
                 </wa-card>
             </div>
             {% endfor %}

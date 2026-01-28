@@ -28,8 +28,15 @@ table tr {
 }
 .container{
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     margin: auto;
+    justify-content: center;
+}
+wa-tab-group{
+    display: block;
+    width: 100%;
+    overflow: hidden;
 }
 .profile, .shipping, .testimonial{
     margin: 2rem;
@@ -50,9 +57,73 @@ table tr {
     overflow-y: auto; 
     /* border: 1px solid var(--violet-twilight-c2); */
 }
-.testimonial-container{
-    border: 1px solid var(--violet-twilight-c2);
+.profile-buttons{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin: auto;
+    justify-content: center;
 }
 .wide-div{
-    width: 100%;
+    width: 80%;
+    margin: 2rem auto;
+}
+.testimonial-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(1rem, 10%, 4rem);
+    margin: auto;
+    justify-content: center;
+}
+.approval{
+    display: flex;
+    width: 60%;
+    justify-content: end;
+}
+.testimonial-form{
+    display: flex;
+    width: 90%;
+    justify-content: center;
+}
+.testimonial-form form{
+    width: clamp(250px,60%, 600px);
+
+}
+.testimonial-card{
+    width: 200px;
+    height: 200px;
+    position: relative;
+    display: block;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+}
+.profile-pic{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    border: 2px solid white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.card-content {
+    padding-top: 40px;
+    font-size: 0.9rem;
+    line-height: 1.2;
+    color: #333;
+}
+wa-rating {
+    display: block;
+    margin-bottom: 15px;
+    font-size: 12px; 
+    text-align: right; 
+}
+.edit-container{
+    display: flex;
+    justify-content:center ;
+    margin: auto;
+     width: clamp(250px,60%, 600px);
 }

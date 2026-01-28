@@ -117,6 +117,44 @@ wa-button.button-dark::part(base){
 .event-item{
     text-align: left;
 }
-wa-card.testimonial-card{
-    max-width: 200px;
+.testimonial-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4rem;
+    margin: auto;
+    justify-content: center;
 }
+.testimonial-card{
+    width: 200px;
+    height: 200px;
+    position: relative;
+    display: block;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+
+}
+.profile-pic{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    border: 2px solid white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.card-content {
+    padding-top: 40px;
+    font-size: 0.9rem;
+    line-height: 1.2;
+    color: #333;
+}
+wa-rating {
+    display: block;
+    margin-bottom: 15px;
+    font-size: 12px; 
+    text-align: right; 
+}
+

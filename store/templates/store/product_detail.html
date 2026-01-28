@@ -12,10 +12,17 @@
 {% block content %}
 <p>{{product.main_category}}...{{product.sub_category}}</p>
 <section class="product-section">
-    <div class="store-container">
-        <div class="wa-grid wa-gap-2" style="--min-column-size: 200px;">
-                <div class="images">
-                    <img src="{{product.primary_image.image.url}}" alt="">
+    <div class="store-detail-container">
+                <div class="carousel-images">
+                    {% for image in product.images.all %}
+                    <div class="slides fade">
+                        <img src="{{image.image.url}}" alt="{{product.name}}" id="img{{forloop.counter}}">
+                    </div>
+                    {%empty%}
+                    <p>No images to display</p>
+                    {% endfor %}
+                    <a class="prev" id="prevBtn">&#10094;</a>
+                    <a class="next" id="nextBtn">&#10095;</a>
                 </div>
             <div class="description">
                 <h2>{{product.name}}</h2>
@@ -34,13 +41,14 @@
                             {% if product.stock_level < 1 %}
                             <p>Item not available</p>
                             {% else %}
-                            <wa-button pill>Add</wa-button>
+                            <button>Add</button>
                             {% endif %}
-                        </form>
-                    
+                        </form>                    
                 </div>                
             </div>
-        </div>
     </div>
 </section>
 {% endblock content  %}
+{% block extra_js %}
+<script src="{% static 'js/carousel.js' %}"></script>
+{% endblock extra_js %}

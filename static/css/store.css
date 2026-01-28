@@ -23,21 +23,27 @@ h3{
   padding: 0.75rem;
   margin: 3rem 0;
 }
-.filter-container {
-  display: inline-flex;
-  position: relative;
+.filter-container form {
+  display: flex;
+  flex-wrap: nowrap;
   align-items: center;
-  
 }
-.filter-container wa-input::part(base) {
+.filter-container button{
+  border-radius: 50%;
+  background-color: var(--amethyst-c1);
+  height: 40px;
+  width: 40px;
+
+}
+/* .filter-container form wa-input::part(base) {
   padding-right: 40px;
 }
-.filter-container wa-button::part(base) {
+.filter-container form wa-button::part(base) {
   position: absolute;
   top: -5px;
   right: -5px;
   background-color: transparent;
-}
+} */
 .category-change{
   margin: 5px;
 }
@@ -56,16 +62,33 @@ wa-button.lamp-btn::part(base) {
 
 wa-button.box-btn::part(base) {
   background-color: var(--lavender-c4);
+  color: #000;
 }
 
 wa-button.bag-btn::part(base) {
   background-color: var(--ash-grey-c5);
+  color: #000
 }
 
 wa-button.tool-btn::part(base) {
   background-color: var(--tropical-teal-c6);
+  color: #000
+}
+.store-detail-container{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  
+}
+.store-detail-container .images{
+  min-width:300px;
+  width: 40%;
+  margin: auto;
 }
 .description{
+  min-width: 300px;
+  width: 40%;
+  margin: auto;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -78,7 +101,7 @@ wa-button.tool-btn::part(base) {
 .add-to-basket input{
   width:60px;
 }
-.add-to-basket wa-button::part(base){
+.add-to-basket button{
   width:60px;
   background-color: var(--amethyst-c1);
 }
@@ -127,3 +150,48 @@ wa-card.horizontal-card{
 .info-panel{
   justify-items: center;
 }
+/* carousel styles heavily based on https://www.w3schools.com/howto/howto_js_slideshow.asp */
+/* Container to keep images and buttons relative to each other */
+.carousel-images {
+    position: relative;
+    max-width: 50%;
+    margin: auto;
+}
+
+.slides {
+    display: none;
+}
+
+/* Make images responsive */
+.slides img {
+    width: 100%;
+    height: auto;
+}
+
+/* Navigation buttons */
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    background-color: rgba(0,0,0,0.3);
+}
+
+/* Position the "next button" to the right */
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+/* Add a hover effect */
+.prev:hover, .next:hover {
+    background-color: rgba(0,0,0,0.8);
+}
+/* end of carousel styles */
