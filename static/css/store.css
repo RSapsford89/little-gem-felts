@@ -117,8 +117,34 @@ wa-button.tool-btn::part(base) {
     align-items: center;
     gap: 1rem;
 }
+/* for the management Post add form */
+.post-form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
 
-
+.post-form-group {
+  display: flex;
+  flex-direction: column; 
+  flex: 1;                
+  min-width: 250px;       
+  margin-bottom: 1rem;    
+}
+.post-checkbox-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 1rem;
+  align-items: center;
+}
+.post-checkbox-group {
+  display: flex;
+  align-items: center;    
+  gap: 8px; 
+}
+/* end */
 .checkbox-group {
     display: flex;
     align-items: center;

@@ -1,31 +1,60 @@
-{% extends "layout.html" %}
-{% load static %}
-{% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/store.css' %}">
-{% endblock extra_css %}
-{% block latestAdditions %}{% endblock latestAdditions %}
-{% block titles %}
-{% if edit %}
+{% extends "layout.html" %} {% load static %} {% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/store.css' %}" />
+{% endblock extra_css %} {% block latestAdditions %}{% endblock latestAdditions%} {% block titles %} {% if edit %}
 <h1>Edit Blog Post</h1>
 {% else %}
 <h1>Add New Blog Post</h1>
-{% endif %}
-{% endblock titles %}
-{% block content %}
+{% endif %} {% endblock titles %} {% block content %}
 <section class="product-listing">
-    <div class="container">
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <wa-button type="submit" variant="brand">
-                {% if edit %}
-                Update Post
-                {% else %}
-                Add Post
-                {% endif %}
-            </wa-button>
-            <wa-button href="{% url 'management:blog_management' %}" variant="outline">Cancel</wa-button>
-        </form>
-    </div>
+  <div class="container">
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %} {# Standard Fields #}
+      <div class="post-form-group">
+        {{ form.title.label_tag }} {{ form.title }}
+      </div>
+      <div class="post-form-group">
+        {{ form.slug.label_tag }} {{ form.slug }}
+      </div>
+      <div class="post-form-group">
+        {{ form.content.label_tag }} {{ form.content }}
+      </div>
+      <div class="post-form-group">{{ form.img.label_tag }} {{ form.img }}</div>
+      <div class="post-form-group">
+        {{ form.location.label_tag }} {{ form.location }}
+      </div>
+
+      {# Dates on one line #}
+      <div class="post-form-row">
+        <div class="post-form-group">
+          {{ form.start_date.label_tag }} {{ form.start_date }}
+        </div>
+        <div class="post-form-group">
+          {{ form.end_date.label_tag }} {{ form.end_date }}
+        </div>
+      </div>
+
+      {# Checkboxes on one line #}
+      <div class="post-checkbox-row">
+        <div class="post-checkbox-group">
+          {{ form.is_event }} {{ form.is_event.label_tag }}
+        </div>
+        <div class="post-checkbox-group">
+          {{ form.allow_comments }} {{ form.allow_comments.label_tag }}
+        </div>
+        <div class="post-checkbox-group">
+          {{ form.publish }} {{ form.publish.label_tag }}
+        </div>
+      </div>
+
+      <br />
+
+      <wa-button type="submit" variant="brand">
+        {% if edit %} Update Post {% else %} Add Post {% endif %}
+      </wa-button>
+      <wa-button href="{% url 'management:blog_management' %}" variant="outline"
+        >Cancel</wa-button
+      >
+    </form>
+  </div>
 </section>
 {% endblock content %}
