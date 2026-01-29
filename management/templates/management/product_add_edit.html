@@ -1,6 +1,11 @@
 {% extends "layout.html" %} {% load static %} {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/store.css' %}" />
-{% endblock extra_css %} {% block latestAdditions %}{% endblock latestAdditions%} {% block titles %}
+{% endblock extra_css %} 
+{% block latestAdditions %}{% endblock latestAdditions%} 
+{% block extra_js %}
+<script src="{% static 'js/img_form_duplicate.js' %}"></script>
+{% endblock extra_js %}
+{% block titles %}
 <h1>Product listings</h1>
 {% endblock titles %} {% block content %}
 <section class="product-listing">
@@ -19,45 +24,47 @@
     <form method="POST" enctype="multipart/form-data">
       {% csrf_token %} {{ form.as_p }}
       <h3>Product Images</h3>
-      {{image_formset.management_form}} {% for form in image_formset %}
-      <div class="image-form">
-        {{ form.id }} {% if form.instance.image %}
-        <div class="current-image">
-          <p><strong>Current image:</strong></p>
-          <img
-            src="{{ form.instance.image.url }}"
-            alt="Product image"
-            style="max-width: 200px"
-          />
+      {{image_formset.management_form}}
+      <div class="image-form-container">
+        {% for form in image_formset %}
+        <div class="image-form">
+          {{ form.id }}
+          {% if form.instance.image %}
+          <div class="current-image slides">
+            <p><strong>Current image:</strong></p>
+            <img
+              src="{{ form.instance.image.url }}"
+              alt="Product image"
+            />
+          </div>
+          {% endif %}
+          <div class="image-form-fields">
+            <div class="checkbox-group">
+              {{ form.DELETE }}
+              <label for="{{ form.DELETE.id_for_label }}"
+                >Delete this image</label>
+            </div>
+            <div class="form-group">
+              {{ form.image.label_tag }} {{ form.image }}
+            </div>
+            <div class="checkbox-group">
+              {{ form.primary_image }} {{ form.primary_image.label_tag }}
+            </div>
+          </div>
         </div>
-        {% endif %}
-        <div class="image-form-fields">
-          <div class="checkbox-group">
-            {{ form.DELETE }}
-            <label for="{{ form.DELETE.id_for_label }}"
-              >Delete this image</label
-            >
-          </div>
-          <div class="form-group">
-            {{ form.image.label_tag }} {{ form.image }}
-          </div>
-
-          <div class="checkbox-group">
-            {{ form.primary_image }} {{ form.primary_image.label_tag }}
-          </div>
-        </div>
+        <hr>
+        {% endfor %}
       </div>
-      <hr>
-      {% endfor %}
       <wa-button type="submit" variant="brand">
         {% if edit %} Update Product {% else %} Add Product {% endif %}
       </wa-button>
-      <wa-button
-        href="{% url 'management:product_management' %}"
-        variant="outline"
-        >Cancel</wa-button
-      >
     </form>
   </div>
+  <wa-button id="add-img-btn">Add another image</wa-button>
+  <wa-button
+  href="{% url 'management:product_management' %}"
+  variant="outline"
+  >Cancel</wa-button
+  >
 </section>
 {% endblock content %}

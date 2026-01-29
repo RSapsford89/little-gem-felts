@@ -7,6 +7,7 @@ from store.models import Product
 from order.models import Order, OrderLineItem
 from .forms import ShippingForm
 from basket.contexts import basket_contents
+from django.views.decorators.csrf import csrf_exempt
 import stripe
 # Create your views here.
 
@@ -42,9 +43,7 @@ def payment(request):
     }
     return render(request, 'order/payment.html', context)
 
-from django.views.decorators.csrf import csrf_exempt
-# what errors do we need to catch?
-# if data is wrong type?
+
 def create_order(request):
     basket = request.session.get('basket', {})
     
@@ -131,6 +130,7 @@ def create_order(request):
             request.session['client_secret'] = intent.client_secret
             request.session['id'] = intent.id
         except Exception as e:
+
             messages.error(request, f"Stripe error: {e}")
             return redirect('basket:view_basket')
         

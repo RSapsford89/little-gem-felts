@@ -1,5 +1,6 @@
 from django.db import models
-
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill
 
 # Create your models here.
 class Category(models.Model):
@@ -46,7 +47,9 @@ class Product(models.Model):
 
 class Images(models.Model):
     product = models.ForeignKey(Product, on_delete= models.CASCADE, related_name='images')
-    image = models.ImageField(upload_to='products/', height_field=None, width_field=None, max_length=None)
+    image = ProcessedImageField(upload_to='products/', processors=[ResizeToFill(300,300)],
+                                    format='JPEG', options={'quality': 90}, blank=True, null=True,
+                                    default='products/no-img-knit.png')
     position = models.IntegerField(default=0, blank=True, null=True)
     primary_image = models.BooleanField(default=False)# image for card and first to display in details
 
