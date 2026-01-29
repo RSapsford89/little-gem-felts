@@ -15,12 +15,12 @@
 .cta-section{
     position:relative;
     width: clamp(300px, 60%, 900px);
-    height: clamp(470px, 25vh, 550px);
+    height: clamp(400px, 25vh, 550px);
     background: no-repeat url('/media/drying-fibres.webp');
     background-size: cover;
     display: flex;
     justify-content: center;
-    inset: 5% 4%;
+    margin: 10% 20%;
 }
 .cta-overlay{
     position: relative;
@@ -158,3 +158,40 @@ wa-rating {
     text-align: right; 
 }
 
+@media screen and (max-width: 768px) {
+    .cta-section {
+        background: no-repeat url('/media/drying-fibres.webp');
+        background-size: 250px 210px;
+        height: auto;
+        flex-direction: column;
+        padding: 1.5rem;
+    }
+    
+    .cta-overlay {
+        padding: 1rem 1rem;
+        font-size: 1.1rem;
+    }
+    .cta-title{
+        margin: 0.5rem;
+        font-size: 2rem;
+    }
+    .blog-event-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        margin: 1.5rem;
+    }
+    .blog-container,
+    .event-container {
+        grid-column: 1;
+    }
+    .testimonial-container {
+        gap: 1.5rem;
+    }
+    .profile-pic {
+        width: 40px;
+        height: 40px;
+        top: 10px;
+        left: 10px;
+    }
+
+}

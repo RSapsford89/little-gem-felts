@@ -74,7 +74,9 @@ h3 {
 .category-change {
   margin: 5px;
 }
-
+.store-container div{
+  justify-items: center;
+}
 /* Filter Button Variants */
 wa-button.all-btn::part(base)  { background-color: var(--amethyst-c1); }
 wa-button.kit-btn::part(base)  { background-color: var(--violet-twilight-c2); }
@@ -115,7 +117,7 @@ wa-button.tool-btn::part(base) { background-color: var(--tropical-teal-c6); colo
 }
 
 .add-to-basket input {
-  width: 60px;
+  width: 80px;
 }
 
 .add-to-basket button {
@@ -179,7 +181,7 @@ wa-card.horizontal-card {
   margin-top: 1rem;
 }
 
-/* Left Column: Form & Payment */
+/* Left column: Form & Payment */
 .checkout-main {
   display: flex;
   flex-direction: column;

@@ -1,13 +1,18 @@
 from django.db import models
 from django.contrib.auth.models import User
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill
+from django.utils.text import slugify
+import uuid
 # Create your models here.
-# add note for pulling from the early walkthrough
 class Post(models.Model):
     title = models.CharField(max_length=200, unique=True)
     slug = models.SlugField(max_length=200, unique=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="blog_posts")
     content = models.TextField()
-    img = models.ImageField(blank=True ,upload_to=None, height_field=None, width_field=None, max_length=None)
+    img = ProcessedImageField(upload_to='blog_pics/', processors=[ResizeToFill(300,300)],
+                                    format='JPEG', options={'quality': 90}, blank=True, null=True,
+                                    default='profile/default-portrait.png')
     start_date = models.DateTimeField(auto_now=False, auto_now_add=False)
     end_date = models.DateTimeField(auto_now=False, auto_now_add=False)
     location = models.CharField(max_length=200)
@@ -22,7 +27,17 @@ class Post(models.Model):
         ordering = ['date_created']
 
     def __str__(self):
-        return f""
+        return f"{self.title}"
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base_slug = slugify(self.title)
+            if Post.objects.filter(slug=base_slug).exists():
+                self.slug = f"{base_slug}-{str(uuid.uuid4())[:4]}"
+            else:
+                self.slug = base_slug
+                
+        super().save(*args, **kwargs)
 
 
 class Comment(models.Model):

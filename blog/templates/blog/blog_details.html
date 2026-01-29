@@ -12,8 +12,12 @@
     <div class="slug">
       <h3>{{post.slug}}</h3>
     </div>
-    <div class="image">
-      <img src="" alt="blog post image">
+    <div class="img">
+      {% if post.img %}
+    <img src="{{ post.img.url }}" alt="blog post image">
+  {% else %}
+    <img src="{% static 'blog_pics/placeholder.png' %}" alt="No image available">
+  {% endif %}
     </div>
     <div class="wa-span-grid text">
       <p>{{post.content}}</p>

@@ -18,29 +18,34 @@
     <title>LittleGemFelts</title>
 </head>
 <body>
+  {% comment %} Coding2Go insipired from this video: https://www.youtube.com/watch?v=R7b3OlEyqug&t=202s {% endcomment %}
     <header>
       <nav class='navbar'>
-
-      <wa-button appearance='plain' size='large'href='{% url 'home'%}'>LittleGemFelts</wa-button>
-
-      <ul class="menu">
-        <li>
-          <wa-button class="nav-btn" href="{% url 'store:store'%}">Shop</wa-button>
-        </li>
-          <wa-button class="nav-btn" pill href="{% url 'blog:blog_list'%}">Blog & Events</wa-button>
-        </li>
-        <li>
-          <wa-button class="nav-btn" pill href="{% url 'basket:view_basket'%}">Basket</wa-button>
-        </li>
-        <li>
-          {% if user.is_authenticated %}
-          <wa-button class="nav-btn" pill href="{% url 'userprofile:profile_view'%}">{{user.username}}'s Profile</wa-button>
-          <wa-button class="nav-btn" pill href="{% url 'account_logout' %}">Logout</wa-button>
-          {% else %}
-          <wa-button class="nav-btn" pill href="{% url 'account_login' %}">Log-in / Sign-up</wa-button>
-          {% endif %}        
-        </li>
-      </ul>
+        <wa-button appearance='plain' size='large' href='{% url 'home'%}'>LittleGemFelts</wa-button>
+        <button class="navbar-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.menu').classList.toggle('open')">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+        <ul class="menu">
+          <li>
+            <wa-button class="nav-btn" href="{% url 'store:store'%}">Shop</wa-button>
+          </li>
+          <li>
+            <wa-button class="nav-btn" pill href="{% url 'blog:blog_list'%}">Blog & Events</wa-button>
+          </li>
+          <li>
+            <wa-button class="nav-btn" pill href="{% url 'basket:view_basket'%}">Basket</wa-button>
+          </li>
+          <li>
+            {% if user.is_authenticated %}
+            <wa-button class="nav-btn" pill href="{% url 'userprofile:profile_view'%}">{{user.username}}'s Profile</wa-button>
+            <wa-button class="nav-btn" pill href="{% url 'account_logout' %}">Logout</wa-button>
+            {% else %}
+            <wa-button class="nav-btn" pill href="{% url 'account_login' %}">Log-in / Sign-up</wa-button>
+            {% endif %}
+          </li>
+        </ul>
       </nav>
     </header>
     <div class="background-svg">

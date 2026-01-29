@@ -37,11 +37,11 @@ def add_to_basket(request, product_id):
                     else: # asking for available amount
 
                         basket[str(product_id)] += quantity
-                        messages.success(request, f' {product.name} updated to {quantity}.')
+                        messages.success(request, f' {product.name} added {quantity} more.')
                 else: # it isn't in the basket
                     
-                    basket[str(product_id)] += quantity
-                    messages.success(request, f'Updated {product.name} quantity to {basket[str(product_id)]}')
+                    basket[str(product_id)] = quantity
+                    messages.success(request, f'Added {product.name} quantity to {basket[str(product_id)]}')
             else:
                 messages.error(request, f'This item only has {product.stock_level} left')
             

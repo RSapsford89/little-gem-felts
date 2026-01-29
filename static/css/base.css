@@ -30,6 +30,7 @@ main {
 h1 {
   font-family: var(--title-font);
   font-weight: 300;
+  margin: 2rem;
 }
 h2,
 h3,
@@ -38,6 +39,7 @@ h5,
 h6 {
   font-family: var(--heading-font);
   font-weight: 300;
+  margin: 1rem;
 }
 p {
   font-family: var(--content-font);
@@ -54,6 +56,28 @@ section {
   align-items: center;
   background-color: var(--light-gold-c3);
   position: relative;
+  z-index: 10;
+}
+
+.navbar-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 1rem;
+  z-index: 20;
+}
+.navbar-toggle .bar {
+  width: 28px;
+  height: 4px;
+  background-color: #564dac;
+  margin: 4px 0;
+  border-radius: 2px;
 }
 .menu {
   display: flex;
@@ -61,6 +85,14 @@ section {
   list-style: none;
   gap: 1rem;
   margin-right: 2rem;
+  transition: max-height 0.3s ease;
+}
+
+.menu.open {
+  display: flex !important;
+  flex-direction: column;
+  max-height: 500px;
+}
 }
 .large-space{
   height: 150px;
@@ -134,6 +166,9 @@ wa-button.nav-btn::part(base):active {
   grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--min-column-size, 200px)), 1fr));
   gap: var(--wa-spacing-2x-large, 2rem);
   margin: 2rem 2rem;
+}
+.latest-additions div{
+  justify-items: center;
 }
 wa-button.latest-section-btn::part(base) {
   display: flex;
@@ -243,6 +278,32 @@ wa-button.footer-btn::part(base) {
 
 /* Responsive */
 @media (max-width: 768px) {
+  .navbar-toggle {
+    display: flex;
+  }
+  .menu {
+    flex-direction: column;
+    width: 100%;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: var(--light-gold-c3);
+    max-height: 0;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    z-index: 15;
+    visibility: hidden;
+    opacity: 0;
+    transition: max-height 0.3s ease ;
+  }
+  .menu.open {
+    max-height: 500px;
+    display: flex;
+    visibility: visible;
+    opacity: 1;
+    padding: 0 0 1rem 0;
+  }
   .footer-container {
     grid-template-columns: 1fr;
     gap: 2rem;

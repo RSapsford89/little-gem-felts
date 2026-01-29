@@ -18,7 +18,7 @@ def blog_details(request, slug):
     :param request: Description
     """
     post = get_object_or_404(Post, slug=slug, publish=True)
-    comments = post.comments.all().order_by('-created_on')
+    comments = post.comments.all().order_by('-date_created')
 
     comment_form = None
 

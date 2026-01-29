@@ -34,7 +34,7 @@ def profile_view(request):
             testimonial_form = TestimonialForm() # Reset form - should not occur, due to DTL on page
             
     else:
-        # GET: load existing review if available
+        # GET load existing review if available
         if user_testimonial:
             testimonial_form = TestimonialForm(instance=user_testimonial)
         else:
