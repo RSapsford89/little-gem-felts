@@ -5,6 +5,17 @@
 {% endblock titles %} {% block content %}
 <section class="product-listing">
   <div class="container">
+    {% if form.errors %}
+    <div class="alert alert-danger">
+        <ul>
+            {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                    <li><strong>{{ field|title }}:</strong> {{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+  {% endif %}
     <form method="POST" enctype="multipart/form-data">
       {% csrf_token %} {{ form.as_p }}
       <h3>Product Images</h3>

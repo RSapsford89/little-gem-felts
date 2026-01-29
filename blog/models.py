@@ -29,6 +29,13 @@ class Post(models.Model):
     def __str__(self):
         return f"{self.title}"
     
+    def clean(self):
+        if self.is_event:
+            if self.start_date and self.end_date:
+                if self.end_date <= self.start_date:
+                    raise ValidationError({'end_date': "End date must be after start date."})
+                
+                
     def save(self, *args, **kwargs):
         if not self.slug:
             base_slug = slugify(self.title)

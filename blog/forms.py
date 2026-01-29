@@ -1,4 +1,5 @@
 from django import forms
+from django.utils import timezone
 from .models import Post, Comment
 
 class PostForm(forms.ModelForm):
@@ -9,7 +10,6 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = [
             'title',
-            'slug',
             'content',
             'img',
             'start_date',
@@ -30,6 +30,25 @@ class PostForm(forms.ModelForm):
             'allow_comments': 'Allow comments?',
             'publish': 'Publish post?',
         }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        is_event = cleaned_data.get('is_event')
+        start_date = cleaned_data.get('start_date')
+        end_date = cleaned_data.get('end_date')
+        # check for EVENT flag first
+        if is_event:
+            now = timezone.now()
+
+            #Check if start date is in the past
+            if start_date and start_date < now:
+                self.add_error('start_date', "The event cannot start in the past.")
+
+            #Check if end date is before start date
+            if start_date and end_date and end_date <= start_date:
+                self.add_error('end_date', "The end date must be after the start date.")
+        
+        return cleaned_data
 
 class CommentForm(forms.ModelForm):
     """

@@ -10,7 +10,13 @@
       <h2>{{post.title}}</h2>
     </div>
     <div class="slug">
-      <h3>{{post.slug}}</h3>
+      {% if post.is_event %}
+      <div class="event-dates">
+        <strong>Event Dates:</strong> 
+        {{ post.start_date|date:"M d, Y H:i" }} – {{ post.end_date|date:"M d, Y H:i" }}
+        <br><strong>Location:</strong> {{post.location}}
+      </div>
+    {% endif %}
     </div>
     <div class="img">
       {% if post.img %}
