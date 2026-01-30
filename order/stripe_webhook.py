@@ -63,6 +63,7 @@ class StripeWH_Handler:
         except Exception as e:
             return HttpResponse(content=f"unable to update order: {e}", status=500)
 
+# Code from Boutique Ado and Stripe QuickStart docs
 @require_POST
 @csrf_exempt
 def webhook(request):

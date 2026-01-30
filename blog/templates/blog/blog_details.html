@@ -47,8 +47,8 @@
     {% endfor %}
 
     <div class="mt-4">
+      {% if user.is_authenticated and user.profile.can_comment %}
         {% if post.allow_comments %}
-            {% if user.is_authenticated %}
                 <form method="post">
                     {% csrf_token %}
                     {{ comment_form.as_p }}

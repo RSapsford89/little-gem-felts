@@ -1,4 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
+
 from .models import Post, Comment
 from .forms import CommentForm
 
@@ -24,17 +26,25 @@ def blog_details(request, slug):
 
     if post.allow_comments:
         if request.user.is_authenticated:
-            if request.method == "POST":
-                comment_form = CommentForm(request.POST)
-                if comment_form.is_valid():
-                    comment = comment_form.save(commit=False)
-                    comment.post = post
-                    comment.author = request.user
-                    comment.save()
+            if request.user.profile.can_comment:
+                if request.method == "POST":
+                    comment_form = CommentForm(request.POST)
+                    try:
+                        if comment_form.is_valid():
+                            comment = comment_form.save(commit=False)
+                            comment.post = post
+                            comment.author = request.user
+                            comment.save()
 
-                    return redirect('blog:blog_details', slug=slug)
+                            return redirect('blog:blog_details', slug=slug)
+                    except Exception as e:
+                        messages.error(request, f"Something went wrong at our end - please try again. {e}")
+                    else:
+                        messages.error(request, "Something went wrong with the for submission")
+                else:
+                    comment_form = CommentForm()
             else:
-                comment_form = CommentForm()
+                messages.error(request, "Sorry you can't comment yet")
     context ={
         'post':post,
         'comments':comments,
