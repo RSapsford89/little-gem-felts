@@ -79,6 +79,12 @@
                     <td>
                         <a href="{% url 'management:edit_post' post.id %}">Edit</a>
                     </td>
+                    <td>
+                        <form method="POST" action="{% url 'management:delete_post' post.id %}" onsubmit="return confirm('Are you sure you want to delete {{ post.title }}? This action cannot be undone.');">
+                            {% csrf_token %}
+                            <wa-button type="submit" variant="danger" size="small">Delete</wa-button>
+                        </form>
+                    </td>
                 </tr>
                 {% empty %}
                 <tr>

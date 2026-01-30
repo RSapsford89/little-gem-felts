@@ -12,11 +12,9 @@ def add_to_basket(request, product_id):
     """
     Docstring for add_to_basket
     When a user clicks on 'add' the basket is updated
-    :param request: Description
-    :param product_id: from prodduct_detail page 
     """
     # need to validate values as being INT, positive and the stock exists - would crispy forms help here?
-    if request.method == 'POST': # this could be a decorator instead?
+    if request.method == 'POST':
         redirect_url = request.POST.get('redirect_url', '/view-basket/')
         try:
             product = get_object_or_404(Product, pk=product_id) # get the obj from DB
@@ -49,11 +47,12 @@ def add_to_basket(request, product_id):
             request.session['basket'] = basket
             request.session.modified = True
             return redirect(redirect_url)
-        except (ValueError,TypeError):
+        except (ValueError, TypeError):
             messages.error(request, 'Invalid quantity entered')
             return redirect(redirect_url)
     return redirect('store:all_products')
-# UX bug with the value. if JS input value display not updated to match basket after update
+
+
 def update_basket(request, product_id):
     """
     Docstring for update_basket
@@ -142,6 +141,7 @@ def update_basket(request, product_id):
     # general idea taken from Boutique Ado project.
     # used AI to assist with the JSON formatting
     # so the AJAX response would work
+    # currently this works but is not needed with the card layout in basket
 def remove_basket(request, product_id):
     """
     Remove an item from the basket and update totals.

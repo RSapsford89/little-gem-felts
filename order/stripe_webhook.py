@@ -33,8 +33,6 @@ class StripeWH_Handler:
             order.stripe_pid = intent.id
             order.is_paid = True
             order.save()
-            print(order.is_paid)
-            print(order.order_id)
             return HttpResponse(content='PaymentIntent was successful!', status=200)
         
         except Order.DoesNotExist:

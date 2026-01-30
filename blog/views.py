@@ -16,8 +16,7 @@ def blog_list(request):
 def blog_details(request, slug):
     """
     Docstring for blog_details
-    A view to return the details of a single blog    
-    :param request: Description
+    A view to return the details of a single blog
     """
     post = get_object_or_404(Post, slug=slug, publish=True)
     comments = post.comments.all().order_by('-date_created')

@@ -34,7 +34,6 @@ def basket_contents(request):
             'product_total': product_total,  # Changed from 'total'
         })
     grand_total = total + delivery
-        # subtotal += (item.cost * qty)
         # for decimal qauntize: https://pythonguides.com/python-print-2-decimal-places/
     return {
         'basket_items': basket_items,

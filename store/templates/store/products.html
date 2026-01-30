@@ -13,7 +13,6 @@
 <section class="product-section">
     <div class="shop-filter">
         <div class="category-change">
-
         </div>
         <div class="category-change">
             <wa-button size='small' class='round-btn all-btn' href="?category=all">All</wa-button>
@@ -40,10 +39,9 @@
             </form>
         </div>
     </div>
-    <div class="store-container">
+    <div class="store-container" id='store-top'>
         <div class="wa-grid wa-gap-2" style="--min-column-size: 200px;">
-            {% for item in products %}
-                {% if item.stock_level > 0 %}
+            {% for item in page_obj %}
                 <div>
                     <wa-card class="card-overview">
                         {% if item.images.first %}
@@ -55,9 +53,26 @@
                         <wa-button slot='footer' size='small' class='footer-btn' href="{% url 'store:product_detail' item.pk %}" variant="brand" pill><i class="fa-solid fa-bag-shopping"></i> £ {{item.price}}</wa-button>
                     </wa-card>
                 </div>
-                {% endif %}
             {% endfor %}
         </div>
+    </div>
+    {% comment %} pagination code from Django pagination docs {% endcomment %}
+    <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1#store-top">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}#store-top">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}#store-top">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}#store-top">last &raquo;</a>
+        {% endif %}
+    </span>
     </div>
 </section>
 {% endblock content  %}
