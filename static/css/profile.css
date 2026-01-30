@@ -124,6 +124,7 @@ wa-rating {
     font-size: 12px; 
     text-align: right; 
 }
+
 .edit-container{
     display: flex;
     justify-content:center ;

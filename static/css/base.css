@@ -275,7 +275,9 @@ wa-button.footer-btn::part(base) {
   background-color: #a560b2;
   color: #000;
 }
-
+wa-button.purple::part(base){
+    background-color: #a560b2;
+}
 /* Responsive */
 @media (max-width: 768px) {
   .navbar-toggle {

@@ -68,8 +68,6 @@
 }
 wa-button.button-light::part(base){
     background: none;
-    /* border: solid 4px #a3c4bc; */
-
 }
 wa-button.button-dark::part(base){
     background: #564dac;
