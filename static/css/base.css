@@ -93,6 +93,11 @@ section {
   flex-direction: column;
   max-height: 500px;
 }
+wa-button.button-light::part(base){
+    background: none;
+}
+wa-button.button-dark::part(base){
+    background: #564dac;
 }
 .large-space{
   height: 150px;
@@ -218,7 +223,6 @@ wa-button.round-btn::part(base){
   gap: 0.5rem;
 }
 .layout-addition {
-  /* display: grid; */
   grid-column: 3;
   margin: 0 auto;
   grid-template-columns: auto auto auto;
@@ -247,7 +251,6 @@ wa-card img{
   object-fit: cover;
 }
 wa-card h3{
-  /* margin: 0.5rem; */
   font-size: clamp(1rem, 10%, 1.5rem);
 }
 wa-card.card-overview::part(media){
@@ -260,7 +263,6 @@ wa-card.card-overview::part(media){
 .card-overview {
   max-width: 200px;
   height: 375px;
-  /* z-index: 1; */
   background-color: #3d89af;
   align-items: center;
   text-align: center;
@@ -272,11 +274,14 @@ wa-card.card-overview::part(media){
     z-index: 1;
 }
 wa-button.footer-btn::part(base) {
-  background-color: #a560b2;
+  background-color: var(--amethyst-c1);
   color: #000;
 }
 wa-button.purple::part(base){
-    background-color: #a560b2;
+    background-color: var(--amethyst-c1);
+}
+.purple{
+  background-color: var(--amethyst-c1);
 }
 /* Responsive */
 @media (max-width: 768px) {

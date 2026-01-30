@@ -66,12 +66,7 @@
     z-index: -1;
     border-radius: 2rem;
 }
-wa-button.button-light::part(base){
-    background: none;
-}
-wa-button.button-dark::part(base){
-    background: #564dac;
-}
+
 
 /* Blog and Events section */
 .blog-event-container{

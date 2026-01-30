@@ -56,9 +56,6 @@
                                     <wa-button data-item-id="{{item.product_id}}" data-action="increase">
                                         <wa-icon name='plus' class='plus-btn'></wa-icon>
                                     </wa-button>
-                                    {% comment %} <wa-button data-item-id="{{item.product_id}}" data-action="remove">
-                                        <wa-icon name='trash-can' class='plus-btn'></wa-icon> {% endcomment %}
-                                    </wa-button>
                                 </wa-button-group>
                             </div>
                         </wa-card>
@@ -91,7 +88,7 @@
                     </tr>
                 </table>
                 <br>
-                <wa-button class="purple totals-btn" href="{% url 'order:create_order' %}" >
+                <wa-button class="purple totals-btn" pill href="{% url 'order:create_order' %}" >
                     Continue to Payment
                 </wa-button>
             </wa-card>

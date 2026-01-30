@@ -10,7 +10,10 @@
 <h1>Product details</h1>
 {% endblock titles %}
 {% block content %}
-<p>{{product.main_category}}...{{product.sub_category}}</p>
+
+<div class="breadcrumb-nav">
+<wa-button class="button-dark" href="{% url 'store:store' %}">Keep Shopping</wa-button>
+</div>
 <section class="product-section">
     <div class="store-detail-container">
                 <div class="carousel-images">
