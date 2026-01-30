@@ -43,17 +43,19 @@
     <div class="store-container">
         <div class="wa-grid wa-gap-2" style="--min-column-size: 200px;">
             {% for item in products %}
-            <div>
-                <wa-card class="card-overview">
-                    {% if item.images.first %}
-                    <img slot="media" src="{{ item.images.first.image.url }}" alt="{{ item.name }}" />
-                    {% else %}
-                    <img slot="media" src="{{MEDIA_URL}}no-img-knit.png" alt="{{ item.name }}" />
-                    {% endif %}
-                    <h3>{{item.name}}</h3>
-                    <wa-button slot='footer' size='small' class='footer-btn' href="{% url 'store:product_detail' item.pk %}" variant="brand" pill><i class="fa-solid fa-bag-shopping"></i>£ {{item.price}}</wa-button>
-                </wa-card>
-            </div>
+                {% if item.stock_level > 0 %}
+                <div>
+                    <wa-card class="card-overview">
+                        {% if item.images.first %}
+                        <img slot="media" src="{{ item.images.first.image.url }}" alt="{{ item.name }}" />
+                        {% else %}
+                        <img slot="media" src="{{MEDIA_URL}}no-img-knit.png" alt="{{ item.name }}" />
+                        {% endif %}
+                        <h3>{{item.name}}</h3>
+                        <wa-button slot='footer' size='small' class='footer-btn' href="{% url 'store:product_detail' item.pk %}" variant="brand" pill><i class="fa-solid fa-bag-shopping"></i>£ {{item.price}}</wa-button>
+                    </wa-card>
+                </div>
+                {% endif %}
             {% endfor %}
         </div>
     </div>

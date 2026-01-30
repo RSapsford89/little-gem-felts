@@ -93,31 +93,39 @@
                     <h2>Order History:</h2>
                     <div class="table-container">
                         {% if order_list %}
-                        
-                        <table>
-                                {% for order in order_list %}
-                                <tr>
-                                    <td>{{order.order_id}}</td>
-                                    {% for lineitem in order.lineitems.all %}
-                                    <tr>
-                                        <td>
-                                            {{lineitem.product_name}}
-                                        </td>
-                                        <td>
-                                            {{lineitem.quantity}}
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                    <td>£ {{order.grand_total}}</td>
-                                    <td>Order place on: {{order.date}}</td>
-                                </tr>
+                        <table class="main-history-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Date</th>
+                                <th>Items Purchased</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                    {% for order in order_list %}
+                    <tr>
+                        <td><strong>{{ order.order_id|truncatechars:8 }}</strong></td>
+                        <td><small>{{ order.date|date:"d/m/Y" }}</small></td>
+                        <td>
+                            <ul class="item-list">
+                                {% for lineitem in order.lineitems.all %}
+                                <li>
+                                    {{ lineitem.quantity }}x {{ lineitem.product_name }}
+                                </li>
                                 {% endfor %}
-                            </table>
-                            {% else %}
-                            <h3>No orders found</h3>
-                            <p>Make your first purchase and check back here later</p>
-                            {% endif %}
-                        </div>
+                            </ul>
+                        </td>
+                        <td><strong>£{{ order.grand_total }}</strong></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <h3>No orders found</h3>
+            <p>Make your first purchase and check back here later</p>
+            {% endif %}
+        </div>
                 </div>
             </wa-tab-panel>
             <wa-tab-panel name="testimonial">

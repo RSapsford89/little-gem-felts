@@ -21,6 +21,9 @@ td:first-child {
 table tr {
     height: 40px; /* Adjust as needed */
 }
+.item-list{
+    list-style-type: none;
+}
 .description-cell{
     max-height:200px;
     min-width: 200px;
