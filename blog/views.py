@@ -1,8 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 
-from .models import Post, Comment
+from .models import Post
 from .forms import CommentForm
+
 
 def blog_list(request):
     """
@@ -12,6 +13,7 @@ def blog_list(request):
     """
     posts = Post.objects.filter(publish=True).order_by('-date_created')
     return render(request, 'blog/blog_list.html', {'posts': posts})
+
 
 def blog_details(request, slug):
     """
@@ -44,9 +46,10 @@ def blog_details(request, slug):
                     comment_form = CommentForm()
             else:
                 messages.error(request, "Sorry you can't comment yet")
-    context ={
-        'post':post,
-        'comments':comments,
-        'comment_form':comment_form
+    context = {
+        'post': post,
+        'comments': comments,
+        'comment_form': comment_form
     }
     return render(request, 'blog/blog_details.html', context)
+

@@ -265,3 +265,4 @@ class updateBasket(BasketTestCase):
         firstMessages = list(get_messages(firstResponse.wsgi_request))
         self.assertEqual(len(firstMessages), 1, "Should 1 message after first addition")
         self.assertEqual(str(firstMessages[0]), f'Added {quantity} of {product.name} to the basket')
+        

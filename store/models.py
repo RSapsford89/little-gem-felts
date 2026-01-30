@@ -2,6 +2,7 @@ from django.db import models
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 
+
 # Create your models here.
 class Category(models.Model):
     """
@@ -10,7 +11,7 @@ class Category(models.Model):
     """
     name = models.CharField(max_length=50, unique=True)
 
-    class  Meta:
+    class Meta:
         verbose_name_plural = 'Categories'
 
     def __str__(self):
@@ -44,14 +45,15 @@ class Product(models.Model):
     def primary_image(self):
         """Returns the primary image or first image if no primary is set"""
         return self.images.filter(primary_image=True).first() or self.images.first()
+    
 
 class Images(models.Model):
     product = models.ForeignKey(Product, on_delete= models.CASCADE, related_name='images')
     image = ProcessedImageField(upload_to='products/', processors=[ResizeToFill(300,300)],
-                                    format='JPEG', options={'quality': 90}, blank=True, null=True,
-                                    default='products/no-img-knit.png')
+                                format='JPEG', options={'quality': 90}, blank=True, null=True,
+                                default='products/no-img-knit.png')
     position = models.IntegerField(default=0, blank=True, null=True)
-    primary_image = models.BooleanField(default=False)# image for card and first to display in details
+    primary_image = models.BooleanField(default=False)  # image for card and first to display in details
 
     class Meta:
         ordering = ['position']  # Changed from 'product' to 'position'

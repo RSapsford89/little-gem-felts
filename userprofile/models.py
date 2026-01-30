@@ -1,11 +1,12 @@
 from django.db import models
-from django.db.models.signals import post_save, post_delete # found in BoutiqueAdo
-from django.dispatch import receiver # found in Boutique Ado
+from django.db.models.signals import post_save  # found in BoutiqueAdo
+from django.dispatch import receiver  # found in Boutique Ado
 from django.contrib.auth.models import User
 from django_countries.fields import CountryField
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 # Create your models here.
+
 
 class userProfile(models.Model):
     """
@@ -13,7 +14,7 @@ class userProfile(models.Model):
     Extend with shipping detail, Stripe, testimonial check
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    profile_pic = ProcessedImageField(upload_to='profile_pics/', processors=[ResizeToFill(300,300)],
+    profile_pic = ProcessedImageField(upload_to='profile_pics/', processors=[ResizeToFill(300, 300)],
                                       format='JPEG', options={'quality': 80}, blank=True, null=True,
                                       default='profile/default-portrait.png')
     ship_name = models.CharField(max_length=100, blank=True, null=True)
@@ -26,8 +27,8 @@ class userProfile(models.Model):
 
     stripe_pid = models.CharField(max_length=255, blank=True, null=True)
 
-    has_purchased = models.BooleanField(default=False) # if the user has placed an order, can leave a testimonial
-    can_comment = models.BooleanField(default=False) # if the user is allowed to leave comments
+    has_purchased = models.BooleanField(default=False)  # if the user has placed an order, can leave a testimonial
+    can_comment = models.BooleanField(default=False)  # if the user is allowed to leave comments
 
     def __str__(self):
         return f'Profile for {self.user.username}'
@@ -38,7 +39,7 @@ def createUpdateProfile(sender, instance, created, **kwargs):
     """
     createUpdateProfile creates or updates the userProfile
     """
-    if created: # a user exists
+    if created:  # a user exists
         userProfile.objects.create(user=instance)
         instance.profile.save()
 
@@ -52,17 +53,17 @@ class Testimonial(models.Model):
     linked to userProfile for 'has_purchased' flag. Has 'featured'
     to push it to the carousel and 'approved' to have it displayed at all
     """
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='testimonials') # link user through the name 'testimonials'
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='testimonials')  # link user through the name 'testimonials'
     rating = models.IntegerField(default=5, choices=RATING)
-    short_review = models.TextField(max_length=200, null=False, blank=False) # short for the carousel
-    long_review = models.TextField(max_length=500, null=True, blank=True) # long for more detail if clicked on
+    short_review = models.TextField(max_length=200, null=False, blank=False)  # short for the carousel
+    long_review = models.TextField(max_length=500, null=True, blank=True)  # long for more detail if clicked on
     date_created = models.DateTimeField(auto_now_add=True)
     date_edited = models.DateTimeField(auto_now=True)
     approved = models.BooleanField(default=False)
     featured = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'Testimonial by {self.user.username} - {self.rating}' # use WA-rating on self.rating
+        return f'Testimonial by {self.user.username} - {self.rating}'  # use WA-rating on self.rating
 
     def save(self, *args, **kwargs):
         """

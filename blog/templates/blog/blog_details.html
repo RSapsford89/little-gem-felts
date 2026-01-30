@@ -35,6 +35,7 @@
   </div>
 </section>
 <section class="comments-section">
+  <h3>Comment section</h3>
   <div class="container">
     {% for comment in comments %}
         <div class="comment">
@@ -46,22 +47,23 @@
         <p>No comments yet.</p>
     {% endfor %}
 
-    <div class="mt-4">
-      {% if user.is_authenticated and user.profile.can_comment %}
-        {% if post.allow_comments %}
-                <form method="post">
-                    {% csrf_token %}
-                    {{ comment_form.as_p }}
-                    <button type="submit" class="btn btn-primary purple">Submit</button>
-                </form>
-            {% else %}
-                <p>Please <a href="{% url 'account_login' %}">login</a> to leave a comment.</p>
-            {% endif %}
+    <div>
+      {% if post.allow_comments %}
+        {% if user.is_authenticated and user.profile.can_comment %}
+        <form method="post">
+            {% csrf_token %}
+            {{ comment_form.as_p }}
+            <button type="submit" class="btn btn-primary purple">Submit</button>
+        </form>
         {% else %}
-            <div class="alert alert-secondary">
-                Comments are closed for this post.
-            </div>
+        <p>Please <a href="{% url 'account_login' %}">login</a> to leave a comment.</p>
         {% endif %}
+      {% else %}
+      <div class="alert alert-secondary">
+        Comments are closed for this post.
+      </div>
+      {% endif %}
     </div>
+  </div>
 </section>
 {% endblock content %}

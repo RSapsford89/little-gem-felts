@@ -1,7 +1,7 @@
 :root {
-  --title-font: "josefin sans", sans-serif;
+  --title-font: "Josefin Sans", sans-serif;
   --heading-font: "Lora", sans-serif;
-  --content-font: "cormorant", sans-serif;
+  --content-font: "Cormorant", sans-serif;
   --amethyst-c1: #a560b2;
   --violet-twilight-c2: #564dac;
   --light-gold-c3: #fcf69f;
@@ -11,15 +11,13 @@
 }
 td{
     width:50%;
-    /* min-width:150px; */
-    
 }
 td:first-child {
     font-weight: bold;
     width: 30%;
 }
 table tr {
-    height: 40px; /* Adjust as needed */
+    height: 40px;
 }
 .item-list{
     list-style-type: none;
@@ -58,7 +56,6 @@ wa-tab-group{
 .orders{
     max-height:500px;   
     overflow-y: auto; 
-    /* border: 1px solid var(--violet-twilight-c2); */
 }
 .profile-buttons{
     display: flex;
@@ -101,23 +98,8 @@ wa-tab-group{
     border-radius: 10px;
     padding: 10px;
 }
-.profile-pic{
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    border: 2px solid white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-.card-content {
-    padding-top: 40px;
-    font-size: 0.9rem;
-    line-height: 1.2;
-    color: #333;
-}
+
+
 wa-rating {
     display: block;
     margin-bottom: 15px;

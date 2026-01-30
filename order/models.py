@@ -9,6 +9,7 @@ import uuid
 from store.models import Product
 # Create your models here.
 
+
 # based on Boutique Ado model
 class Order(models.Model):
     """
@@ -16,7 +17,7 @@ class Order(models.Model):
     """
     order_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='orders')
-    full_name = models.CharField(max_length=100, blank= False, null=False)
+    full_name = models.CharField(max_length=100, blank=False, null=False)
     email = models.EmailField(blank=False, null=False)
     phoneNumber = models.CharField(max_length=20, blank=True, null=True)
 
@@ -27,12 +28,12 @@ class Order(models.Model):
     country = CountryField(blank_label='Country *', blank=False, null=False)
 
     date = models.DateTimeField(auto_now_add=True)
-    basket= models.CharField(max_length=255)
-    delivery_cost = models.DecimalField(max_digits=5, decimal_places=2, default=0)
-    order_total = models.DecimalField(max_digits=5, decimal_places=2, default=0)
-    grand_total = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    basket = models.CharField(max_length=255)
+    delivery_cost = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    order_total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    grand_total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     is_paid = models.BooleanField(default=False)
-    stripe_pid = models.CharField(max_length=254, blank=True, null= True)
+    stripe_pid = models.CharField(max_length=254, blank=True, null=True)
     
     def __str__(self):
         return str(self.order_id)
@@ -52,12 +53,12 @@ class Order(models.Model):
 
     def clean_up(self):
         """
-        if an order remains unpaid for 15 minutes, 
+        if an order remains unpaid for 15 minutes,
         put the stock back and delete the order.
         """
         if self.is_paid is False:
-            #find the order put back stock
-            #delete order
+            # find the order put back stock
+            # delete order
             for line_item in self.lineitems.all():
                 product = line_item.product
                 product.stock_level += line_item.quantity
@@ -73,10 +74,10 @@ class OrderLineItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='lineitems')
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True)
     product_name = models.CharField(max_length=200, null=False, blank=False)
-    product_price = models.DecimalField(max_digits=5, decimal_places=2, null=False, blank=False)
-    product_delivery = models.DecimalField(max_digits=5, decimal_places=2, null=False, blank=False)
+    product_price = models.DecimalField(max_digits=10, decimal_places=2, null=False, blank=False)
+    product_delivery = models.DecimalField(max_digits=10, decimal_places=2, null=False, blank=False)
     quantity = models.IntegerField(default=1, validators=[MinValueValidator(0), MaxValueValidator(10)], null=False, blank=False)
-    line_total = models.DecimalField(max_digits=5, decimal_places=2, editable=False)
+    line_total = models.DecimalField(max_digits=10, decimal_places=2, editable=False)
 
     def save(self, *args, **kwargs):
         """
@@ -87,6 +88,7 @@ class OrderLineItem(models.Model):
 
     def __str__(self):
         return f'{self.product_name}, {self.quantity} on order number: {self.order.order_id}'
+
 
 # suggestion by AI to ensure updates are saved to the Order table
 @receiver(post_save, sender=OrderLineItem)

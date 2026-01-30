@@ -1,8 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import Paginator
 from django.contrib import messages
 from .models import Product
+
 
 # Create your views here.
 def all_products(request):
@@ -11,7 +12,7 @@ def all_products(request):
     Retrieve all products from Product Table and filter
     if the filter input has been submitted. Show main_category
     items if buttons are pressed.
-    Tutorial adapted: https://www.makeuseof.com/add-search-functionality-to-django-apps/ 
+    Tutorial adapted: https://www.makeuseof.com/add-search-functionality-to-django-apps/
     :param request: Description
     """
     products = Product.objects.all()
@@ -43,15 +44,11 @@ def all_products(request):
     return render(request, 'store/products.html', context)
 
 
-
-
-
 def product_detail(request, product_id):
     """
     product_detail taken from BoutiqueAdo
-    
     """
-    product = get_object_or_404(Product, pk=product_id) # Grab all the Product objects
+    product = get_object_or_404(Product, pk=product_id)  # Grab all the Product objects
     # The context returned to the view...
     context = {
         'product': product,

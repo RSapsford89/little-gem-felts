@@ -13,6 +13,7 @@ import stripe
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
+
 def order_confirmation(request):
     """
     display an order confirmation page after the
@@ -23,19 +24,20 @@ def order_confirmation(request):
     context = {
         'order': order,
     }
-    return render(request,'order/order_confirmation.html', context)
+    return render(request, 'order/order_confirmation.html', context)
+
 
 def payment(request):
     """Handle the payment page with Stripe Payment Element"""
     client_secret = request.session.get('client_secret')
     order_id = request.session.get('order_id')
-    
+
     if not client_secret or not order_id:
         messages.error(request, "No payment information found")
         return redirect('basket:view_basket')
-    
+
     order = get_object_or_404(Order, order_id=order_id)
-    
+
     context = {
         'order': order,
         'client_secret': client_secret,
@@ -46,7 +48,7 @@ def payment(request):
 
 def create_order(request):
     basket = request.session.get('basket', {})
-    
+
     if not basket:
         return JsonResponse({'success': False, 'error': 'Basket is empty'}, status=400)
 
@@ -64,7 +66,7 @@ def create_order(request):
                     # use the clean_up def to remove
                     repeat_order.clean_up()
                     repeat_order.delete()
-            
+
             if request.user.is_authenticated:
                 user = request.user
                 order.user = user
@@ -92,11 +94,11 @@ def create_order(request):
                         order.delete()
                         return JsonResponse({'success': False, 'error': f'{product.name} does not have enough stock'}, status=400)
             except Exception as e:
-                #adjust stock to previous level before finishing
+                # adjust stock to previous level before finishing
                 order.clean_up()
-                
+
                 return JsonResponse({'success': False, 'error': f'Error creating order: {e}'}, status=400)
-            
+
             if pid:
                 try:
                     stripe.PaymentIntent.modify(
@@ -109,15 +111,15 @@ def create_order(request):
                 except Exception as e:
                     print(f'error with pid {e}')
                     return JsonResponse({'success': False, 'error': 'Payment processing error'}, status=400)
-                
+
             request.session['order_id'] = str(order.order_id)
-            
+
             messages.success(request, 'order created')
             return JsonResponse({'success': True, 'message': f'Order created{str(order)}'})
         else:
             return JsonResponse({'success': False, 'error': form.errors}, status=400)
 
-    else: # For GET requests, render the form as usual
+    else:  # For GET requests, render the form as usual
         basket_context = basket_contents(request)
         grand_total = basket_context['grand_total']
 
@@ -133,7 +135,6 @@ def create_order(request):
 
             messages.error(request, f"Stripe error: {e}")
             return redirect('basket:view_basket')
-        
 
         if request.user.is_authenticated:
             user = request.user

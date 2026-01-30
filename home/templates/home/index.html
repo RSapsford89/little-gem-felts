@@ -10,8 +10,8 @@
   <div class="cta-overlay ">
     <h1 class='cta-title'>LittleGemFelts</h1>
       <p>Handmade felt gifts and kits made with love for you in the North West of England - Paul & Silvia</p>      
-        <wa-button class="button-light"size='medium' href="{% url 'blog:blog_list'%}" pill>Upcoming Events</wa-button>
-        <wa-button class="button-dark"size='medium' href="{% url 'store:store'%}" pill>Shop All</wa-button>
+        <wa-button class="button-light" size='medium' href="{% url 'blog:blog_list'%}" pill>Upcoming Events</wa-button>
+        <wa-button class="button-dark" size='medium' href="{% url 'store:store'%}" pill>Shop All</wa-button>
   </div>
 </section>
 {% endblock cta %}
@@ -43,7 +43,7 @@
                 <p>{{post.content}}</p>
                 <p>We will be at <strong>{{post.location}}</strong></p>
                 <p>Added: {{post.date_created}}</p>
-                <wa-button size='small'class="event-btn button-dark" pill href="{% url 'blog:blog_details' post.slug %}">Read more</wa-button>
+                <wa-button size='small' class="event-btn button-dark" pill href="{% url 'blog:blog_details' post.slug %}">Read more</wa-button>
             </div>        
         {% endif %}
       {% endfor %}

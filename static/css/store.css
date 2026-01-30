@@ -1,8 +1,8 @@
 :root {
   /* Fonts */
-  --title-font: "josefin sans", sans-serif;
+  --title-font: "Josefin Sans", sans-serif;
   --heading-font: "Lora", sans-serif;
-  --content-font: "cormorant", sans-serif;
+  --content-font: "Cormorant", sans-serif;
 
   /* Colors */
   --amethyst-c1: #a560b2;
@@ -25,7 +25,6 @@ h3 {
   width: 100%;
   box-sizing: border-box;
 }
-
 /* Generic form group helpers */
 .form-group {
   display: flex;
@@ -215,7 +214,7 @@ wa-card.horizontal-card {
   padding-top: 1rem !important;
 }
 
-/* Checkout Buttons */
+/* Checkout buttons */
 .checkout-actions {
   display: flex;
   gap: 1rem;
@@ -357,7 +356,6 @@ wa-card.horizontal-card {
     position: static;
   }
 
-  /* Adjust Container Widths */
   .basket-section,
   .horizontal-card-container {
     width: 90%;

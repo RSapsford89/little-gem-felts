@@ -1,9 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=Josefin+Sans:ital@0;1&family=Lora:ital,wght@0,400..700;1,400..700&display=swap");
-
+/* Uses components from WebAwesome */
 :root {
-  --title-font: "josefin sans", sans-serif;
+  --title-font: "Josefin Sans", sans-serif;
   --heading-font: "Lora", sans-serif;
-  --content-font: "cormorant", sans-serif;
+  --content-font: "Cormorant", sans-serif;
   --amethyst-c1: #a560b2;
   --violet-twilight-c2: #564dac;
   --light-gold-c3: #fcf69f;
@@ -72,6 +72,17 @@ section {
   margin-right: 1rem;
   z-index: 20;
 }
+.profile-pic{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    border: 2px solid white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
 .navbar-toggle .bar {
   width: 28px;
   height: 4px;
@@ -101,7 +112,6 @@ wa-button.button-dark::part(base){
 }
 .large-space{
   height: 150px;
-  /* margin-top: clamp(2rem 5vh 10rem); */
 }
 .background-svg{
   position: fixed;
@@ -110,7 +120,6 @@ wa-button.button-dark::part(base){
   height: 100%;
   width: 100%;
   pointer-events: none;
-  
 }
 .bg-svg{
   position: absolute;
@@ -272,6 +281,12 @@ wa-card.card-overview::part(media){
     grid-column: 1 / -1; /* Span all columns */
     margin: 0 auto;
     z-index: 1;
+}
+.card-content {
+    padding-top: 40px;
+    font-size: 0.9rem;
+    line-height: 1.2;
+    color: #333;
 }
 wa-button.footer-btn::part(base) {
   background-color: var(--amethyst-c1);

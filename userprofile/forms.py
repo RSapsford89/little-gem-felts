@@ -46,7 +46,7 @@ class ProfileForm(forms.ModelForm):
     """
     class Meta:
         model = userProfile
-        fields = ['phoneNumber', 'ship_name', 'street_address1', 'street_address2', 'town_city', 'postcode','country', 'profile_pic']
+        fields = ['phoneNumber', 'ship_name', 'street_address1', 'street_address2', 'town_city', 'postcode', 'country', 'profile_pic']
         widgets = {
             'phoneNumber': forms.TextInput(attrs={'class': 'form-control'}),
             'ship_name': forms.TextInput(attrs={'class': 'form-control'}),
@@ -56,6 +56,7 @@ class ProfileForm(forms.ModelForm):
             'postcode': forms.TextInput(attrs={'class': 'form-control'}),
             'profile_pic': forms.FileInput(attrs={'class': 'form-control', 'accept': 'image/*'})
         }
+
 
 class TestimonialForm(forms.ModelForm):
     """

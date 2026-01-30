@@ -3,6 +3,7 @@ from django.utils import timezone
 from datetime import timedelta
 from order.models import Order
 
+
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
@@ -11,10 +12,10 @@ class Command(BaseCommand):
         old_orders = Order.objects.filter(is_paid=False, date__lt=time_elapsed)
         count = old_orders.count()
 
-        if count ==0:
+        if count == 0:
             self.stdout.write("no orders to remove")
             return
-        
+
         self.stdout.write(f"old orders found: {count}")
 
         for order in old_orders:

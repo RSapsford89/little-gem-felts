@@ -11,7 +11,7 @@
     {% if user.is_authenticated %}
     <h1>{{user.username}}'s Shipping Details:</h1>
     {% else %}
-    <h1>Shipping Details</h1>
+    <h2>Shipping Details</h2>
     {% endif %}
 
     <form id="payment-form" class="checkout-form" data-url="{% url 'order:create_order'%}" data-return-url="{% url 'order:order_confirmation' %}" data-client-secret="{{ client_secret }}" data-stripe-public-key="{{ stripe_public_key }}">
@@ -39,7 +39,7 @@
 
         <div class="checkout-sidebar">
             <wa-card class="summary-card sticky-summary">
-                <h3 class='header'>Basket Summary:</h3>
+                <h2 class='header'>Basket Summary:</h2>
                 <table class="total-contents">
                     <tr>
                         <td>Number of items:</td>

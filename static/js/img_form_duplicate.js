@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const addButton = document.getElementById('add-img-btn');
-    const container = document.querySelector('.product-listing form'); 
+    // const container = document.querySelector('.product-listing form'); 
     const totalForms = document.getElementById('id_images-TOTAL_FORMS');
     const MAX_FORMS = 8;
 

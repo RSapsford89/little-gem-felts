@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import userProfile, Testimonial
 # Register your models here.
 
+
 class UserProfileAdmin(admin.ModelAdmin):
     list_display = [
         'user',
@@ -15,6 +16,7 @@ class UserProfileAdmin(admin.ModelAdmin):
         'has_purchased',
         'can_comment',
     ]
+
 
 class TestimonialAdmin(admin.ModelAdmin):
     model = Testimonial
@@ -34,7 +36,7 @@ class TestimonialAdmin(admin.ModelAdmin):
         'long_review',
         'featured',
     ]
-    readonly_fields = ['date_created','date_edited']
+    readonly_fields = ['date_created', 'date_edited']
 
 
 admin.site.register(userProfile, UserProfileAdmin)

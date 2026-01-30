@@ -1,7 +1,7 @@
-from django.contrib.auth import get_user_model
 from django import forms
 from django.forms import inlineformset_factory
-from .models import Product,Category, Images
+from .models import Product, Images
+
 
 class ProductForm(forms.ModelForm):
     """
@@ -9,7 +9,15 @@ class ProductForm(forms.ModelForm):
     """
     class Meta:
         model = Product
-        fields = ['name','description','price','main_category','sub_category','stock_level','delivery_cost','promoted',]
+        fields = [
+            'name',
+            'description',
+            'price',
+            'main_category',
+            'sub_category',
+            'stock_level',
+            'delivery_cost',
+            'promoted',]
         labels = {
             'name': 'Product Title',
             'description': 'Product Description',
@@ -21,9 +29,11 @@ class ProductForm(forms.ModelForm):
             'promoted': 'Promote on Homepage?',
         }
         widgets = {
-            'description': forms.Textarea(attrs={'rows':4}),
-            'price': forms.NumberInput(attrs={'step':'0.01'}),
+            'description': forms.Textarea(attrs={'rows': 4}),
+            'price': forms.NumberInput(attrs={'step': '0.01'}),
         }
+
+
 class ImageForm(forms.ModelForm):
     """
     Form for admin to upload an image to be
@@ -31,7 +41,7 @@ class ImageForm(forms.ModelForm):
     """
     class Meta:
         model = Images
-        fields = ['image','position','primary_image',]
+        fields = ['image', 'position', 'primary_image',]
         labels = {
             'image': 'Upload Image',
             'position': 'Display Order (1 = First)',
@@ -41,11 +51,11 @@ class ImageForm(forms.ModelForm):
             'image': forms.FileInput(attrs={'accept': 'image/*'}),
             'position': forms.NumberInput(attrs={'min': 0}),
         }
-    
+
 
 ImageFormSet = inlineformset_factory(
     Product,
-    Images, 
+    Images,
     form=ImageForm,
     extra=1,
     can_delete=True,

@@ -1,6 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.admin.views.decorators import staff_member_required
-from django.http import JsonResponse
 from django.contrib import messages
 from store.forms import ProductForm, ImageFormSet
 from store.models import Product
@@ -8,6 +7,7 @@ from blog.forms import PostForm
 from blog.models import Post
 
 # Create your views here.
+
 
 @staff_member_required
 def product_management(request):
@@ -20,8 +20,9 @@ def product_management(request):
     context = {
         'products': products,
     }
-    
+
     return render(request, 'management/product_management.html', context)
+
 
 @staff_member_required
 def edit_product(request, product_id):
@@ -33,7 +34,7 @@ def edit_product(request, product_id):
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES, instance=product)
         image_formset = ImageFormSet(request.POST, request.FILES, instance=product)
-        
+
         if form.is_valid() and image_formset.is_valid():
             form.save()
             image_formset.save()
@@ -45,7 +46,7 @@ def edit_product(request, product_id):
     else:
         form = ProductForm(instance=product)
         image_formset = ImageFormSet(instance=product)
-        
+
     context = {
         'product': product,
         'form': form,
@@ -122,6 +123,7 @@ def add_product(request):
     }
     return render(request, 'management/product_add_edit.html', context)
 
+
 @staff_member_required
 def blog_management(request):
     """
@@ -133,6 +135,7 @@ def blog_management(request):
         'posts': posts,
     }
     return render(request, 'management/blog_management.html', context)
+
 
 @staff_member_required
 def add_post(request):
@@ -159,6 +162,7 @@ def add_post(request):
     }
     return render(request, 'management/post_add_edit.html', context)
 
+
 @staff_member_required
 def edit_post(request, post_id):
     """
@@ -183,6 +187,7 @@ def edit_post(request, post_id):
         'edit': True,
     }
     return render(request, 'management/post_add_edit.html', context)
+
 
 @staff_member_required
 def delete_post(request, post_id):

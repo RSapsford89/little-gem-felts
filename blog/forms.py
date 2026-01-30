@@ -2,6 +2,7 @@ from django import forms
 from django.utils import timezone
 from .models import Post, Comment
 
+
 class PostForm(forms.ModelForm):
     """
     Form for creating and editing blog posts
@@ -40,15 +41,16 @@ class PostForm(forms.ModelForm):
         if is_event:
             now = timezone.now()
 
-            #Check if start date is in the past
+            # Check if start date is in the past
             if start_date and start_date < now:
                 self.add_error('start_date', "The event cannot start in the past.")
 
-            #Check if end date is before start date
+            # Check if end date is before start date
             if start_date and end_date and end_date <= start_date:
                 self.add_error('end_date', "The end date must be after the start date.")
-        
+
         return cleaned_data
+
 
 class CommentForm(forms.ModelForm):
     """
