@@ -51,7 +51,7 @@ class Images(models.Model):
     product = models.ForeignKey(Product, on_delete= models.CASCADE, related_name='images')
     image = ProcessedImageField(upload_to='products/', processors=[ResizeToFill(300,300)],
                                 format='JPEG', options={'quality': 90}, blank=True, null=True,
-                                default='products/no-img-knit.png')
+                                default='products/no-img-knit.jpg')
     position = models.IntegerField(default=0, blank=True, null=True)
     primary_image = models.BooleanField(default=False)  # image for card and first to display in details
 

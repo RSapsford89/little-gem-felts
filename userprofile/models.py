@@ -16,7 +16,7 @@ class userProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     profile_pic = ProcessedImageField(upload_to='profile_pics/', processors=[ResizeToFill(300, 300)],
                                       format='JPEG', options={'quality': 80}, blank=True, null=True,
-                                      default='profile/default-portrait.png')
+                                      default='profile/default-portrait.jpg')
     ship_name = models.CharField(max_length=100, blank=True, null=True)
     phoneNumber = models.CharField(max_length=20, blank=True, null=True)
     street_address1 = models.CharField(max_length=80, blank=True, null=True)

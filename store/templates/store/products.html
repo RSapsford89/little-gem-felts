@@ -47,7 +47,7 @@
                         {% if item.images.first %}
                         <img slot="media" src="{{ item.images.first.image.url }}" alt="{{ item.name }}" />
                         {% else %}
-                        <img slot="media" src="{{MEDIA_URL}}no-img-knit.png" alt="{{ item.name }}" />
+                        <img slot="media" src="{{MEDIA_URL}}no-img-knit.jpg" alt="{{ item.name }}" />
                         {% endif %}
                         <h3>{{item.name}}</h3>
                         <wa-button slot='footer' size='small' class='footer-btn' href="{% url 'store:product_detail' item.pk %}" variant="brand" pill><i class="fa-solid fa-bag-shopping"></i> £ {{item.price}}</wa-button>

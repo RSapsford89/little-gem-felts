@@ -19,11 +19,7 @@
     {% endif %}
     </div>
     <div class="img">
-      {% if post.img %}
-    <img src="{{ post.img.url }}" alt="blog post image">
-  {% else %}
-    <img src="{% static 'blog_pics/placeholder.png' %}" alt="No image available">
-  {% endif %}
+      <img src="{{ post.img.url }}" alt="{{ post.img.name }}">
     </div>
     <div class="wa-span-grid text">
       <p>{{post.content}}</p>

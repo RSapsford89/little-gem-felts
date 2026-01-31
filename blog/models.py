@@ -15,7 +15,7 @@ class Post(models.Model):
     content = models.TextField()
     img = ProcessedImageField(upload_to='blog_pics/', processors=[ResizeToFill(300,300)],
                               format='JPEG', options={'quality': 90}, blank=True, null=True,
-                              default='profile/default-portrait.png')
+                              default='profile/default-portrait.jpg')
     start_date = models.DateTimeField(auto_now=False, auto_now_add=False)
     end_date = models.DateTimeField(auto_now=False, auto_now_add=False)
     location = models.CharField(max_length=200)
