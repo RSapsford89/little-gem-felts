@@ -275,6 +275,7 @@ wa-card.card-overview::part(media){
   background-color: #3d89af;
   align-items: center;
   text-align: center;
+  border: none;
 }
 .latest-section-btn{
     width: 90%;
