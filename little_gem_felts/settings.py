@@ -30,7 +30,7 @@ STRIPE_WH_SECRET = os.environ.get("STRIPE_WH_SECRET")
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    'little-gem-felts.herokuapp.com',
+    '.herokuapp.com',
     '127.0.0.1',
     'localhost',
 ]
