@@ -2,7 +2,7 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
 {% endblock extra_css %}
 {% block latestAdditions %}{% endblock latestAdditions %}
 
@@ -19,7 +19,7 @@
         <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
     {% endif %}
     
-    <wa-button type="submit" variant="brand" pill>Log Out</wa-button>
+    <wa-button type="submit" class="button-dark" variant="brand" pill>Log Out</wa-button>
     <wa-button type="button" variant="outline" pill onclick="window.history.back()">Cancel</wa-button>
     </form>
   </div>

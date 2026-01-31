@@ -16,13 +16,13 @@ class CustomUserForm(UserCreationForm):
     This stops the form Meta.model from using default auth.User
     instead of this one
     """
-    email = forms.EmailField()
+    email = forms.EmailField(required=True)
     first_name = forms.CharField(max_length=50, required=True)
     last_name = forms.CharField(max_length=50, required=True)
 
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
+        fields = ('username', 'first_name', 'last_name', 'email')
 
 
 class ProfilePictureForm(forms.ModelForm):

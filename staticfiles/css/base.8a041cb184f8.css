@@ -104,6 +104,20 @@ section {
   flex-direction: column;
   max-height: 500px;
 }
+.auth-container{
+  width: 80%;
+  margin: auto;
+}
+.auth-container form{
+  margin: auto;
+}
+.auth-container wa-button{
+  margin: 1rem 0;
+}
+.auth-container p{
+  margin-top: 1rem;
+  font-size: 1.2rem;
+}
 wa-button.button-light::part(base){
     background: none;
 }
