@@ -44,13 +44,18 @@ class Product(models.Model):
     @property
     def primary_image(self):
         """Returns the primary image or first image if no primary is set"""
-        return self.images.filter(primary_image=True).first() or self.images.first()
+        img = self.images.filter(primary_image=True).first() or self.images.first()
+        if not img:
+            img = self.images.first()
+        if img and img.image:
+            return img.image
+        return None
     
 
 class Images(models.Model):
     product = models.ForeignKey(Product, on_delete= models.CASCADE, related_name='images')
     image = ProcessedImageField(upload_to='products/', processors=[ResizeToFill(300,300)],
-                                format='JPEG', options={'quality': 90}, blank=True, null=True,
+                                format='JPEG', options={'quality': 90}, blank=False, null=False,
                                 default='products/no-img-knit.jpg')
     position = models.IntegerField(default=0, blank=True, null=True)
     primary_image = models.BooleanField(default=False)  # image for card and first to display in details
