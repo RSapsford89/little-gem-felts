@@ -1,0 +1,169 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=Josefin+Sans:ital@0;1&family=Lora:ital,wght@0,400..700;1,400..700&display=swap");
+
+:root {
+  --title-font: "Josefin Sans", sans-serif;
+  --heading-font: "Lora", sans-serif;
+  --content-font: "Cormorant", sans-serif;
+  --amethyst-c1: #a560b2;
+  --violet-twilight-c2: #564dac;
+  --light-gold-c3: #fcf69f;
+  --lavender-c4: #d6d5ee;
+  --ash-grey-c5: #a3c4bc;
+  --tropical-teal-c6: #16bac5;
+}
+.cta-section {
+  position: relative;
+  width: clamp(300px, 60%, 900px);
+  height: clamp(400px, 25vh, 550px);
+  background: no-repeat url("/media/drying-fibres.webp");
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  margin: 10% 20%;
+}
+.cta-overlay {
+  position: relative;
+  background-color: rgba(86, 77, 172, 0.8);
+  padding: 2rem 3rem;
+  border-radius: 10px;
+  text-align: left;
+  font-size: 1.6rem;
+  color: white;
+  inset: -15% -20%;
+}
+.cta-img {
+  position: relative;
+  z-index: -1;
+}
+.cta-title {
+  color: #fcf69f;
+}
+.button-light {
+  border: #a3c4bc 4px solid;
+  background: none;
+  border-radius: 2rem;
+  margin: 1rem;
+}
+.button-dark {
+  position: relative;
+  border-radius: 2rem;
+  padding: 0.5rem;
+  margin: 1rem;
+  border: none;
+  color: white;
+  z-index: 1;
+  background: linear-gradient(45deg, #a3c4bc, #fcf69f);
+}
+.button-dark::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  right: 4px;
+  left: 4px;
+  background: #564dac;
+  z-index: -1;
+  border-radius: 2rem;
+}
+
+/* Blog and Events section */
+.blog-event-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+.blog-container {
+  grid-column: 1;
+  background-color: transparent;
+  position: relative;
+  z-index: 1;
+}
+
+.blog-container::before {
+  background: var(--tropical-teal-c6);
+  filter: blur(5rem);
+  content: "";
+  inset: 0;
+  z-index: -1;
+  position: absolute;
+}
+.event-container {
+  grid-column: 2;
+  background-color: transparent;
+  position: relative;
+  z-index: 1;
+}
+.event-container::before {
+  grid-column: 2;
+  background-color: var(--violet-twilight-c2);
+  filter: blur(5rem);
+  content: "";
+  inset: 0;
+  z-index: -1;
+  position: absolute;
+}
+.blog-item {
+  text-align: right;
+}
+.event-item {
+  text-align: left;
+}
+.testimonial-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4rem;
+  margin: auto;
+  justify-content: center;
+}
+.testimonial-card {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  display: block;
+  background-color: white;
+  border-radius: 10px;
+  padding: 10px;
+}
+wa-rating {
+  display: block;
+  margin-bottom: 15px;
+  font-size: 12px;
+  text-align: right;
+}
+
+@media screen and (max-width: 768px) {
+  .cta-section {
+    background: no-repeat url("/media/drying-fibres.webp");
+    background-size: 250px 210px;
+    height: auto;
+    flex-direction: column;
+    padding: 1.5rem;
+  }
+
+  .cta-overlay {
+    padding: 1rem 1rem;
+    font-size: 1.1rem;
+  }
+  .cta-title {
+    margin: 0.5rem;
+    font-size: 2rem;
+  }
+  .blog-event-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin: 1.5rem;
+  }
+  .blog-container,
+  .event-container {
+    grid-column: 1;
+  }
+  .testimonial-container {
+    gap: 1.5rem;
+  }
+  .profile-pic {
+    width: 40px;
+    height: 40px;
+    top: 10px;
+    left: 10px;
+  }
+}
