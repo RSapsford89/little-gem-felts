@@ -133,7 +133,7 @@ wa-rating {
 
 @media screen and (max-width: 768px) {
   .cta-section {
-    background: no-repeat url("/media/drying-fibres.webp");
+    background: no-repeat url("../images/drying-fibres.webp");
     background-size: 250px 210px;
     height: auto;
     flex-direction: column;
