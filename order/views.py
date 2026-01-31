@@ -48,10 +48,15 @@ def payment(request):
 
 def create_order(request):
     basket = request.session.get('basket', {})
-
+    # check for empty basket and if it is GET or POST method
+    # to determine proper response
     if not basket:
-        return JsonResponse({'success': False, 'error': 'Basket is empty'}, status=400)
-
+        if request.method == 'POST':
+            return JsonResponse({'success': False, 'error': 'Basket is empty'}, status=400)
+        else:
+            messages.error(request, "Your basket is empty at the moment.")
+            return redirect('store:all_products')
+        
     if request.method == 'POST':
         form = ShippingForm(request.POST)
 
