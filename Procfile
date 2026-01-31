@@ -1,1 +1,1 @@
-web: gunicorn little_gem_felts.wsgi
+web: gunicorn little_gem_felts.wsgi:application
