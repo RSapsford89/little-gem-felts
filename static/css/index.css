@@ -15,7 +15,7 @@
   position: relative;
   width: clamp(300px, 60%, 900px);
   height: clamp(400px, 25vh, 550px);
-  background: no-repeat url("/media/drying-fibres.webp");
+  background: no-repeat url("../images/drying-fibres.webp");
   background-size: cover;
   display: flex;
   justify-content: center;
