@@ -55,7 +55,7 @@ def create_order(request):
             return JsonResponse({'success': False, 'error': 'Basket is empty'}, status=400)
         else:
             messages.error(request, "Your basket is empty at the moment.")
-            return redirect('store:all_products')
+            return redirect('store:store')
         
     if request.method == 'POST':
         form = ShippingForm(request.POST)
