@@ -57,7 +57,7 @@ ImageFormSet = inlineformset_factory(
     Product,
     Images,
     form=ImageForm,
-    extra=1,
+    extra=8,
     can_delete=True,
     max_num=8,
     validate_max=True,

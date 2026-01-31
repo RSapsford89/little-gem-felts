@@ -1,17 +1,24 @@
-{% extends "layout.html" %} {% load static %} {% block extra_css %}
+{% extends "layout.html" %} 
+{% load static %} 
+
+{% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/store.css' %}" />
+
 {% endblock extra_css %} 
+
 {% block latestAdditions %}{% endblock latestAdditions%} 
-{% block extra_js %}
-<script src="{% static 'js/img_form_duplicate.js' %}"></script>
-{% endblock extra_js %}
+
 {% block titles %}
-<h1>Product listings</h1>
-{% endblock titles %} {% block content %}
+<h1>{% if edit %}Edit{% else %}Add{% endif %} Product</h1>
+{% endblock titles %} 
+
+{% block content %}
 <section class="product-listing">
   <div class="container">
+    
+    {# Error Display #}
     {% if form.errors %}
-    <div class="alert alert-danger">
+    <div>
         <ul>
             {% for field, errors in form.errors.items %}
                 {% for error in errors %}
@@ -20,51 +27,87 @@
             {% endfor %}
         </ul>
     </div>
-  {% endif %}
+    {% endif %}
+
     <form method="POST" enctype="multipart/form-data">
-      {% csrf_token %} {{ form.as_p }}
+      {% csrf_token %} 
+      
+      {# Product Details Form #}
+      <div style="margin-bottom: 2rem;">
+          {{ form.as_p }}
+      </div>
+
+      <hr>
+      
       <h3>Product Images</h3>
-      {{image_formset.management_form}}
-      <div class="image-form-container">
+      <p>
+          Upload up to 8 images. Empty slots will be ignored.
+      </p>
+      
+      {# Management form is CRITICAL #}
+      {{ image_formset.management_form }}
+      
+      <div class="store-detail-container">
         {% for form in image_formset %}
-        <div class="image-form">
-          {{ form.id }}
-          {% if form.instance.image %}
-          <div class="current-image slides">
-            <p><strong>Current image:</strong></p>
-            <img
-              src="{{ form.instance.image.url }}"
-              alt="Product image"
-            />
-          </div>
-          {% endif %}
-          <div class="image-form-fields">
-            <div class="checkbox-group">
-              {{ form.DELETE }}
-              <label for="{{ form.DELETE.id_for_label }}"
-                >Delete this image</label>
-            </div>
-            <div class="form-group">
-              {{ form.image.label_tag }} {{ form.image }}
-            </div>
-            <div class="checkbox-group">
-              {{ form.primary_image }} {{ form.primary_image.label_tag }}
-            </div>
-          </div>
-        </div>
-        <hr>
+            <wa-card class="manage-img-card">
+                <div >
+                    {# Hidden ID field #}
+                    {{ form.id }}
+                    
+                    {# Column 1: Image Preview #}
+                    <div>
+                        {% if form.instance.image %}
+                            <img src="{{ form.instance.image.url }}" alt="Preview">
+                        {% else %}
+                            <div class="img-placeholder">
+                                No Image
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    {# Column 2: Upload Field #}
+                    <div>
+                        {{ form.image }}
+                        {% if form.image.errors %}
+                            <span>
+                                {{ form.image.errors }}
+                            </span>
+                        {% endif %}
+                    </div>
+
+                    {# Column 3: Options #}
+                    <div>
+                        <div>
+                            {{ form.primary_image }} 
+                            <label for="{{ form.primary_image.id_for_label }}">Main Image</label>
+                        </div>
+                        
+                        {# Only show Delete if it's an existing image (has an ID) #}
+                        {% if form.instance.pk %}
+                            <div>
+                                {{ form.DELETE }} 
+                                <label for="{{ form.DELETE.id_for_label }}">Delete</label>
+                            </div>
+                        {% endif %}
+                        
+                        {# Hidden position field if you use it #}
+                        {{ form.position.as_hidden }}
+                    </div>
+                </div>
+            </wa-card>
         {% endfor %}
       </div>
-      <wa-button type="submit" variant="brand">
-        {% if edit %} Update Product {% else %} Add Product {% endif %}
-      </wa-button>
+
+      <div>
+          <wa-button type="submit" variant="brand">
+            {% if edit %} Update Product {% else %} Add Product {% endif %}
+          </wa-button>
+          
+          <wa-button href="{% url 'management:product_management' %}" variant="neutral" outline>
+            Cancel
+          </wa-button>
+      </div>
     </form>
   </div>
-  <wa-button id="add-img-btn">Add another image</wa-button>
-  <wa-button
-  href="{% url 'management:product_management' %}"
-  variant="outline"
-  >Cancel</wa-button
-  >
 </section>
 {% endblock content %}

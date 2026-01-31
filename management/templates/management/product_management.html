@@ -59,12 +59,12 @@
                         </td>
                         <td>
                             <div class="image-cell">
-                                {% if product.img %}
-                                <img src="{{product.images.first.image.url}}" alt="{{product.images.first.image}}">
-                            {% else %}
-                                <span>No image</span>
-                            {% endif %}
-                        </div>
+                                {% if product.primary_image %}
+                                    <img src="{{ product.primary_image.url }}" alt="{{ product.name }}">
+                                {% else %}
+                                    <span>No image</span>
+                                {% endif %}
+                            </div>
                         </td>
                         <td>
                             <a href="{% url 'management:edit_product' product.id %}">Edit</a>

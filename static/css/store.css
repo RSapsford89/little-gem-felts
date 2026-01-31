@@ -345,6 +345,14 @@ wa-card.horizontal-card {
 }
 /* end of AI suggestion */
 
+.manage-img-card {
+  max-width: 400px;
+  height: 400px;
+  background-color: #3d89af;
+  align-items: center;
+  text-align: center;
+  border: none;
+}
 
 @media (max-width: 900px) {
   /* Stack checkout columns */
