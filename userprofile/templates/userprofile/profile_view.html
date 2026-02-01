@@ -47,10 +47,6 @@
                             <td>{{user.last_name}}</td>
                         </tr>
                         <tr>
-                            <td>Contact number:</td>
-                            <td>{{user.profile.phoneNumber}}</td>
-                        </tr>
-                        <tr>
                             <td>Member since:</td>
                             <td>{{user.date_joined}}</td>
                         </tr>
@@ -165,7 +161,7 @@
         </wa-tab-group>
         
         <div class="profile-buttons">
-            <wa-button class="button-dark" href="{% url 'userprofile:edit_view' %}" variant="outline" pill>Edit Profile</wa-button>
+            <wa-button class="button-dark" href="{% url 'userprofile:edit_view' %}" variant="outline" pill>Update Shipping info</wa-button>
             
             {% if user.is_staff %}
             <wa-button href="{% url 'management:product_management' %}" variant="brand" pill>Product Management</wa-button>

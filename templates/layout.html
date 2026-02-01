@@ -90,7 +90,7 @@
               <img slot="media" src="{{MEDIA_URL}}no-img-knit.png" alt="{{ product.name }}" />
               {% endif %}
               <h3>{{ product.name }}</h3>
-              <p>£{{ product.price }}</p>
+              <h4>£{{ product.price }}</h4>
               <wa-button size='small' class='footer-btn' variant="brand" pill href="{% url 'store:product_detail' product.pk %}"><i class="fa-solid fa-bag-shopping"></i> Shop</wa-button>
             </wa-card>
           </div>

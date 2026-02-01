@@ -122,7 +122,7 @@ def create_order(request):
             messages.success(request, 'order created')
             return JsonResponse({'success': True, 'message': f'Order created{str(order)}'})
         else:
-            return JsonResponse({'success': False, 'error': form.errors}, status=400)
+            return JsonResponse({'success': False, 'error': form.errors.get_json_data()}, status=400)
 
     else:  # For GET requests, render the form as usual
         basket_context = basket_contents(request)

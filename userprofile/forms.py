@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from allauth.account.forms import SignupForm
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from .models import userProfile, Testimonial
@@ -8,6 +9,22 @@ User = get_user_model()
 # the YouTube video by Codemy.com: https://www.youtube.com/watch?v=HdrOcreAXKk&t=397s
 # Form taken from Collaborative Calendar P3 project and
 # updated for this project
+
+class CustomSignupForm(SignupForm):
+    """
+    extend the allauth signup form to include
+    the name fields
+    """
+    first_name = forms.CharField(max_length=50, label='First Name')
+    last_name = forms.CharField(max_length=50, label='Last Name')
+
+
+    def save(self, request):
+        user = super(CustomSignupForm, self).save(request)
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.save()
+        return user
 
 
 class CustomUserForm(UserCreationForm):

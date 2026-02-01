@@ -34,9 +34,9 @@
             {% if basket_items %}
                 {% for item in basket_items %}
                     <div data-item-id="{{item.product_id}}">
-                        <wa-card orientation="horizontal" class="horizontal-card" style="width: 100%;">
+                        <wa-card orientation="horizontal" class="horizontal-card">
                             {% if item.product.primary_image %}
-                                <img slot="media" src="{{ item.product.primary_image.image.url }}" alt="{{ item.product.name }}">
+                                <img slot="media" src="{{ item.product.primary_image.url }}" alt="{{ item.product.name }}">
                             {% endif %}
                             <div class="card-content">
                                 <div>

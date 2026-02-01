@@ -13,7 +13,11 @@
     {% else %}
     <h2>Shipping Details</h2>
     {% endif %}
-
+    {% if form.errors %}
+    <div id="form-errors-container">
+        {% comment %} improved error handling in view, AJAX should post here {% endcomment %}
+    </div>
+    {% endif %}
     <form id="payment-form" class="checkout-form" data-url="{% url 'order:create_order'%}" data-return-url="{% url 'order:order_confirmation' %}" data-client-secret="{{ client_secret }}" data-stripe-public-key="{{ stripe_public_key }}">
         {% csrf_token %}
 
