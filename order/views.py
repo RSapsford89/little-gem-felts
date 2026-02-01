@@ -21,6 +21,9 @@ def order_confirmation(request):
     """
     order_id = request.session.get('order_id')
     order = get_object_or_404(Order, order_id=order_id)
+    # add the forgotten basket empty
+    if 'basket' in request.session:
+        del request.session['basket']
     context = {
         'order': order,
     }
