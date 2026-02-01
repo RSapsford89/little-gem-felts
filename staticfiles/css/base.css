@@ -33,7 +33,6 @@ h1 {
   margin: 2rem;
 }
 h2,
-h3,
 h4,
 h5,
 h6 {
@@ -43,6 +42,7 @@ h6 {
 }
 p {
   font-family: var(--content-font);
+  font-size: 1.2rem;
 }
 section {
   max-width: 900px;
@@ -276,21 +276,30 @@ wa-card img{
 wa-card h3{
   font-size: clamp(1rem, 10%, 1.5rem);
 }
+
 wa-card.card-overview::part(media){
   height:200px;
   width:200px;
+}
+wa-card.card-overview::part(body){
+  padding: 0.5rem;
+}
+wa-card.card-overview::part(footer){
+  padding: 0.5rem;
 }
 .card-media {
   max-width: 200px;
 }
 .card-overview {
   max-width: 200px;
-  height: 375px;
+  height: 350px;
   background-color: #3d89af;
   align-items: center;
   text-align: center;
   border: none;
+  justify-content: space-between;
 }
+
 .latest-section-btn{
     width: 90%;
     grid-column: 1 / -1; /* Span all columns */
@@ -302,6 +311,10 @@ wa-card.card-overview::part(media){
     font-size: 0.9rem;
     line-height: 1.2;
     color: #333;
+    overflow-y: scroll;
+}
+.card-content p{
+  font-size: 0.9rem;
 }
 wa-button.footer-btn::part(base) {
   background-color: var(--amethyst-c1);

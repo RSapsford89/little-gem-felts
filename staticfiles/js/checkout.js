@@ -59,7 +59,7 @@ async function handleSubmit(e) {
         });
 
         if (error.type === "card_error" || error.type === "validation_error") {
-          showToast("Stripe payment error", "error");
+          showToast(error.message, "error");
         } 
         else {
           showToast("An unexpected error has occured", "error");

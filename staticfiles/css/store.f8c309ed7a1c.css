@@ -13,9 +13,7 @@
   --tropical-teal-c6: #16bac5;
   --green-c7: #09BC8A;
 }
-h3 {
-  font-size: 1.2rem;
-}
+
 
 .basket-section,
 .container {
@@ -345,6 +343,14 @@ wa-card.horizontal-card {
 }
 /* end of AI suggestion */
 
+.manage-img-card {
+  max-width: 400px;
+  height: 400px;
+  background-color: #3d89af;
+  align-items: center;
+  text-align: center;
+  border: none;
+}
 
 @media (max-width: 900px) {
   /* Stack checkout columns */
