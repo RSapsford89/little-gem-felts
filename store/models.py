@@ -30,7 +30,7 @@ class Product(models.Model):
     description = models.TextField(blank=False)
     price = models.DecimalField(max_digits=5, decimal_places=2)
     main_category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='products')
-    sub_category = models.CharField(max_length=200, blank=True, null=True)
+    sub_category = models.CharField(max_length=50, blank=True, null=True)
     stock_level = models.IntegerField(default=0, blank=False, null=False)
     delivery_cost = models.DecimalField(max_digits=5, decimal_places=2)
     promoted = models.BooleanField(default=False)

@@ -13,7 +13,7 @@
         <h1>{{user.username}}</h1>
         {% if user.profile.profile_pic %}
         <div class="pic-container">
-            <img src="{{ user.profile.profile_pic.url }}" alt="Profile picture" >
+            <img src="{{ user.profile.profile_pic.url }}" alt="Profile picture" aria-label="{{user.username}}'s profile picture">
         </div>
         {% else %}
             <p>No profile picture uploaded</p>
@@ -21,10 +21,10 @@
     </div>
     <div class="container">
         <wa-tab-group active="profile">
-            <wa-tab panel="profile">Profile</wa-tab>
-            <wa-tab panel="shipping">Shipping Info</wa-tab>
-            <wa-tab panel="orders">Order History</wa-tab>
-            <wa-tab panel="testimonial">Testimonial</wa-tab>
+            <wa-tab panel="profile" aria-label="Profile information tab">Profile</wa-tab>
+            <wa-tab panel="shipping" aria-label="Shipping information tab">Shipping Info</wa-tab>
+            <wa-tab panel="orders" aria-label="Order history tab">Order History</wa-tab>
+            <wa-tab panel="testimonial" aria-label="Testimonial tab">Testimonial</wa-tab>
 
             <wa-tab-panel name="profile">
                 <div class="profile">
@@ -128,10 +128,10 @@
                 <div>
                     <h2>Your testimonial:</h2>
                     <div class="testimonial-container">                    
-                        <wa-card class="testimonial-card">
-                            <img src="{{user_testimonial.user.profile.profile_pic.url}}" alt="profile picture" class="profile-pic">
+                        <wa-card class="testimonial-card" aria-label="Your testimonial from {{user_testimonial.user.username}}">
+                            <img src="{{user_testimonial.user.profile.profile_pic.url}}" alt="profile picture" class="profile-pic" aria-label="{{user_testimonial.user.username}}'s profile picture">
                             <div class="card-content">
-                            <wa-rating readonly value="{{user_testimonial.rating}}"></wa-rating>
+                            <wa-rating readonly value="{{user_testimonial.rating}}" aria-label="Your rating {{user_testimonial.rating}} stars"></wa-rating>
                             <p>"{{user_testimonial.short_review}}"</p>
                             <p>- {{user_testimonial.user.username}}</p>
                             </div>
@@ -151,7 +151,7 @@
                             {% if user.profile.has_purchased %}
                             {{ testimonial_form }}
                             
-                            <wa-button class="button-dark" type='submit' pill>Submit your review</wa-button>
+                            <wa-button class="button-dark" type='submit' pill aria-label="Submit your review">Submit your review</wa-button>
                             {% else %}
                             <wa-textarea appearance="filled" label="Review" hint="Complete a purchase to leave a review." disabled></wa-textarea>
                             {% endif %}
@@ -161,11 +161,11 @@
         </wa-tab-group>
         
         <div class="profile-buttons">
-            <wa-button class="button-dark" href="{% url 'userprofile:edit_view' %}" variant="outline" pill>Update Shipping info</wa-button>
+            <wa-button class="button-dark" href="{% url 'userprofile:edit_view' %}" variant="outline" pill aria-label="Update your shipping information">Update Shipping info</wa-button>
             
             {% if user.is_staff %}
-            <wa-button href="{% url 'management:product_management' %}" variant="brand" pill>Product Management</wa-button>
-            <wa-button href="{% url 'management:blog_management' %}" variant="brand" pill>Blog Post Management</wa-button>
+            <wa-button href="{% url 'management:product_management' %}" variant="brand" pill aria-label="Go to product management">Product Management</wa-button>
+            <wa-button href="{% url 'management:blog_management' %}" variant="brand" pill aria-label="Go to blog management">Blog Post Management</wa-button>
             {% endif %}
         </div>
         {% endif %}

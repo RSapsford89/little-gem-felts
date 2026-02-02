@@ -55,7 +55,7 @@ class Testimonial(models.Model):
     """
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='testimonials')  # link user through the name 'testimonials'
     rating = models.IntegerField(default=5, choices=RATING)
-    short_review = models.TextField(max_length=200, null=False, blank=False)  # short for the carousel
+    short_review = models.TextField(max_length=100, null=False, blank=False)  # short for the carousel
     long_review = models.TextField(max_length=500, null=True, blank=True)  # long for more detail if clicked on
     date_created = models.DateTimeField(auto_now_add=True)
     date_edited = models.DateTimeField(auto_now=True)

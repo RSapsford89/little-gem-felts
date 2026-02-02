@@ -22,7 +22,7 @@
                 <p>{{post.slug}}</p>
                 <p>{{post.content|truncatechars:200}}</p>
                 <p>{{post.date_created}}</p>
-                <wa-button size='small' class="blog-btn button-dark" pill href="{% url 'blog:blog_details' post.slug %}">Read more</wa-button>
+                <wa-button size='small' class="blog-btn button-dark" pill href="{% url 'blog:blog_details' post.slug %}" aria-label="Read more about {{post.title}}">Read more</wa-button>
             </div>
         {% endif %}
       {% endfor %}
@@ -37,7 +37,7 @@
                 <p>{{post.content|truncatechars:200}}</p>
                 <p>We will be at <strong>{{post.location}}</strong></p>
                 <p>{{post.date_created}}</p>
-                <wa-button size='small' class="event-btn button-dark" pill href="{% url 'blog:blog_details' post.slug %}">Read more</wa-button>
+                <wa-button size='small' class="event-btn button-dark" pill href="{% url 'blog:blog_details' post.slug %}" aria-label="Read more about event {{post.title}}">Read more</wa-button>
             </div>
         {% endif %}
       {% endfor %}

@@ -91,13 +91,13 @@
               {% endif %}
               <h3>{{ product.name }}</h3>
               <h4>£{{ product.price }}</h4>
-              <wa-button size='small' class='footer-btn' variant="brand" pill href="{% url 'store:product_detail' product.pk %}"><i class="fa-solid fa-bag-shopping"></i> Shop</wa-button>
+              <wa-button size='small' class='footer-btn' variant="brand" pill href="{% url 'store:product_detail' product.pk %}" aria-label="Shop {{ product.name }}"><i class="fa-solid fa-bag-shopping"></i> Shop</wa-button>
             </wa-card>
           </div>
           {% empty %}
           <p>No promoted products to display.</p>
           {% endfor %}
-          <wa-button size="large" class="latest-section-btn wa-span-grid" variant="brand" pill href="{% url 'store:store' %}">Shop All</wa-button>
+          <wa-button size="large" class="latest-section-btn wa-span-grid" variant="brand" pill href="{% url 'store:store' %}" aria-label="View all products in shop">Shop All</wa-button>
         </div>
       </section>
       {% endblock latestAdditions %}
@@ -116,13 +116,11 @@
     <div class="footer-brand-section">
       <wa-button appearance='plain' size='large' href='{% url 'home'%}'>LittleGemFelts</wa-button>
       <div class="footer-social">
-        <a href="https://www.instagram.com/" class="footer-link" target="_blank" rel="noopener">
+        <a href="https://www.instagram.com/" class="footer-link" target="_blank" rel="noopener" aria-label="Visit our Instagram">
           <i class="fa-brands fa-instagram"></i>
         </a>
-        <a href="https://www.facebook.com/" class="footer-link" target="_blank" rel="noopener">
-          <i class="fa-brands fa-facebook"></i>
-        </a>
-        
+        <a href="https://www.facebook.com/" class="footer-link" target="_blank" rel="noopener" aria-label="Visit our Facebook">
+          <i class="fa-brands fa-facebook"></i>        
       </div>
     </div>    
   </div>

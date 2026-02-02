@@ -38,7 +38,7 @@
                             {% if item.product.primary_image %}
                                 <img slot="media" src="{{ item.product.primary_image.url }}" alt="{{ item.product.name }}">
                             {% endif %}
-                            <div class="card-content">
+                            <div class="horizontal-content">
                                 <div>
                                     <h3>{{item.product.name}}</h3>
                                 </div>
@@ -47,13 +47,13 @@
                                 </div>
                                 
                                 <wa-button-group orientation="horizontal">
-                                    <wa-button data-item-id="{{item.product_id}}" data-action="decrease" >
+                                    <wa-button data-item-id="{{item.product_id}}" data-action="decrease" aria-label="Decrease quantity for {{item.product.name}}">
                                         <wa-icon name='minus' class='minus-btn'></wa-icon>
                                     </wa-button>
-                                    <wa-input data-item-id="{{item.product_id}}" class='qty-input' value='{{item.quantity}}' data-qty='{{item.quantity}}'>
-                                        <wa-label slot="start">Qty</wa-label>
+                                    <wa-input data-item-id="{{item.product_id}}" class='qty-input' value='{{item.quantity}}' data-qty='{{item.quantity}}' aria-label="Quantity for {{item.product.name}}">
+                                        <label slot="start">Qty</label>
                                     </wa-input>
-                                    <wa-button data-item-id="{{item.product_id}}" data-action="increase">
+                                    <wa-button data-item-id="{{item.product_id}}" data-action="increase" aria-label="Increase quantity for {{item.product.name}}">
                                         <wa-icon name='plus' class='plus-btn'></wa-icon>
                                     </wa-button>
                                 </wa-button-group>
@@ -88,7 +88,7 @@
                     </tr>
                 </table>
                 <br>
-                <wa-button class="purple totals-btn" pill href="{% url 'order:create_order' %}" >
+                <wa-button class="purple totals-btn" pill href="{% url 'order:create_order' %}" aria-label="Continue to checkout and payment">
                     Continue to Payment
                 </wa-button>
             </wa-card>

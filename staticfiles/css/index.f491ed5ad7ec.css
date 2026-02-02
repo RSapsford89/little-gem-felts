@@ -115,14 +115,15 @@
   margin: auto;
   justify-content: center;
 }
-.testimonial-card {
+wa-card.testimonial-card {
   width: 200px;
   height: 200px;
   position: relative;
   display: block;
   background-color: white;
   border-radius: 10px;
-  padding: 10px;
+  padding: 5px;
+  overflow: hidden;
 }
 wa-rating {
   display: block;

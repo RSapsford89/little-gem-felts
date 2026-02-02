@@ -11,35 +11,33 @@
 {% endblock titles %}
 {% block content %}
 <section class="product-section">
-    <div class="shop-filter">
+    <div class="shop-filter" id='store-top'>
         <div class="category-change">
+            <wa-button size='small' class='round-btn all-btn' href="?category=all#store-top" aria-label="View all products">All</wa-button>
         </div>
         <div class="category-change">
-            <wa-button size='small' class='round-btn all-btn' href="?category=all">All</wa-button>
+            <wa-button size='small' class='round-btn kit-btn' href="?category=kit#store-top" aria-label="View kits">Kits</wa-button>
         </div>
         <div class="category-change">
-            <wa-button size='small' class='round-btn kit-btn' href="?category=kit">Kits</wa-button>
+            <wa-button size='small' class='round-btn lamp-btn' href="?category=lamp#store-top" aria-label="View lamps">Lamps</wa-button>
         </div>
         <div class="category-change">
-            <wa-button size='small' class='round-btn lamp-btn' href="?category=lamp">Lamps</wa-button>
+            <wa-button size='small' class='round-btn box-btn' href="?category=box#store-top" aria-label="View boxes">Boxes</wa-button>
         </div>
         <div class="category-change">
-            <wa-button size='small' class='round-btn box-btn' href="?category=box">Boxes</wa-button>
+            <wa-button size='small' class='round-btn bag-btn' href="?category=bag#store-top" aria-label="View bags">Bags</wa-button>
         </div>
         <div class="category-change">
-            <wa-button size='small' class='round-btn bag-btn' href="?category=bag">Bags</wa-button>
-        </div>
-        <div class="category-change">
-            <wa-button size='small' class='round-btn tool-btn' href="?category=tool">Tools</wa-button>
+            <wa-button size='small' class='round-btn tool-btn' href="?category=tool#store-top" aria-label="View tools">Tools</wa-button>
         </div>
         <div class="filter-container">
             <form action="{% url 'store:store' %}" method="get">
-                <wa-input placeholder='Filter' size='small' type='text' name='filter_input' value="{{filter_input}}"></wa-input>
-                <button type="submit" class="search-btn">🔎</button>
+                <wa-input placeholder='Filter' size='small' type='text' name='filter_input' value="{{filter_input}}" aria-label="Search products"></wa-input>
+                <button type="submit" class="search-btn" aria-label="Submit search">🔎</button>
             </form>
         </div>
     </div>
-    <div class="store-container" id='store-top'>
+    <div class="store-container">
         <div class="wa-grid wa-gap-2" style="--min-column-size: 200px;">
             {% for item in page_obj %}
                 <div>
@@ -47,7 +45,7 @@
                         {% if item.images.first %}
                         <img slot="media" src="{{ item.images.first.image.url }}" alt="{{ item.name }}" />
                         {% else %}
-                        <img slot="media" src="{{MEDIA_URL}}no-img-knit.jpg" alt="{{ item.name }}" />
+                        <p>No image available</p>
                         {% endif %}
                         <h3>{{item.name}}</h3>
                         <wa-button slot='footer' size='small' class='footer-btn' href="{% url 'store:product_detail' item.pk %}" variant="brand" pill><i class="fa-solid fa-bag-shopping"></i> £ {{item.price}}</wa-button>

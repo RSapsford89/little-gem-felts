@@ -19,13 +19,13 @@
     {% endif %}
     </div>
     <div class="img">
-      <img src="{{ post.img.url }}" alt="{{ post.img.name }}">
+      <img src="{{ post.img.url }}" alt="{{ post.title }}" aria-label="Featured image for {{post.title}}">
     </div>
     <div class="wa-span-grid text">
       <p>{{post.content}}</p>
     </div>
     <div class="date-edit-author">
-      <span>written by: {{post.author}} | </span><span>first published on: {{post.date_created}} | </span><span>last edited on: {{post.date_updated}}</span>
+      <span aria-label="Post author">written by: {{post.author}} | </span><span aria-label="First published date">first published on: {{post.date_created}} | </span><span aria-label="Last edited date">last edited on: {{post.date_updated}}</span>
     </div>
 
   </div>
@@ -34,9 +34,9 @@
   <h3>Comment section</h3>
   <div class="container">
     {% for comment in comments %}
-        <div class="comment">
+        <div class="comment" aria-label="Comment by {{comment.author.username}}">
             <strong>{{ comment.author.username }}</strong> 
-            <span class="text-muted">- {{ comment.date_created|date:"M d, Y" }}</span>
+            <span class="text-muted" aria-label="Comment date">- {{ comment.date_created|date:"M d, Y" }}</span>
             <p>{{ comment.content }}</p>
         </div>
     {% empty %}
@@ -46,13 +46,13 @@
     <div>
       {% if post.allow_comments %}
         {% if user.is_authenticated and user.profile.can_comment %}
-        <form method="post">
+        <form method="post" aria-label="Leave a comment form">
             {% csrf_token %}
             {{ comment_form.as_p }}
-            <button type="submit" class="btn btn-primary purple">Submit</button>
+            <button type="submit" class="btn btn-primary purple" aria-label="Submit comment">Submit</button>
         </form>
         {% else %}
-        <p>Please <a href="{% url 'account_login' %}">login</a> to leave a comment.</p>
+        <p>Please <a href="{% url 'account_login' %}" aria-label="Login to leave a comment">login</a> to leave a comment.</p>
         {% endif %}
       {% else %}
       <div class="alert alert-secondary">
